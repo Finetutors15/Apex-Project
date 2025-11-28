@@ -1,0 +1,24 @@
+-------------TABLE---------------
+
+          STUDENT_ASSESSMENT
+
+Column Name            DataType
+
+ EME_CONTACT            number
+
+ EMAIL                VARCHAR2(100)
+----------------------------------------
+  table  Student Fees and Student Fees Histry table
+
+ALTER TABLE STUDENT_FEES_HISTORY 
+MODIFY (due_fee DATE);
+
+ALTER TABLE STUDENT_FEES_HISTORY 
+MODIFY (due_fee DATE);
+
+//Run These command for change data type
+-----------------------------------------------------
+   Table Student
+
+  ALTER TABLE STUDENTS
+ADD comments VARCHAR2(250);

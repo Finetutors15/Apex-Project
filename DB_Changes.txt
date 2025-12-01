@@ -1,0 +1,6 @@
+//Run These command for change data type
+-----------------------------------------------------
+   Table Student_FEES
+
+  ALTER TABLE Student_FEES
+ADD STATUS VARCHAR2(2);

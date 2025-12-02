@@ -33,17 +33,17 @@ prompt APPLICATION 246682 - Fine Tutors
 -- Application Export:
 --   Application:     246682
 --   Name:            Fine Tutors
---   Date and Time:   18:02 Monday December 1, 2025
+--   Date and Time:   18:19 Tuesday December 2, 2025
 --   Exported By:     MIANSAUED786@GMAIL.COM
 --   Flashback:       0
 --   Export Type:     Application Export
---     Pages:                    113
---       Items:                  636
---       Validations:             72
---       Processes:              145
---       Regions:                261
---       Buttons:                322
---       Dynamic Actions:        300
+--     Pages:                    115
+--       Items:                  640
+--       Validations:             73
+--       Processes:              147
+--       Regions:                264
+--       Buttons:                327
+--       Dynamic Actions:        304
 --     Shared Components:
 --       Logic:
 --         Items:                  1
@@ -52,14 +52,14 @@ prompt APPLICATION 246682 - Fine Tutors
 --       Navigation:
 --         Lists:                  6
 --         Breadcrumbs:            1
---           Entries:              8
+--           Entries:              9
 --       Security:
 --         Authentication:         2
 --         Authorization:          2
 --       User Interface:
 --         Themes:                 1
 --         Templates:
---         LOVs:                  44
+--         LOVs:                  45
 --       PWA:
 --       Globalization:
 --       Reports:
@@ -112,7 +112,7 @@ wwv_imp_workspace.create_flow(
 ,p_substitution_value_01=>'Fine Tutors'
 ,p_file_prefix => nvl(wwv_flow_application_install.get_static_app_file_prefix,'')
 ,p_files_version=>249
-,p_version_scn=>15678165889722
+,p_version_scn=>15678567552725
 ,p_print_server_type=>'INSTANCE'
 ,p_file_storage=>'DB'
 ,p_is_pwa=>'Y'
@@ -164,7 +164,7 @@ wwv_flow_imp_shared.create_list(
  p_id=>wwv_flow_imp.id(15575767932923332147)
 ,p_name=>'Navigation Menu'
 ,p_list_status=>'PUBLIC'
-,p_version_scn=>15670187671096
+,p_version_scn=>15678562501639
 );
 wwv_flow_imp_shared.create_list_item(
  p_id=>wwv_flow_imp.id(15575782217124332167)
@@ -173,6 +173,15 @@ wwv_flow_imp_shared.create_list_item(
 ,p_list_item_link_target=>'f?p=&APP_ID.:1:&APP_SESSION.::&DEBUG.:::'
 ,p_list_item_icon=>'fa-home'
 ,p_list_item_current_type=>'TARGET_PAGE'
+);
+wwv_flow_imp_shared.create_list_item(
+ p_id=>wwv_flow_imp.id(115474705736650101836)
+,p_list_item_display_sequence=>390
+,p_list_item_link_text=>'Student Fee Status Update'
+,p_list_item_link_target=>'f?p=&APP_ID.:102:&APP_SESSION.::&DEBUG.:::'
+,p_list_item_icon=>'fa-forms'
+,p_list_item_current_type=>'COLON_DELIMITED_PAGE_LIST'
+,p_list_item_current_for_pages=>'102'
 );
 wwv_flow_imp_shared.create_list_item(
  p_id=>wwv_flow_imp.id(15576439761024332541)
@@ -1606,6 +1615,16 @@ wwv_flow_imp_shared.create_list_item(
 ,p_list_item_icon=>'fa-table'
 ,p_parent_list_item_id=>wwv_flow_imp.id(23713383607926390617)
 ,p_list_item_current_type=>'TARGET_PAGE'
+);
+wwv_flow_imp_shared.create_list_item(
+ p_id=>wwv_flow_imp.id(115452680324049208451)
+,p_list_item_display_sequence=>163
+,p_list_item_link_text=>'In Active Fee Status'
+,p_list_item_link_target=>'f?p=&APP_ID.:100:&SESSION.::&DEBUG.::::'
+,p_list_item_icon=>'fa-table'
+,p_parent_list_item_id=>wwv_flow_imp.id(23713383607926390617)
+,p_list_item_current_type=>'COLON_DELIMITED_PAGE_LIST'
+,p_list_item_current_for_pages=>'100'
 );
 wwv_flow_imp_shared.create_list_item(
  p_id=>wwv_flow_imp.id(39201097582711573228)
@@ -9467,6 +9486,22 @@ wwv_flow_imp_shared.create_list_of_values_cols(
 );
 end;
 /
+prompt --application/shared_components/user_interface/lovs/payment_type_payment_name
+begin
+wwv_flow_imp_shared.create_list_of_values(
+ p_id=>wwv_flow_imp.id(115474710966061101976)
+,p_lov_name=>'PAYMENT_TYPE.PAYMENT_NAME'
+,p_source_type=>'TABLE'
+,p_location=>'LOCAL'
+,p_query_table=>'PAYMENT_TYPE'
+,p_return_column_name=>'PAY_ID'
+,p_display_column_name=>'PAYMENT_NAME'
+,p_default_sort_column_name=>'PAYMENT_NAME'
+,p_default_sort_direction=>'ASC'
+,p_version_scn=>15678562503734
+);
+end;
+/
 prompt --application/shared_components/user_interface/lovs/siblings_fee_plan_lov
 begin
 wwv_flow_imp_shared.create_list_of_values(
@@ -10764,6 +10799,12 @@ wwv_flow_imp_shared.create_menu_option(
 ,p_short_name=>'Student Details'
 ,p_link=>'f?p=&APP_ID.:48:&SESSION.::&DEBUG.:::'
 ,p_page_id=>48
+);
+wwv_flow_imp_shared.create_menu_option(
+ p_id=>wwv_flow_imp.id(115452681220281208452)
+,p_short_name=>'IN ACTIVE FEES STATUS'
+,p_link=>'f?p=&APP_ID.:100:&APP_SESSION.::&DEBUG.:::'
+,p_page_id=>100
 );
 end;
 /
@@ -12805,7 +12846,7 @@ wwv_flow_imp_page.create_report_region(
 ,p_name=>'STUDNET_CARD'
 ,p_template=>4072358936313175081
 ,p_display_sequence=>10
-,p_region_template_options=>'#DEFAULT#:t-Region--noPadding:t-Region--removeHeader js-removeLandmark:t-Region--scrollBody'
+,p_region_template_options=>'#DEFAULT#:t-Region--noPadding:t-Region--removeHeader js-removeLandmark:t-Region--noBorder:t-Region--scrollBody'
 ,p_component_template_options=>'#DEFAULT#:u-colors:t-BadgeList--xlarge:t-BadgeList--dash:t-BadgeList--fixed'
 ,p_source_type=>'NATIVE_SQL_REPORT'
 ,p_query_type=>'SQL'
@@ -12945,33 +12986,32 @@ wwv_flow_imp_page.create_jet_chart_series(
 ,p_name=>'CHART'
 ,p_data_source_type=>'SQL'
 ,p_data_source=>wwv_flow_string.join(wwv_flow_t_varchar2(
-'        SELECT COUNT(*) Student_Active, ''Student_Active''',
+'        SELECT COUNT(*) Student_Active, ''Student Active''',
 '          FROM STUDENTS S',
 '         WHERE S.STATUS = ''A''',
 '           AND S.SITE_ID = :APP_SITE_ID  ',
 '         UNION ALL',
-'          SELECT COUNT(*) Student_inactive, ''Student_inactive''',
+'          SELECT COUNT(*) Student_inactive, ''Student Inactive''',
 '          FROM STUDENTS S',
 '         WHERE S.STATUS = ''I''',
 '           AND S.SITE_ID = :APP_SITE_ID  ',
 '         UNION ALL',
-'          SELECT COUNT(*) Student_Pending, ''Student_Pending''',
+'          SELECT COUNT(*) Student_Pending, ''Student Pending''',
 '          FROM STUDENTS S',
 '         WHERE S.STATUS = ''P''',
 '           AND S.SITE_ID = :APP_SITE_ID  ',
 '          UNION ALL',
-'          SELECT COUNT(*) Student_Alumni, ''Student_Alumni''',
+'          SELECT COUNT(*) Student_Alumni, ''Student Alumni''',
 '          FROM STUDENTS S',
 '         WHERE S.STATUS = ''AL''',
 '           AND S.SITE_ID = :APP_SITE_ID  ',
 '          UNION ALL',
-'          SELECT  COUNT(*) Student_Archive, ''Student_Archive''',
+'          SELECT  COUNT(*) Student_Archive, ''Student Archive''',
 '          FROM STUDENTS S',
 '         WHERE S.STATUS = ''AR''',
 '           AND S.SITE_ID = :APP_SITE_ID  '))
-,p_series_name_column_name=>'''STUDENT_ACTIVE'''
 ,p_items_value_column_name=>'STUDENT_ACTIVE'
-,p_items_label_column_name=>'''STUDENT_ACTIVE'''
+,p_items_label_column_name=>'''STUDENTACTIVE'''
 ,p_items_label_rendered=>true
 ,p_items_label_position=>'auto'
 ,p_items_label_display_as=>'LABEL'
@@ -55463,7 +55503,7 @@ wwv_flow_imp_page.create_report_region(
 '       CLOSING_BALANCE,',
 '       CASE WHEN P.PAYMENT_NAME=''Adjustment'' THEN NULL ELSE P.PAYMENT_NAME END AS PAYMENT_NAME,',
 '       TO_CHAR(PAYMENT_DATE,''DD-MON-YYYY'')PAYMENT_DATE,',
-'       COMMENTS,',
+'       SFC.COMMENTS,',
 '       SFC.STATUS,',
 '       SFC.FEED_BY,',
 '       TO_CHAR(SFC.FEED_DATE,''DD-MON-YYYY'')FEED_DATE',
@@ -63288,8 +63328,8 @@ wwv_flow_imp_page.create_report_region(
 ,p_source=>wwv_flow_string.join(wwv_flow_t_varchar2(
 'SELECT  DENSE_RANK() OVER (',
 '         ORDER BY STUDENT_ID,SORTED_FEE_MONTH',
-'       ) SERIAL_NO,FEE_MONTH,STUDENT_ID,STUDENT_NAME,STUDENT_TYPE,CLASS_ID,CLASS_NAME,SITE_ID,SITE_NAME,(SELECT TO_CHAR(MAX(F.DUE_DATE),''DD'') FROM STUDENT_FEES F WHERE F.STUDENT_ID = STUDENT_ID)DUE_DATE,OPENING_BALANCE,TOTAL_MONTHLY_FEE,ADMISSION_FEE'
-||',TOTAL_DISCOUNT,TOTAL_EXAM_FEE,TOTAL_BOOK_FEE,TOTAL_PAST_PAPER_FEE,',
+'       ) SERIAL_NO,FEE_MONTH,STUDENT_ID,STUDENT_NAME,STUDENT_TYPE,CLASS_ID,CLASS_NAME,SITE_ID,SITE_NAME,(SELECT TO_CHAR(MAX(F.DUE_DATE),''DD'') FROM STUDENT_FEES F WHERE F.STUDENT_ID = STUDENT_ID AND F.STATUS = ''A'')DUE_DATE,OPENING_BALANCE,TOTAL_MONTHL'
+||'Y_FEE,ADMISSION_FEE,TOTAL_DISCOUNT,TOTAL_EXAM_FEE,TOTAL_BOOK_FEE,TOTAL_PAST_PAPER_FEE,',
 '       TOTAL_FEE+OPENING_BALANCE AS TOTAL_FEE,--CASE WHEN ABS(OPENING_BALANCE) > TOTAL_FEE THEN TOTAL_FEE ELSE TOTAL_FEE+OPENING_BALANCE END AS TOTAL_FEE,',
 '       TOTAL_RECEIVED_AMOUNT,CLOSING_BALANCE,SORTED_FEE_MONTH,SUSPENDED,COMMENTS_IF_ANY,PAYMENT_COUNT1,PAYMENT_COUNT2,PAYMENT_COUNT3,PAYMENT_DATE1,PAYMENT_DATE2,PAYMENT_DATE3,',
 '       CASE WHEN PAYMENT_NAME1=''Adjustment'' THEN NULL ELSE PAYMENT_NAME1 END AS PAYMENT_NAME1,CASE WHEN PAYMENT_NAME2=''Adjustment'' THEN NULL ELSE PAYMENT_NAME2 END AS PAYMENT_NAME2,',
@@ -63913,7 +63953,7 @@ wwv_flow_imp_page.create_page_plug(
 '         PAYMENT_NAME3,COMMENTS,REMINDER_DATE1,REMINDER_DATE2,REMINDER_DATE3,REMINDER_COMMENTS,SUSPENDED,COMMENTS_IF_ANY',
 '          FROM(',
 '        SELECT',
-'          TO_CHAR(TO_DATE(FEE_MONTH, ''MM-YYYY''), ''MON-YYYY'') AS FEE_MONTH,B.STUDENT_ID,STUDENT_NAME,STUDENT_TYPE,STATUS,B.SITE_ID,CLASS_NAME,DUE_DATE,NVL(OPENING_BALANCE,0) OPENING_BALANCE,',
+'          TO_CHAR(TO_DATE(FEE_MONTH, ''MM-YYYY''), ''MON-YYYY'') AS FEE_MONTH,B.STUDENT_ID,STUDENT_NAME,STUDENT_TYPE,F.STATUS,B.SITE_ID,CLASS_NAME,DUE_DATE,NVL(OPENING_BALANCE,0) OPENING_BALANCE,',
 '           CASE WHEN NVL(TOTAL_MONTHLY_FEE,0) > 0 THEN TOTAL_MONTHLY_FEE ELSE NVL(F.TOTAL_FEE,0) END AS TOTAL_MONTHLY_FEE',
 '          ,TOTAL_DISCOUNT,CASE WHEN NVL(ADMISSION_FEE,0) > 0 OR NVL(ADD_FEE_COLLECTION,0) > 0 THEN ADMISSION_FEE ELSE NVL(F.REGISTRATION_FEE,0) END AS ADMISSION_FEE,',
 '          CASE WHEN NVL(TOTAL_EXAM_FEE,0) > 0 OR NVL(EXAM_FEE_COLLECTION,0) > 0 THEN TOTAL_EXAM_FEE ELSE NVL(F.EXAM_FEE,0) END AS TOTAL_EXAM_FEE,',
@@ -64125,6 +64165,7 @@ wwv_flow_imp_page.create_page_plug(
 '                    JOIN STUDENT_FEES sf ',
 '                        ON sf.STUDENT_ID = st.STUDENT_ID ',
 '                       AND sf.SITE_ID = st.SITE_ID',
+'                       AND SF.STATUS = ''A''',
 '',
 '                    LEFT JOIN (',
 '                        SELECT STUDENT_ID, SITE_ID, MAX(FEE_MONTH) AS MAX_FEE_MONTH',
@@ -64166,6 +64207,7 @@ wwv_flow_imp_page.create_page_plug(
 '        ) B,STUDENT_FEES F   ',
 '        WHERE B.STUDENT_ID=F.STUDENT_ID(+)  ',
 '          AND B.SITE_ID   =F.SITE_ID(+)',
+'          AND F.STATUS = ''A''',
 '          AND F.FEE_START_DATE <= TRUNC(SYSDATE)',
 '          )',
 '  )  ',
@@ -70520,6 +70562,587 @@ wwv_flow_imp_page.create_page_process(
 ,p_process_name=>'Initialize form Student Fee Rcvd Form'
 ,p_error_display_location=>'INLINE_IN_NOTIFICATION'
 ,p_internal_uid=>90344177260241288813
+);
+end;
+/
+prompt --application/pages/page_00100
+begin
+wwv_flow_imp_page.create_page(
+ p_id=>100
+,p_name=>'In Active Fee Status'
+,p_alias=>'IN-ACTIVE-FEES-STATUS'
+,p_step_title=>'In Active Fee Status'
+,p_autocomplete_on_off=>'OFF'
+,p_page_template_options=>'#DEFAULT#'
+,p_protection_level=>'C'
+,p_page_component_map=>'03'
+);
+wwv_flow_imp_page.create_page_plug(
+ p_id=>wwv_flow_imp.id(77995144441678684441)
+,p_plug_name=>'Parameter'
+,p_region_template_options=>'#DEFAULT#:t-Region--scrollBody'
+,p_plug_template=>4072358936313175081
+,p_plug_display_sequence=>10
+,p_location=>null
+,p_attributes=>wwv_flow_t_plugin_attributes(wwv_flow_t_varchar2(
+  'expand_shortcuts', 'N',
+  'output_as', 'HTML')).to_clob
+);
+wwv_flow_imp_page.create_report_region(
+ p_id=>wwv_flow_imp.id(115452681478596208453)
+,p_name=>'In Active Fee Status'
+,p_title=>'In Active Fee Status'
+,p_template=>4072358936313175081
+,p_display_sequence=>20
+,p_region_template_options=>'#DEFAULT#:t-Region--noPadding:t-Region--scrollBody'
+,p_component_template_options=>'#DEFAULT#:t-Report--stretch:t-Report--staticRowColors:t-Report--rowHighlight:t-Report--inline:t-Report--hideNoPagination'
+,p_source_type=>'NATIVE_SQL_REPORT'
+,p_query_type=>'SQL'
+,p_source=>wwv_flow_string.join(wwv_flow_t_varchar2(
+'SELECT FEE_ID,',
+'S.STUDENT_ID,',
+'S.STUDENT_NAME||'' ''||S.LAST_NAME AS STUDENT_NAME, ',
+'P.PARENT_NAME,',
+'C.CLASS_NAME,',
+'SF.TOTAL_FEE,',
+'SF.REGISTRATION_FEE,',
+'SF.BOOK_FEE,',
+'SF.EXAM_FEE,',
+'SF.HOURLY_FEE,',
+'SF.PAST_PAPER_FEE,',
+'SF.DUE_DATE,',
+'DECODE(SF.STATUS, ''A'', ''Active'', ''I'', ''In Active'') AS FEE_STATUS,',
+'SF.STATUS',
+'FROM STUDENTS S, STUDENT_PARENTS P, CLASSES C, STUDENT_FEES SF',
+'WHERE S.STUDENT_ID = P.STUDENT_ID',
+'AND   S.SITE_ID = P.SITE_ID',
+'AND   S.CLASS_ID = C.CLASS_ID',
+'AND   S.STUDENT_ID = SF.STUDENT_ID',
+'AND   S.SITE_ID = SF.SITE_ID',
+'AND   SF.SITE_ID = :APP_SITE_ID',
+'AND   SF.STATUS =  ''I''',
+'AND   SF.STUDENT_ID = NVL(:P100_STUDENT_ID,SF.STUDENT_ID)'))
+,p_ajax_enabled=>'Y'
+,p_ajax_items_to_submit=>'P100_STUDENT_ID'
+,p_lazy_loading=>false
+,p_query_row_template=>2538654340625403440
+,p_query_num_rows=>50
+,p_query_options=>'DERIVED_REPORT_COLUMNS'
+,p_query_no_data_found=>'no data found'
+,p_query_num_rows_type=>'NEXT_PREVIOUS_LINKS'
+,p_query_row_count_max=>500
+,p_pagination_display_position=>'BOTTOM_RIGHT'
+,p_prn_output=>'N'
+,p_prn_format=>'PDF'
+,p_sort_null=>'L'
+,p_plug_query_strip_html=>'N'
+);
+wwv_flow_imp_page.create_report_columns(
+ p_id=>wwv_flow_imp.id(115456274410081314937)
+,p_query_column_id=>1
+,p_column_alias=>'FEE_ID'
+,p_column_display_sequence=>140
+,p_hidden_column=>'Y'
+,p_derived_column=>'N'
+);
+wwv_flow_imp_page.create_report_columns(
+ p_id=>wwv_flow_imp.id(115452681913284208454)
+,p_query_column_id=>2
+,p_column_alias=>'STUDENT_ID'
+,p_column_display_sequence=>20
+,p_column_heading=>'Admission No'
+,p_heading_alignment=>'LEFT'
+,p_default_sort_column_sequence=>1
+,p_derived_column=>'N'
+,p_include_in_export=>'Y'
+);
+wwv_flow_imp_page.create_report_columns(
+ p_id=>wwv_flow_imp.id(115452682340392208454)
+,p_query_column_id=>3
+,p_column_alias=>'STUDENT_NAME'
+,p_column_display_sequence=>30
+,p_column_heading=>'Student Name'
+,p_heading_alignment=>'LEFT'
+,p_default_sort_column_sequence=>1
+,p_derived_column=>'N'
+,p_include_in_export=>'Y'
+);
+wwv_flow_imp_page.create_report_columns(
+ p_id=>wwv_flow_imp.id(115452682753312208455)
+,p_query_column_id=>4
+,p_column_alias=>'PARENT_NAME'
+,p_column_display_sequence=>40
+,p_column_heading=>'Parent Name'
+,p_heading_alignment=>'LEFT'
+,p_default_sort_column_sequence=>1
+,p_derived_column=>'N'
+,p_include_in_export=>'Y'
+);
+wwv_flow_imp_page.create_report_columns(
+ p_id=>wwv_flow_imp.id(115452683139868208455)
+,p_query_column_id=>5
+,p_column_alias=>'CLASS_NAME'
+,p_column_display_sequence=>50
+,p_column_heading=>'Year'
+,p_heading_alignment=>'LEFT'
+,p_default_sort_column_sequence=>1
+,p_derived_column=>'N'
+,p_include_in_export=>'Y'
+);
+wwv_flow_imp_page.create_report_columns(
+ p_id=>wwv_flow_imp.id(115452683516307208455)
+,p_query_column_id=>6
+,p_column_alias=>'TOTAL_FEE'
+,p_column_display_sequence=>60
+,p_column_heading=>'Monthly Fee'
+,p_column_alignment=>'RIGHT'
+,p_heading_alignment=>'RIGHT'
+,p_derived_column=>'N'
+,p_include_in_export=>'Y'
+);
+wwv_flow_imp_page.create_report_columns(
+ p_id=>wwv_flow_imp.id(115452683916337208456)
+,p_query_column_id=>7
+,p_column_alias=>'REGISTRATION_FEE'
+,p_column_display_sequence=>70
+,p_column_heading=>'Registration Fee'
+,p_column_alignment=>'RIGHT'
+,p_heading_alignment=>'RIGHT'
+,p_derived_column=>'N'
+,p_include_in_export=>'Y'
+);
+wwv_flow_imp_page.create_report_columns(
+ p_id=>wwv_flow_imp.id(115452684377334208456)
+,p_query_column_id=>8
+,p_column_alias=>'BOOK_FEE'
+,p_column_display_sequence=>80
+,p_column_heading=>'Book Fee'
+,p_column_alignment=>'RIGHT'
+,p_heading_alignment=>'RIGHT'
+,p_derived_column=>'N'
+,p_include_in_export=>'Y'
+);
+wwv_flow_imp_page.create_report_columns(
+ p_id=>wwv_flow_imp.id(115452684704361208456)
+,p_query_column_id=>9
+,p_column_alias=>'EXAM_FEE'
+,p_column_display_sequence=>90
+,p_column_heading=>'Exam Fee'
+,p_column_alignment=>'RIGHT'
+,p_heading_alignment=>'RIGHT'
+,p_derived_column=>'N'
+,p_include_in_export=>'Y'
+);
+wwv_flow_imp_page.create_report_columns(
+ p_id=>wwv_flow_imp.id(115452685120078208456)
+,p_query_column_id=>10
+,p_column_alias=>'HOURLY_FEE'
+,p_column_display_sequence=>100
+,p_column_heading=>'Hourly Fee'
+,p_column_alignment=>'RIGHT'
+,p_heading_alignment=>'RIGHT'
+,p_derived_column=>'N'
+,p_include_in_export=>'Y'
+);
+wwv_flow_imp_page.create_report_columns(
+ p_id=>wwv_flow_imp.id(115452685562975208457)
+,p_query_column_id=>11
+,p_column_alias=>'PAST_PAPER_FEE'
+,p_column_display_sequence=>110
+,p_column_heading=>'Past Paper Fee'
+,p_column_alignment=>'RIGHT'
+,p_heading_alignment=>'RIGHT'
+,p_derived_column=>'N'
+,p_include_in_export=>'Y'
+);
+wwv_flow_imp_page.create_report_columns(
+ p_id=>wwv_flow_imp.id(115452685963310208457)
+,p_query_column_id=>12
+,p_column_alias=>'DUE_DATE'
+,p_column_display_sequence=>120
+,p_column_heading=>'Due Date'
+,p_heading_alignment=>'LEFT'
+,p_derived_column=>'N'
+,p_include_in_export=>'Y'
+);
+wwv_flow_imp_page.create_report_columns(
+ p_id=>wwv_flow_imp.id(115452686319456208457)
+,p_query_column_id=>13
+,p_column_alias=>'FEE_STATUS'
+,p_column_display_sequence=>130
+,p_column_heading=>'Fee Status'
+,p_heading_alignment=>'LEFT'
+,p_default_sort_column_sequence=>1
+,p_derived_column=>'N'
+,p_include_in_export=>'Y'
+);
+wwv_flow_imp_page.create_report_columns(
+ p_id=>wwv_flow_imp.id(115456274141989314934)
+,p_query_column_id=>13
+,p_column_alias=>'DERIVED$01'
+,p_column_display_sequence=>10
+,p_column_heading=>'Edit'
+,p_column_link=>'f?p=&APP_ID.:102:&SESSION.::&DEBUG.:Y,:P102_FEE_ID,P102_STUDENT_ID:#FEE_ID#,#STUDENT_ID#'
+,p_column_linktext=>'<img src="#APEX_FILES#app_ui/img/icons/apex-edit-pencil-alt.png" class="apex-edit-pencil-alt" alt="">'
+,p_column_alignment=>'CENTER'
+,p_derived_column=>'Y'
+,p_include_in_export=>'Y'
+);
+wwv_flow_imp_page.create_report_columns(
+ p_id=>wwv_flow_imp.id(115456274669121314939)
+,p_query_column_id=>14
+,p_column_alias=>'STATUS'
+,p_column_display_sequence=>150
+,p_hidden_column=>'Y'
+,p_derived_column=>'N'
+);
+wwv_flow_imp_page.create_page_button(
+ p_id=>wwv_flow_imp.id(77995144628450684443)
+,p_button_sequence=>10
+,p_button_plug_id=>wwv_flow_imp.id(115452681478596208453)
+,p_button_name=>'Filter'
+,p_button_action=>'DEFINED_BY_DA'
+,p_button_template_options=>'#DEFAULT#:t-Button--iconLeft'
+,p_button_template_id=>2082829544945815391
+,p_button_is_hot=>'Y'
+,p_button_image_alt=>'Filter'
+,p_button_position=>'EDIT'
+,p_warn_on_unsaved_changes=>null
+,p_icon_css_classes=>'fa-search'
+);
+wwv_flow_imp_page.create_page_button(
+ p_id=>wwv_flow_imp.id(77995145310927684450)
+,p_button_sequence=>20
+,p_button_plug_id=>wwv_flow_imp.id(115452681478596208453)
+,p_button_name=>'Hide'
+,p_button_action=>'DEFINED_BY_DA'
+,p_button_template_options=>'#DEFAULT#'
+,p_button_template_id=>4072362960822175091
+,p_button_is_hot=>'Y'
+,p_button_image_alt=>'Hide'
+,p_button_position=>'EDIT'
+,p_warn_on_unsaved_changes=>null
+);
+wwv_flow_imp_page.create_page_item(
+ p_id=>wwv_flow_imp.id(77995144530953684442)
+,p_name=>'P100_STUDENT_ID'
+,p_item_sequence=>10
+,p_item_plug_id=>wwv_flow_imp.id(77995144441678684441)
+,p_use_cache_before_default=>'NO'
+,p_prompt=>'Admission No'
+,p_display_as=>'NATIVE_POPUP_LOV'
+,p_named_lov=>'STUDNET_WISE_LOV_PARAM'
+,p_lov=>wwv_flow_string.join(wwv_flow_t_varchar2(
+'SELECT STUDENT_ID,STUDENT_NAME||'' ''||LAST_NAME STUDENT_NAME,S.CLASS_ID',
+'  FROM STUDENTS S',
+' WHERE /*(CLASS_ID =NVL(:P48_CLASS_ID,:P53_CLASS_ID)',
+'   AND */S.SITE_ID=:APP_SITE_ID ',
+'   AND S.STATUS=''A'''))
+,p_lov_display_null=>'YES'
+,p_cSize=>30
+,p_field_template=>1609121967514267634
+,p_item_template_options=>'#DEFAULT#'
+,p_is_persistent=>'N'
+,p_lov_display_extra=>'YES'
+,p_attributes=>wwv_flow_t_plugin_attributes(wwv_flow_t_varchar2(
+  'case_sensitive', 'N',
+  'display_as', 'POPUP',
+  'fetch_on_search', 'N',
+  'initial_fetch', 'FIRST_ROWSET',
+  'manual_entry', 'N',
+  'match_type', 'CONTAINS',
+  'min_chars', '0')).to_clob
+);
+wwv_flow_imp_page.create_page_da_event(
+ p_id=>wwv_flow_imp.id(77995144721733684444)
+,p_name=>'shw region and hide'
+,p_event_sequence=>10
+,p_triggering_element_type=>'BUTTON'
+,p_triggering_button_id=>wwv_flow_imp.id(77995144628450684443)
+,p_bind_type=>'bind'
+,p_execution_type=>'IMMEDIATE'
+,p_bind_event_type=>'click'
+);
+wwv_flow_imp_page.create_page_da_action(
+ p_id=>wwv_flow_imp.id(77995145257938684449)
+,p_event_id=>wwv_flow_imp.id(77995144721733684444)
+,p_event_result=>'TRUE'
+,p_action_sequence=>10
+,p_execute_on_page_init=>'Y'
+,p_action=>'NATIVE_SHOW'
+,p_affected_elements_type=>'REGION'
+,p_affected_region_id=>wwv_flow_imp.id(77995144441678684441)
+);
+wwv_flow_imp_page.create_page_da_action(
+ p_id=>wwv_flow_imp.id(77995144863977684445)
+,p_event_id=>wwv_flow_imp.id(77995144721733684444)
+,p_event_result=>'TRUE'
+,p_action_sequence=>20
+,p_execute_on_page_init=>'Y'
+,p_action=>'NATIVE_SHOW'
+,p_affected_elements_type=>'BUTTON'
+,p_affected_button_id=>wwv_flow_imp.id(77995145310927684450)
+);
+wwv_flow_imp_page.create_page_da_action(
+ p_id=>wwv_flow_imp.id(77995145138757684448)
+,p_event_id=>wwv_flow_imp.id(77995144721733684444)
+,p_event_result=>'TRUE'
+,p_action_sequence=>30
+,p_execute_on_page_init=>'Y'
+,p_action=>'NATIVE_HIDE'
+,p_affected_elements_type=>'BUTTON'
+,p_affected_button_id=>wwv_flow_imp.id(77995144628450684443)
+);
+wwv_flow_imp_page.create_page_da_event(
+ p_id=>wwv_flow_imp.id(115456270814973314901)
+,p_name=>'Show region  and hide '
+,p_event_sequence=>20
+,p_triggering_element_type=>'BUTTON'
+,p_triggering_button_id=>wwv_flow_imp.id(77995145310927684450)
+,p_bind_type=>'bind'
+,p_execution_type=>'IMMEDIATE'
+,p_bind_event_type=>'click'
+);
+wwv_flow_imp_page.create_page_da_action(
+ p_id=>wwv_flow_imp.id(115456270947777314902)
+,p_event_id=>wwv_flow_imp.id(115456270814973314901)
+,p_event_result=>'TRUE'
+,p_action_sequence=>10
+,p_execute_on_page_init=>'Y'
+,p_action=>'NATIVE_HIDE'
+,p_affected_elements_type=>'REGION'
+,p_affected_region_id=>wwv_flow_imp.id(77995144441678684441)
+);
+wwv_flow_imp_page.create_page_da_action(
+ p_id=>wwv_flow_imp.id(115456271030325314903)
+,p_event_id=>wwv_flow_imp.id(115456270814973314901)
+,p_event_result=>'TRUE'
+,p_action_sequence=>20
+,p_execute_on_page_init=>'Y'
+,p_action=>'NATIVE_HIDE'
+,p_affected_elements_type=>'BUTTON'
+,p_affected_button_id=>wwv_flow_imp.id(77995145310927684450)
+);
+wwv_flow_imp_page.create_page_da_action(
+ p_id=>wwv_flow_imp.id(115456271119807314904)
+,p_event_id=>wwv_flow_imp.id(115456270814973314901)
+,p_event_result=>'TRUE'
+,p_action_sequence=>30
+,p_execute_on_page_init=>'Y'
+,p_action=>'NATIVE_SHOW'
+,p_affected_elements_type=>'BUTTON'
+,p_affected_button_id=>wwv_flow_imp.id(77995144628450684443)
+);
+wwv_flow_imp_page.create_page_da_event(
+ p_id=>wwv_flow_imp.id(115456271235371314905)
+,p_name=>'Refresh'
+,p_event_sequence=>30
+,p_triggering_element_type=>'ITEM'
+,p_triggering_element=>'P100_STUDENT_ID'
+,p_bind_type=>'bind'
+,p_execution_type=>'IMMEDIATE'
+,p_bind_event_type=>'change'
+);
+wwv_flow_imp_page.create_page_da_action(
+ p_id=>wwv_flow_imp.id(115456271304409314906)
+,p_event_id=>wwv_flow_imp.id(115456271235371314905)
+,p_event_result=>'TRUE'
+,p_action_sequence=>10
+,p_execute_on_page_init=>'N'
+,p_action=>'NATIVE_REFRESH'
+,p_affected_elements_type=>'REGION'
+,p_affected_region_id=>wwv_flow_imp.id(115452681478596208453)
+,p_attribute_01=>'N'
+);
+wwv_flow_imp_page.create_page_da_event(
+ p_id=>wwv_flow_imp.id(115456274217488314935)
+,p_name=>'Open Student Fees'
+,p_event_sequence=>40
+,p_triggering_element_type=>'JQUERY_SELECTOR'
+,p_triggering_element=>'.apex-edit-pencil-alt'
+,p_bind_type=>'bind'
+,p_execution_type=>'IMMEDIATE'
+,p_bind_event_type=>'click'
+);
+end;
+/
+prompt --application/pages/page_00102
+begin
+wwv_flow_imp_page.create_page(
+ p_id=>102
+,p_name=>'Student Fee Status Update'
+,p_alias=>'STUDENT-FEE-STATUS-UPDATE'
+,p_page_mode=>'MODAL'
+,p_step_title=>'Student Fee Status Update'
+,p_autocomplete_on_off=>'OFF'
+,p_step_template=>2100407606326202693
+,p_page_template_options=>'#DEFAULT#'
+,p_dialog_resizable=>'Y'
+,p_protection_level=>'C'
+,p_page_component_map=>'02'
+);
+wwv_flow_imp_page.create_page_plug(
+ p_id=>wwv_flow_imp.id(115474707239069101970)
+,p_plug_name=>'Student Fee Status Update'
+,p_region_template_options=>'#DEFAULT#:t-Region--scrollBody'
+,p_plug_template=>4072358936313175081
+,p_plug_display_sequence=>10
+,p_query_type=>'TABLE'
+,p_query_table=>'STUDENT_FEES'
+,p_include_rowid_column=>false
+,p_is_editable=>true
+,p_edit_operations=>'i:u:d'
+,p_lost_update_check_type=>'VALUES'
+,p_plug_source_type=>'NATIVE_FORM'
+);
+wwv_flow_imp_page.create_page_button(
+ p_id=>wwv_flow_imp.id(115474725531390101989)
+,p_button_sequence=>10
+,p_button_plug_id=>wwv_flow_imp.id(115474707239069101970)
+,p_button_name=>'CANCEL'
+,p_button_action=>'REDIRECT_PAGE'
+,p_button_template_options=>'#DEFAULT#'
+,p_button_template_id=>4072362960822175091
+,p_button_image_alt=>'Cancel'
+,p_button_position=>'CLOSE'
+,p_button_redirect_url=>'f?p=&APP_ID.:1:&APP_SESSION.::&DEBUG.:::'
+);
+wwv_flow_imp_page.create_page_button(
+ p_id=>wwv_flow_imp.id(115474726565018101989)
+,p_button_sequence=>30
+,p_button_plug_id=>wwv_flow_imp.id(115474707239069101970)
+,p_button_name=>'SAVE'
+,p_button_action=>'SUBMIT'
+,p_button_template_options=>'#DEFAULT#'
+,p_button_template_id=>4072362960822175091
+,p_button_is_hot=>'Y'
+,p_button_image_alt=>'Apply Changes'
+,p_button_position=>'CREATE'
+,p_button_condition=>'P102_FEE_ID'
+,p_button_condition_type=>'ITEM_IS_NOT_NULL'
+,p_database_action=>'UPDATE'
+);
+wwv_flow_imp_page.create_page_button(
+ p_id=>wwv_flow_imp.id(115474726916893101990)
+,p_button_sequence=>40
+,p_button_plug_id=>wwv_flow_imp.id(115474707239069101970)
+,p_button_name=>'CREATE'
+,p_button_action=>'SUBMIT'
+,p_button_template_options=>'#DEFAULT#'
+,p_button_template_id=>4072362960822175091
+,p_button_is_hot=>'Y'
+,p_button_image_alt=>'Create'
+,p_button_position=>'CREATE'
+,p_button_condition=>'P102_FEE_ID'
+,p_button_condition_type=>'ITEM_IS_NULL'
+,p_database_action=>'INSERT'
+);
+wwv_flow_imp_page.create_page_branch(
+ p_id=>wwv_flow_imp.id(115474727252499101990)
+,p_branch_action=>'f?p=&APP_ID.:1:&APP_SESSION.::&DEBUG.:::&success_msg=#SUCCESS_MSG#'
+,p_branch_point=>'AFTER_PROCESSING'
+,p_branch_type=>'REDIRECT_URL'
+,p_branch_sequence=>1
+);
+wwv_flow_imp_page.create_page_item(
+ p_id=>wwv_flow_imp.id(115474707567987101970)
+,p_name=>'P102_FEE_ID'
+,p_source_data_type=>'NUMBER'
+,p_is_primary_key=>true
+,p_item_sequence=>10
+,p_item_plug_id=>wwv_flow_imp.id(115474707239069101970)
+,p_item_source_plug_id=>wwv_flow_imp.id(115474707239069101970)
+,p_source=>'FEE_ID'
+,p_source_type=>'REGION_SOURCE_COLUMN'
+,p_display_as=>'NATIVE_HIDDEN'
+,p_is_persistent=>'N'
+,p_protection_level=>'S'
+,p_attributes=>wwv_flow_t_plugin_attributes(wwv_flow_t_varchar2(
+  'value_protected', 'Y')).to_clob
+);
+wwv_flow_imp_page.create_page_item(
+ p_id=>wwv_flow_imp.id(115474707925687101971)
+,p_name=>'P102_STUDENT_ID'
+,p_source_data_type=>'VARCHAR2'
+,p_item_sequence=>40
+,p_item_plug_id=>wwv_flow_imp.id(115474707239069101970)
+,p_item_source_plug_id=>wwv_flow_imp.id(115474707239069101970)
+,p_source=>'STUDENT_ID'
+,p_source_type=>'REGION_SOURCE_COLUMN'
+,p_display_as=>'NATIVE_HIDDEN'
+,p_is_persistent=>'N'
+,p_attributes=>wwv_flow_t_plugin_attributes(wwv_flow_t_varchar2(
+  'value_protected', 'Y')).to_clob
+);
+wwv_flow_imp_page.create_page_item(
+ p_id=>wwv_flow_imp.id(115474717691317101983)
+,p_name=>'P102_STATUS'
+,p_source_data_type=>'VARCHAR2'
+,p_item_sequence=>270
+,p_item_plug_id=>wwv_flow_imp.id(115474707239069101970)
+,p_item_source_plug_id=>wwv_flow_imp.id(115474707239069101970)
+,p_prompt=>'Status'
+,p_source=>'STATUS'
+,p_source_type=>'REGION_SOURCE_COLUMN'
+,p_display_as=>'NATIVE_SELECT_LIST'
+,p_lov=>'STATIC2:Active;A,In Active;I'
+,p_cHeight=>1
+,p_field_template=>1609121967514267634
+,p_item_template_options=>'#DEFAULT#'
+,p_is_persistent=>'N'
+,p_lov_display_extra=>'NO'
+,p_attributes=>wwv_flow_t_plugin_attributes(wwv_flow_t_varchar2(
+  'page_action_on_selection', 'NONE')).to_clob
+);
+wwv_flow_imp_page.create_page_validation(
+ p_id=>wwv_flow_imp.id(115456275443295314947)
+,p_validation_name=>'student_fees'
+,p_validation_sequence=>10
+,p_validation=>wwv_flow_string.join(wwv_flow_t_varchar2(
+'DECLARE',
+'  V_CNT NUMBER;',
+'',
+'BEGIN',
+'   SELECT COUNT(*) INTO V_CNT',
+'     FROM STUDENT_FEES F ',
+'   WHERE F.STATUS = ''A''',
+'     AND F.STUDENT_ID = :P102_STUDENT_ID',
+'     AND F.SITE_ID = :APP_SITE_ID',
+'     ;   ',
+'     IF V_CNT = 0 THEN',
+'        RETURN TRUE;',
+'      ELSE',
+'         RETURN FALSE;',
+'     END IF;',
+'END;'))
+,p_validation2=>'PLSQL'
+,p_validation_type=>'FUNC_BODY_RETURNING_BOOLEAN'
+,p_error_message=>'Only one fee can active at one time. '
+,p_associated_item=>wwv_flow_imp.id(115474717691317101983)
+,p_error_display_location=>'INLINE_WITH_FIELD_AND_NOTIFICATION'
+);
+wwv_flow_imp_page.create_page_process(
+ p_id=>wwv_flow_imp.id(115474728119116101991)
+,p_process_sequence=>10
+,p_process_point=>'AFTER_SUBMIT'
+,p_region_id=>wwv_flow_imp.id(115474707239069101970)
+,p_process_type=>'NATIVE_FORM_DML'
+,p_process_name=>'Process form Student Fee Status Update'
+,p_attribute_01=>'REGION_SOURCE'
+,p_attribute_05=>'Y'
+,p_attribute_06=>'Y'
+,p_attribute_08=>'Y'
+,p_error_display_location=>'INLINE_IN_NOTIFICATION'
+,p_internal_uid=>115474728119116101991
+);
+wwv_flow_imp_page.create_page_process(
+ p_id=>wwv_flow_imp.id(115474727744408101991)
+,p_process_sequence=>10
+,p_process_point=>'BEFORE_HEADER'
+,p_region_id=>wwv_flow_imp.id(115474707239069101970)
+,p_process_type=>'NATIVE_FORM_INIT'
+,p_process_name=>'Initialize form Student Fee Status Update'
+,p_internal_uid=>115474727744408101991
 );
 end;
 /

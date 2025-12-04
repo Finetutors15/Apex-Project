@@ -33,13 +33,13 @@ prompt APPLICATION 246682 - Fine Tutors
 -- Application Export:
 --   Application:     246682
 --   Name:            Fine Tutors
---   Date and Time:   18:19 Tuesday December 2, 2025
+--   Date and Time:   16:49 Thursday December 4, 2025
 --   Exported By:     MIANSAUED786@GMAIL.COM
 --   Flashback:       0
 --   Export Type:     Application Export
 --     Pages:                    115
 --       Items:                  640
---       Validations:             73
+--       Validations:             74
 --       Processes:              147
 --       Regions:                264
 --       Buttons:                327
@@ -112,7 +112,7 @@ wwv_imp_workspace.create_flow(
 ,p_substitution_value_01=>'Fine Tutors'
 ,p_file_prefix => nvl(wwv_flow_application_install.get_static_app_file_prefix,'')
 ,p_files_version=>249
-,p_version_scn=>15678567552725
+,p_version_scn=>15679377970668
 ,p_print_server_type=>'INSTANCE'
 ,p_file_storage=>'DB'
 ,p_is_pwa=>'Y'
@@ -17569,7 +17569,7 @@ wwv_flow_imp_page.create_report_columns(
 'where "GENDER" is not null',
 'and "EMP_ID" = :P17_EMP_ID'))
 ,p_display_as=>'TEXT_FROM_LOV_ESC'
-,p_inline_lov=>'STATIC2:Male;M,Fe-Male;F'
+,p_inline_lov=>'STATIC2:Male;M,Female;F'
 ,p_derived_column=>'N'
 ,p_include_in_export=>'Y'
 );
@@ -28385,6 +28385,7 @@ wwv_flow_imp_page.create_page_validation(
 ,p_validation2=>'PLSQL'
 ,p_validation_type=>'FUNC_BODY_RETURNING_BOOLEAN'
 ,p_error_message=>'Due Date must have some value.'
+,p_when_button_pressed=>wwv_flow_imp.id(89332703940775115615)
 ,p_associated_item=>wwv_flow_imp.id(31172480182208568025)
 ,p_error_display_location=>'INLINE_WITH_FIELD'
 );
@@ -28455,6 +28456,17 @@ wwv_flow_imp_page.create_page_validation(
 ,p_when_button_pressed=>wwv_flow_imp.id(31172481991489568043)
 ,p_associated_item=>wwv_flow_imp.id(77995143922516684436)
 ,p_error_display_location=>'INLINE_WITH_FIELD'
+);
+wwv_flow_imp_page.create_page_validation(
+ p_id=>wwv_flow_imp.id(116427920949772251101)
+,p_validation_name=>'Check email is valid'
+,p_validation_sequence=>530
+,p_validation=>'regexp_like(:P30_EMAIL, ''^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$'')'
+,p_validation2=>'PLSQL'
+,p_validation_type=>'EXPRESSION'
+,p_error_message=>'Please enter a valid email.'
+,p_associated_item=>wwv_flow_imp.id(30767320828028546339)
+,p_error_display_location=>'INLINE_WITH_FIELD_AND_NOTIFICATION'
 );
 wwv_flow_imp_page.create_page_da_event(
  p_id=>wwv_flow_imp.id(16563972516383459722)
@@ -33515,7 +33527,8 @@ wwv_flow_imp_page.create_report_region(
 ,p_source_type=>'NATIVE_SQL_REPORT'
 ,p_query_type=>'SQL'
 ,p_source=>wwv_flow_string.join(wwv_flow_t_varchar2(
-'select STUDENT_ID,',
+'select STUDENT_ID STUDENT_NO,',
+'       STAGE||''-''||STUDENT_ID STUDENT_ID,',
 '       STUDENT_NAME||'' ''||LAST_NAME Student_Name,',
 '       DECODE(GENDER,''M'',''Male'',''F'',''Female'')GENDER,',
 '       TO_CHAR(DATE_OF_BIRTH,''DD-MON-YYYY'')DATE_OF_BIRTH,',
@@ -33549,8 +33562,16 @@ wwv_flow_imp_page.create_report_region(
 ,p_plug_query_strip_html=>'N'
 );
 wwv_flow_imp_page.create_report_columns(
- p_id=>wwv_flow_imp.id(18866735488616931958)
+ p_id=>wwv_flow_imp.id(116427921191231251103)
 ,p_query_column_id=>1
+,p_column_alias=>'STUDENT_NO'
+,p_column_display_sequence=>120
+,p_hidden_column=>'Y'
+,p_derived_column=>'N'
+);
+wwv_flow_imp_page.create_report_columns(
+ p_id=>wwv_flow_imp.id(18866735488616931958)
+,p_query_column_id=>2
 ,p_column_alias=>'STUDENT_ID'
 ,p_column_display_sequence=>20
 ,p_column_heading=>'Admission No'
@@ -33560,7 +33581,7 @@ wwv_flow_imp_page.create_report_columns(
 );
 wwv_flow_imp_page.create_report_columns(
  p_id=>wwv_flow_imp.id(18866735869282931959)
-,p_query_column_id=>2
+,p_query_column_id=>3
 ,p_column_alias=>'STUDENT_NAME'
 ,p_column_display_sequence=>40
 ,p_column_heading=>'Student Name'
@@ -33570,7 +33591,7 @@ wwv_flow_imp_page.create_report_columns(
 );
 wwv_flow_imp_page.create_report_columns(
  p_id=>wwv_flow_imp.id(18866736249396931959)
-,p_query_column_id=>3
+,p_query_column_id=>4
 ,p_column_alias=>'GENDER'
 ,p_column_display_sequence=>50
 ,p_column_heading=>'Gender'
@@ -33580,7 +33601,7 @@ wwv_flow_imp_page.create_report_columns(
 );
 wwv_flow_imp_page.create_report_columns(
  p_id=>wwv_flow_imp.id(18866736692599931959)
-,p_query_column_id=>4
+,p_query_column_id=>5
 ,p_column_alias=>'DATE_OF_BIRTH'
 ,p_column_display_sequence=>60
 ,p_column_heading=>'Date of Birth'
@@ -33590,7 +33611,7 @@ wwv_flow_imp_page.create_report_columns(
 );
 wwv_flow_imp_page.create_report_columns(
  p_id=>wwv_flow_imp.id(18866737052272931959)
-,p_query_column_id=>5
+,p_query_column_id=>6
 ,p_column_alias=>'ADMISSION_DATE'
 ,p_column_display_sequence=>80
 ,p_column_heading=>'Admission Date'
@@ -33600,7 +33621,7 @@ wwv_flow_imp_page.create_report_columns(
 );
 wwv_flow_imp_page.create_report_columns(
  p_id=>wwv_flow_imp.id(18866737493440931960)
-,p_query_column_id=>6
+,p_query_column_id=>7
 ,p_column_alias=>'CLASS_ID'
 ,p_column_display_sequence=>70
 ,p_column_heading=>'School Year'
@@ -33612,7 +33633,7 @@ wwv_flow_imp_page.create_report_columns(
 );
 wwv_flow_imp_page.create_report_columns(
  p_id=>wwv_flow_imp.id(18866740901906931962)
-,p_query_column_id=>7
+,p_query_column_id=>8
 ,p_column_alias=>'SESSIONS'
 ,p_column_display_sequence=>100
 ,p_column_heading=>'Sessions'
@@ -33622,7 +33643,7 @@ wwv_flow_imp_page.create_report_columns(
 );
 wwv_flow_imp_page.create_report_columns(
  p_id=>wwv_flow_imp.id(18847802492076260014)
-,p_query_column_id=>8
+,p_query_column_id=>9
 ,p_column_alias=>'SITE_ID'
 ,p_column_display_sequence=>110
 ,p_hidden_column=>'Y'
@@ -33630,7 +33651,7 @@ wwv_flow_imp_page.create_report_columns(
 );
 wwv_flow_imp_page.create_report_columns(
  p_id=>wwv_flow_imp.id(18866739385619931961)
-,p_query_column_id=>9
+,p_query_column_id=>10
 ,p_column_alias=>'STATUS'
 ,p_column_display_sequence=>90
 ,p_column_heading=>'Status'
@@ -33644,7 +33665,7 @@ wwv_flow_imp_page.create_report_columns(
 ,p_column_alias=>'DERIVED$01'
 ,p_column_display_sequence=>10
 ,p_column_heading=>'Edit'
-,p_column_link=>'f?p=&APP_ID.:31:&SESSION.::&DEBUG.::P31_STUDENT_ID,P31_SITE_ID,P31_STUDENT_REPORT:#STUDENT_ID#,#SITE_ID#,2'
+,p_column_link=>'f?p=&APP_ID.:31:&SESSION.::&DEBUG.::P31_STUDENT_ID,P31_SITE_ID,P31_STUDENT_REPORT:#STUDENT_NO#,#SITE_ID#,2'
 ,p_column_linktext=>'<img src="#APEX_FILES#app_ui/img/icons/apex-edit-pencil-alt.png" class="apex-edit-pencil-alt" alt="">'
 ,p_column_alignment=>'CENTER'
 ,p_display_when_cond_type=>'FUNCTION_BODY'
@@ -47253,7 +47274,7 @@ wwv_flow_imp_page.create_page_plug(
 'SELECT *',
 'FROM (',
 '  SELECT ',
-'    S.STUDENT_ID,',
+'    S.STAGE||''-''||S.STUDENT_ID STUDENT_ID,',
 '    S.STUDENT_NAME || '' '' || S.LAST_NAME AS STUDENT_NAME,',
 '    TO_CHAR(ATT.ATTENDANCE_DATE, ''DD'') AS DAY,',
 '    ATT.ATTENDANCE_STATUS AS ATTENDANCE_STATUS',
@@ -48622,7 +48643,8 @@ wwv_flow_imp_page.create_report_region(
 ,p_source_type=>'NATIVE_SQL_REPORT'
 ,p_query_type=>'SQL'
 ,p_source=>wwv_flow_string.join(wwv_flow_t_varchar2(
-'select STUDENT_ID,',
+'select STUDENT_ID STUDENT_NO,',
+'       S.STAGE||''-''||STUDENT_ID STUDENT_ID,',
 '       STUDENT_NAME||'' ''||LAST_NAME Student_Name,',
 '       DECODE(GENDER,''M'',''Male'',''F'',''Female'')GENDER,',
 '       TO_CHAR(DATE_OF_BIRTH,''DD-MON-YYYY'')DATE_OF_BIRTH,',
@@ -48652,8 +48674,16 @@ wwv_flow_imp_page.create_report_region(
 ,p_plug_query_strip_html=>'N'
 );
 wwv_flow_imp_page.create_report_columns(
- p_id=>wwv_flow_imp.id(32507098957921318854)
+ p_id=>wwv_flow_imp.id(116427921237646251104)
 ,p_query_column_id=>1
+,p_column_alias=>'STUDENT_NO'
+,p_column_display_sequence=>120
+,p_hidden_column=>'Y'
+,p_derived_column=>'N'
+);
+wwv_flow_imp_page.create_report_columns(
+ p_id=>wwv_flow_imp.id(32507098957921318854)
+,p_query_column_id=>2
 ,p_column_alias=>'STUDENT_ID'
 ,p_column_display_sequence=>20
 ,p_column_heading=>'Admission No'
@@ -48663,7 +48693,7 @@ wwv_flow_imp_page.create_report_columns(
 );
 wwv_flow_imp_page.create_report_columns(
  p_id=>wwv_flow_imp.id(32507099300328318854)
-,p_query_column_id=>2
+,p_query_column_id=>3
 ,p_column_alias=>'STUDENT_NAME'
 ,p_column_display_sequence=>40
 ,p_column_heading=>'Student Name'
@@ -48673,7 +48703,7 @@ wwv_flow_imp_page.create_report_columns(
 );
 wwv_flow_imp_page.create_report_columns(
  p_id=>wwv_flow_imp.id(32507099794525318855)
-,p_query_column_id=>3
+,p_query_column_id=>4
 ,p_column_alias=>'GENDER'
 ,p_column_display_sequence=>50
 ,p_column_heading=>'Gender'
@@ -48683,7 +48713,7 @@ wwv_flow_imp_page.create_report_columns(
 );
 wwv_flow_imp_page.create_report_columns(
  p_id=>wwv_flow_imp.id(32507100141176318855)
-,p_query_column_id=>4
+,p_query_column_id=>5
 ,p_column_alias=>'DATE_OF_BIRTH'
 ,p_column_display_sequence=>60
 ,p_column_heading=>'Date of Birth'
@@ -48693,7 +48723,7 @@ wwv_flow_imp_page.create_report_columns(
 );
 wwv_flow_imp_page.create_report_columns(
  p_id=>wwv_flow_imp.id(32507100581228318855)
-,p_query_column_id=>5
+,p_query_column_id=>6
 ,p_column_alias=>'ADMISSION_DATE'
 ,p_column_display_sequence=>80
 ,p_column_heading=>'Admission Date'
@@ -48703,7 +48733,7 @@ wwv_flow_imp_page.create_report_columns(
 );
 wwv_flow_imp_page.create_report_columns(
  p_id=>wwv_flow_imp.id(32507100984058318856)
-,p_query_column_id=>6
+,p_query_column_id=>7
 ,p_column_alias=>'CLASS_ID'
 ,p_column_display_sequence=>70
 ,p_column_heading=>'School Year'
@@ -48715,7 +48745,7 @@ wwv_flow_imp_page.create_report_columns(
 );
 wwv_flow_imp_page.create_report_columns(
  p_id=>wwv_flow_imp.id(32507101774547318856)
-,p_query_column_id=>7
+,p_query_column_id=>8
 ,p_column_alias=>'SESSIONS'
 ,p_column_display_sequence=>100
 ,p_column_heading=>'Sessions'
@@ -48725,7 +48755,7 @@ wwv_flow_imp_page.create_report_columns(
 );
 wwv_flow_imp_page.create_report_columns(
  p_id=>wwv_flow_imp.id(32507102619767318857)
-,p_query_column_id=>8
+,p_query_column_id=>9
 ,p_column_alias=>'SITE_ID'
 ,p_column_display_sequence=>110
 ,p_hidden_column=>'Y'
@@ -48733,7 +48763,7 @@ wwv_flow_imp_page.create_report_columns(
 );
 wwv_flow_imp_page.create_report_columns(
  p_id=>wwv_flow_imp.id(32507101378529318856)
-,p_query_column_id=>9
+,p_query_column_id=>10
 ,p_column_alias=>'STATUS'
 ,p_column_display_sequence=>90
 ,p_column_heading=>'Status'
@@ -48747,7 +48777,7 @@ wwv_flow_imp_page.create_report_columns(
 ,p_column_alias=>'DERIVED$01'
 ,p_column_display_sequence=>10
 ,p_column_heading=>'Edit'
-,p_column_link=>'f?p=&APP_ID.:31:&SESSION.::&DEBUG.::P31_STUDENT_ID,P31_SITE_ID,P31_STUDENT_REPORT:#STUDENT_ID#,#SITE_ID#,1'
+,p_column_link=>'f?p=&APP_ID.:31:&SESSION.::&DEBUG.::P31_STUDENT_ID,P31_SITE_ID,P31_STUDENT_REPORT:#STUDENT_NO#,#SITE_ID#,1'
 ,p_column_linktext=>'<img src="#APEX_FILES#app_ui/img/icons/apex-edit-pencil-alt.png" class="apex-edit-pencil-alt" alt="">'
 ,p_column_alignment=>'CENTER'
 ,p_display_when_cond_type=>'FUNCTION_BODY'
@@ -48978,7 +49008,7 @@ wwv_flow_imp_page.create_report_region(
 ,p_query_type=>'SQL'
 ,p_source=>wwv_flow_string.join(wwv_flow_t_varchar2(
 'select F.COMMENT_ID,',
-'       F.STUDENT_ID,',
+'       STAGE||''-''||F.STUDENT_ID STUDENT_ID,',
 '       S.STUDENT_NAME||'' ''||S.LAST_NAME STUDENT_NAME,',
 '       F.SITE_ID,',
 '       F.COMMENTS_NO,',
@@ -49054,6 +49084,7 @@ wwv_flow_imp_page.create_report_columns(
 ,p_column_display_sequence=>20
 ,p_column_heading=>'Ad No'
 ,p_heading_alignment=>'LEFT'
+,p_report_column_width=>100
 ,p_derived_column=>'N'
 ,p_include_in_export=>'Y'
 );
@@ -49669,11 +49700,13 @@ wwv_flow_imp_page.create_report_region(
 ,p_source_type=>'NATIVE_SQL_REPORT'
 ,p_query_type=>'SQL'
 ,p_source=>wwv_flow_string.join(wwv_flow_t_varchar2(
-'select TSH.ASSIGN_ID,TSH.EMP_ID,TSH.STUDENT_ID,C.CLASS_NAME,TSH.STUDENT_CLASS_SCHEDULE_ID,TSH.ASSIGN_DATE,DECODE(TSH.STATUS,''A'',''ACTIVE'',''I'',''IN ACTIVE'') AS STATUS,TSH.ACTION_TYPE, TSH.FEED_BY,TSH.FEED_DATE,S.SUBJECT_NAME,B.BOOK_NAME',
+'select TSH.ASSIGN_ID,TSH.EMP_ID,S.STAGE||''-''||TSH.STUDENT_ID STUDENT_ID,C.CLASS_NAME,TSH.STUDENT_CLASS_SCHEDULE_ID,TSH.ASSIGN_DATE,DECODE(TSH.STATUS,''A'',''ACTIVE'',''I'',''IN ACTIVE'') AS STATUS,TSH.ACTION_TYPE, TSH.FEED_BY,TSH.FEED_DATE,S.SUBJECT_NAME,B.B'
+||'OOK_NAME',
 'FROM TEACHER_ASSIGN_TO_STUDENT_HISTORY TSH, CLASSES C, SUBJECTS S, BOOKS B,',
-'STUDENT_CLASSES_SCHEDULE SC, TEACHER_ASSIGN_TO_STUDENT T',
+'STUDENT_CLASSES_SCHEDULE SC, TEACHER_ASSIGN_TO_STUDENT T,STUDENTS S',
 'WHERE TSH.CLASS_ID = C.CLASS_ID',
 '  AND TSH.ASSIGN_ID  = T.ASSIGN_ID',
+'  AND TSH.STUDENT_ID = S.STUDENT_ID',
 '  AND TSH.STUDENT_CLASS_SCHEDULE_ID = SC.STUDENT_SCHEDULE_ID',
 '  AND SC.SUBJECT_ID = S.SUBJECT_ID',
 '  AND SC.BOOK_ID    = B.BOOK_ID(+)',
@@ -49715,10 +49748,10 @@ wwv_flow_imp_page.create_report_columns(
 ,p_include_in_export=>'Y'
 );
 wwv_flow_imp_page.create_report_columns(
- p_id=>wwv_flow_imp.id(28701559119725634900)
+ p_id=>wwv_flow_imp.id(116430627836743605501)
 ,p_query_column_id=>3
 ,p_column_alias=>'STUDENT_ID'
-,p_column_display_sequence=>3
+,p_column_display_sequence=>94
 ,p_column_heading=>'Admission No'
 ,p_heading_alignment=>'LEFT'
 ,p_derived_column=>'N'
@@ -49846,7 +49879,7 @@ wwv_flow_imp_page.create_page_plug(
 ,p_query_type=>'SQL'
 ,p_plug_source=>wwv_flow_string.join(wwv_flow_t_varchar2(
 'select F.COMMENT_ID,',
-'       F.STUDENT_ID,',
+'       S.STAGE||''-''||F.STUDENT_ID STUDENT_ID,',
 '       S.STUDENT_NAME||'' ''||S.LAST_NAME STUDENT_NAME,',
 '       F.SITE_ID,',
 '       F.COMMENTS_NO,',
@@ -51157,7 +51190,7 @@ wwv_flow_imp_page.create_page_plug(
 ,p_query_type=>'SQL'
 ,p_plug_source=>wwv_flow_string.join(wwv_flow_t_varchar2(
 'select REMINDER_ID,',
-'       F.STUDENT_ID,',
+'       S.STAGE||''-''||F.STUDENT_ID STUDENT_ID,',
 '       S.STUDENT_NAME||'' ''||S.LAST_NAME STUDENT_NAME,',
 '       F.SITE_ID,',
 '        REMINDER_COUNT,',
@@ -54226,7 +54259,7 @@ wwv_flow_imp_page.create_report_region(
 ,p_source_type=>'NATIVE_SQL_REPORT'
 ,p_query_type=>'SQL'
 ,p_source=>wwv_flow_string.join(wwv_flow_t_varchar2(
-'SELECT P.SP_DATE,P.SP_ID,P.STUDENT_ID,S.STUDENT_NAME,DECODE(P.PROGRESS_TYPE,''M'',''Monthly'') AS PROGRESS_TYPE,''Show Report'' Detail',
+'SELECT P.SP_DATE,P.SP_ID,S.STAGE||''-''||P.STUDENT_ID STUDENT_ID,S.STUDENT_NAME,DECODE(P.PROGRESS_TYPE,''M'',''Monthly'') AS PROGRESS_TYPE,''Show Report'' Detail',
 'FROM STUDENT_PROGRESS P, STUDENTS S',
 'WHERE P.STUDENT_ID = S.STUDENT_ID',
 ' AND  P.SITE_ID = S.SITE_ID',
@@ -55469,7 +55502,7 @@ wwv_flow_imp_page.create_report_region(
 ,p_query_type=>'SQL'
 ,p_source=>wwv_flow_string.join(wwv_flow_t_varchar2(
 'select ',
-'       SFC.STUDENT_ID,',
+'       S.STAGE||''-''||SFC.STUDENT_ID STUDENT_ID,',
 '       S.STUDENT_NAME||'' ''||S.LAST_NAME STUDENT_NAME,',
 '       C.CLASS_NAME,',
 '       SITE_NAME,',
@@ -58263,7 +58296,7 @@ wwv_flow_imp_page.create_report_region(
 'select T.ASSIGN_ID,',
 '       T.EMP_ID,',
 '       E.EMP_NAME||'' ''||E.LAST_NAME EMP_NAME,',
-'       T.STUDENT_ID,',
+'       STS.STAGE||''-''||T.STUDENT_ID STUDENT_ID,',
 '       STS.STUDENT_NAME||'' ''||STS.LAST_NAME STUDENT_NAME,',
 '       ST.SITE_NAME BRANCH,',
 '       S.CLASS_ID,',
@@ -58323,7 +58356,7 @@ wwv_flow_imp_page.create_report_columns(
 ,p_column_alias=>'ASSIGN_ID'
 ,p_column_display_sequence=>0
 ,p_column_heading=>'Edit'
-,p_column_link=>'f?p=&APP_ID.:45:&SESSION.::&DEBUG.::P45_ASSIGN_ID,P45_WEEK_DAY,P45_SUBJECT_ID,P45_SUBJECT,P45_CLASS_ID,P45_CLASS_NAME,P45_PARAM_ITEM:\#ASSIGN_ID#\,#WEEKDAY#,#SUBJECT_ID#,#SUBJECT#,#CLASS_ID#,#CLASS_NAME#,2'
+,p_column_link=>'f?p=&APP_ID.:45:&SESSION.::&DEBUG.::P45_ASSIGN_ID,P45_WEEK_DAY,P45_SUBJECT_ID,P45_SUBJECT,P45_CLASS_ID,P45_CLASS_NAME,P45_PARAM_ITEM:\#ASSIGN_ID#\,#WEEKDAY#,#SUBJECT_ID#,#SUBJECT#,#CLASS_ID#,#CLASS_NAME#,2#STUDENT_NO#'
 ,p_column_linktext=>'<img src="#APEX_FILES#app_ui/img/icons/apex-edit-pencil-alt.png" class="apex-edit-pencil-alt" alt="">'
 ,p_column_alignment=>'CENTER'
 ,p_display_when_cond_type=>'FUNCTION_BODY'
@@ -58888,7 +58921,7 @@ wwv_flow_imp_page.create_report_region(
 '       SCR.RESHEDULE_DATE,',
 '       SCR.EMPLOYEE_ID,',
 '       E.EMP_NAME||'' ''||E.LAST_NAME EMP_NAME,',
-'       SCR.STUDENT_ID,',
+'       S.STAGE||''-''||SCR.STUDENT_ID STUDENT_ID,',
 '       S.STUDENT_NAME||'' ''||S.LAST_NAME STUDENT_NAME,',
 '       SCR.CLASS_ID,',
 '       C.CLASS_NAME,',
@@ -60454,7 +60487,7 @@ wwv_flow_imp_page.create_report_region(
 ,p_query_type=>'SQL'
 ,p_source=>wwv_flow_string.join(wwv_flow_t_varchar2(
 'select CONTRACT_ID,',
-'       PC.STUDENT_ID,',
+'       S.STAGE||''-''||PC.STUDENT_ID STUDENT_ID,',
 '       S.STUDENT_NAME||'' ''||S.LAST_NAME STUDENT_NAME,',
 '       PC.CLASS_ID,',
 '       C.CLASS_NAME,',
@@ -60496,11 +60529,11 @@ wwv_flow_imp_page.create_report_columns(
 ,p_derived_column=>'N'
 );
 wwv_flow_imp_page.create_report_columns(
- p_id=>wwv_flow_imp.id(44028030273957987475)
+ p_id=>wwv_flow_imp.id(115456275607079314949)
 ,p_query_column_id=>2
 ,p_column_alias=>'STUDENT_ID'
-,p_column_display_sequence=>40
-,p_column_heading=>'Ad No'
+,p_column_display_sequence=>130
+,p_column_heading=>'Admission No'
 ,p_heading_alignment=>'LEFT'
 ,p_derived_column=>'N'
 ,p_include_in_export=>'Y'
@@ -62961,7 +62994,7 @@ wwv_flow_imp_page.create_report_region(
 ,p_source_type=>'NATIVE_SQL_REPORT'
 ,p_query_type=>'SQL'
 ,p_source=>wwv_flow_string.join(wwv_flow_t_varchar2(
-'SELECT P.SP_DATE,P.SP_ID,P.STUDENT_ID,S.STUDENT_NAME,DECODE(P.PROGRESS_TYPE,''W'',''Weekly'') AS PROGRESS_TYPE,SP.SUBJECT_NAME,''Show Report'' Detail',
+'SELECT P.SP_DATE,P.SP_ID,S.STAGE||''-''||P.STUDENT_ID STUDENT_ID,S.STUDENT_NAME,DECODE(P.PROGRESS_TYPE,''W'',''Weekly'') AS PROGRESS_TYPE,SP.SUBJECT_NAME,''Show Report'' Detail',
 'FROM STUDENT_PROGRESS P, STUDENTS S,SUBJECTS SP',
 'WHERE P.STUDENT_ID = S.STUDENT_ID',
 ' AND  P.SITE_ID = S.SITE_ID',
@@ -63377,8 +63410,8 @@ wwv_flow_imp_page.create_report_region(
 '                ) AS OPENING_BALANCE1',
 '',
 '          FROM(   ',
-'            SELECT SFC.FEE_MONTH,SFC.STUDENT_ID,S.STUDENT_NAME || '' '' || S.LAST_NAME AS STUDENT_NAME,S.STUDENT_TYPE,S.CLASS_ID,C.CLASS_NAME,SFC.SITE_ID,ST.SITE_NAME,NVL(SFC.MONTHLY_FEE,0) AS TOTAL_MONTHLY_FEE, NVL(SUM(REGISTRATION_FEE),0)ADMISSION_FE'
-||'E, NVL(SUM(SFC.DISCOUNT),0) AS TOTAL_DISCOUNT,  ',
+'            SELECT SFC.FEE_MONTH,S.STAGE||''-''||SFC.STUDENT_ID STUDENT_ID,S.STUDENT_NAME || '' '' || S.LAST_NAME AS STUDENT_NAME,S.STUDENT_TYPE,S.CLASS_ID,C.CLASS_NAME,SFC.SITE_ID,ST.SITE_NAME,NVL(SFC.MONTHLY_FEE,0) AS TOTAL_MONTHLY_FEE, NVL(SUM(REGISTR'
+||'ATION_FEE),0)ADMISSION_FEE, NVL(SUM(SFC.DISCOUNT),0) AS TOTAL_DISCOUNT,  ',
 '                NVL(SUM(SFC.EXAM_FEE),0) AS TOTAL_EXAM_FEE,  NVL(SUM(SFC.BOOKS_FEE),0) AS TOTAL_BOOK_FEE,  NVL(SUM(SFC.PAST_PAPER_FEE),0) AS TOTAL_PAST_PAPER_FEE,  ((NVL(SFC.MONTHLY_FEE,0)) +NVL(SUM(REGISTRATION_FEE),0)+ NVL(SUM(SFC.DISCOUNT),0) + NV'
 ||'L(SUM(SFC.EXAM_FEE),0) + NVL(SUM(SFC.PAST_PAPER_FEE),0)+NVL(SUM(SFC.BOOKS_FEE),0) ) AS TOTAL_FEE,  ',
 '                NVL(SUM(SFC.RECEIVED_AMOUNT),0) AS TOTAL_RECEIVED_AMOUNT,DECODE(S.STATUS,''A'',''Active'',''I'',''In-Active'')STATUS,',
@@ -63467,7 +63500,7 @@ wwv_flow_imp_page.create_report_region(
 '              AND TO_CHAR(F.REMINDER_DATE(+),''MM-YYYY'')=TO_CHAR(TO_DATE(SFC.FEE_MONTH, ''MM-YYYY''), ''MM-YYYY'')*/',
 '              --AND SFC.STUDENT_ID = ''K301''',
 '             AND SFC.SITE_ID = :P88_BRANCHES',
-'            GROUP BY SFC.FEE_MONTH, SFC.STUDENT_ID, S.STUDENT_NAME, S.LAST_NAME,S.STUDENT_TYPE,S.STATUS,S.CLASS_ID,C.CLASS_NAME,SFC.SITE_ID, ST.SITE_NAME, SFC.MONTHLY_FEE',
+'            GROUP BY SFC.FEE_MONTH, S.STAGE, SFC.STUDENT_ID, S.STUDENT_NAME, S.LAST_NAME,S.STUDENT_TYPE,S.STATUS,S.CLASS_ID,C.CLASS_NAME,SFC.SITE_ID, ST.SITE_NAME, SFC.MONTHLY_FEE',
 '            ORDER BY TO_DATE(SFC.FEE_MONTH, ''MM-YYYY'') ASC',
 '          )A',
 '        )B',
@@ -63953,7 +63986,7 @@ wwv_flow_imp_page.create_page_plug(
 '         PAYMENT_NAME3,COMMENTS,REMINDER_DATE1,REMINDER_DATE2,REMINDER_DATE3,REMINDER_COMMENTS,SUSPENDED,COMMENTS_IF_ANY',
 '          FROM(',
 '        SELECT',
-'          TO_CHAR(TO_DATE(FEE_MONTH, ''MM-YYYY''), ''MON-YYYY'') AS FEE_MONTH,B.STUDENT_ID,STUDENT_NAME,STUDENT_TYPE,F.STATUS,B.SITE_ID,CLASS_NAME,DUE_DATE,NVL(OPENING_BALANCE,0) OPENING_BALANCE,',
+'          TO_CHAR(TO_DATE(FEE_MONTH, ''MM-YYYY''), ''MON-YYYY'') AS FEE_MONTH,STAGE||''-''||B.STUDENT_ID STUDENT_ID,STUDENT_NAME,STUDENT_TYPE,F.STATUS,B.SITE_ID,CLASS_NAME,DUE_DATE,NVL(OPENING_BALANCE,0) OPENING_BALANCE,',
 '           CASE WHEN NVL(TOTAL_MONTHLY_FEE,0) > 0 THEN TOTAL_MONTHLY_FEE ELSE NVL(F.TOTAL_FEE,0) END AS TOTAL_MONTHLY_FEE',
 '          ,TOTAL_DISCOUNT,CASE WHEN NVL(ADMISSION_FEE,0) > 0 OR NVL(ADD_FEE_COLLECTION,0) > 0 THEN ADMISSION_FEE ELSE NVL(F.REGISTRATION_FEE,0) END AS ADMISSION_FEE,',
 '          CASE WHEN NVL(TOTAL_EXAM_FEE,0) > 0 OR NVL(EXAM_FEE_COLLECTION,0) > 0 THEN TOTAL_EXAM_FEE ELSE NVL(F.EXAM_FEE,0) END AS TOTAL_EXAM_FEE,',
@@ -63970,7 +64003,7 @@ wwv_flow_imp_page.create_page_plug(
 '          REMINDER_COMMENT1||'' ''||REMINDER_COMMENT2||''  ''||REMINDER_COMMENT3 REMINDER_COMMENTS,SUSPENDED,COMMENTS_IF_ANY',
 '        FROM (',
 '          SELECT',
-'            FEE_MONTH,STUDENT_ID,STUDENT_NAME,STUDENT_TYPE,STATUS,SITE_ID,CLASS_NAME,TOTAL_MONTHLY_FEE,ADMISSION_FEE,TOTAL_DISCOUNT,TOTAL_EXAM_FEE,TOTAL_BOOK_FEE,TOTAL_PAST_PAPER_FEE,TOTAL_FEE,TOTAL_RECEIVED_AMOUNT,',
+'            FEE_MONTH,STAGE,STUDENT_ID,STUDENT_NAME,STUDENT_TYPE,STATUS,SITE_ID,CLASS_NAME,TOTAL_MONTHLY_FEE,ADMISSION_FEE,TOTAL_DISCOUNT,TOTAL_EXAM_FEE,TOTAL_BOOK_FEE,TOTAL_PAST_PAPER_FEE,TOTAL_FEE,TOTAL_RECEIVED_AMOUNT,',
 '            PAYMENT_COUNT1,PAYMENT_COUNT2,PAYMENT_COUNT3,PAYMENT_DATE1,PAYMENT_DATE2,PAYMENT_DATE3,PAYMENT_NAME1,PAYMENT_NAME2,PAYMENT_NAME3,COMMENTS1,COMMENTS2,COMMENTS3,',
 '            (',
 '              SELECT NVL(SOB.CLOSING_BALANCE, 0)',
@@ -64103,8 +64136,8 @@ wwv_flow_imp_page.create_page_plug(
 '                   ) AS COMMENTS_IF_ANY ',
 '          FROM (  ',
 '            SELECT',
-'              NVL(TO_CHAR(TO_DATE(SFC.FEE_MONTH, ''MM-YYYY''), ''MM-YYYY''), TO_CHAR(SYSDATE, ''MM-YYYY'')) AS FEE_MONTH,S.STUDENT_ID,S.STUDENT_NAME || '' '' || S.LAST_NAME AS STUDENT_NAME,S.STUDENT_TYPE,DECODE(S.STATUS,''A'',''Active'',''I'',''In-Active'')STATUS,S.'
-||'SITE_ID,C.CLASS_NAME,NVL(SFC.MONTHLY_FEE, 0) AS TOTAL_MONTHLY_FEE,',
+'              NVL(TO_CHAR(TO_DATE(SFC.FEE_MONTH, ''MM-YYYY''), ''MM-YYYY''), TO_CHAR(SYSDATE, ''MM-YYYY'')) AS FEE_MONTH, S.STAGE,S.STUDENT_ID,S.STUDENT_NAME || '' '' || S.LAST_NAME AS STUDENT_NAME,S.STUDENT_TYPE,DECODE(S.STATUS,''A'',''Active'',''I'',''In-Active'')'
+||'STATUS,S.SITE_ID,C.CLASS_NAME,NVL(SFC.MONTHLY_FEE, 0) AS TOTAL_MONTHLY_FEE,',
 '              NVL(SUM(SFC.REGISTRATION_FEE), 0) AS ADMISSION_FEE,NVL(SUM(SFC.DISCOUNT), 0) AS TOTAL_DISCOUNT,NVL(SUM(SFC.EXAM_FEE), 0) AS TOTAL_EXAM_FEE,NVL(SUM(SFC.BOOKS_FEE),0) AS TOTAL_BOOK_FEE,NVL(SUM(SFC.PAST_PAPER_FEE), 0) AS TOTAL_PAST_PAPER_F'
 ||'EE,',
 '              (NVL(SFC.MONTHLY_FEE, 0) + NVL(SUM(SFC.REGISTRATION_FEE), 0) + NVL(SUM(SFC.DISCOUNT), 0) + NVL(SUM(SFC.EXAM_FEE), 0) + NVL(SUM(SFC.PAST_PAPER_FEE), 0)+NVL(SUM(SFC.BOOKS_FEE),0)) AS TOTAL_FEE,',
@@ -64202,7 +64235,7 @@ wwv_flow_imp_page.create_page_plug(
 '              AND TO_CHAR(TO_DATE(SFC.FEE_MONTH, ''MM-YYYY''), ''MM-YYYY'') = TO_CHAR(SYSDATE, ''MM-YYYY'')',
 '            WHERE S.SITE_ID = :APP_SITE_ID',
 '              --AND S.STATUS=''A''',
-'            GROUP BY S.ADMISSION_DATE,SFC.FEE_MONTH,S.STUDENT_ID,S.STUDENT_NAME,S.LAST_NAME,S.STUDENT_TYPE,S.STATUS,S.SITE_ID,C.CLASS_NAME,SFC.MONTHLY_FEE',
+'            GROUP BY S.STAGE,S.ADMISSION_DATE,SFC.FEE_MONTH,S.STUDENT_ID,S.STUDENT_NAME,S.LAST_NAME,S.STUDENT_TYPE,S.STATUS,S.SITE_ID,C.CLASS_NAME,SFC.MONTHLY_FEE',
 '          ) A',
 '        ) B,STUDENT_FEES F   ',
 '        WHERE B.STUDENT_ID=F.STUDENT_ID(+)  ',
@@ -70600,7 +70633,8 @@ wwv_flow_imp_page.create_report_region(
 ,p_query_type=>'SQL'
 ,p_source=>wwv_flow_string.join(wwv_flow_t_varchar2(
 'SELECT FEE_ID,',
-'S.STUDENT_ID,',
+'S.STUDENT_ID STUDENT_NO,',
+'S.STAGE||''-''||S.STUDENT_ID STUDENT_ID,',
 'S.STUDENT_NAME||'' ''||S.LAST_NAME AS STUDENT_NAME, ',
 'P.PARENT_NAME,',
 'C.CLASS_NAME,',
@@ -70646,8 +70680,16 @@ wwv_flow_imp_page.create_report_columns(
 ,p_derived_column=>'N'
 );
 wwv_flow_imp_page.create_report_columns(
- p_id=>wwv_flow_imp.id(115452681913284208454)
+ p_id=>wwv_flow_imp.id(116427921063416251102)
 ,p_query_column_id=>2
+,p_column_alias=>'STUDENT_NO'
+,p_column_display_sequence=>160
+,p_hidden_column=>'Y'
+,p_derived_column=>'N'
+);
+wwv_flow_imp_page.create_report_columns(
+ p_id=>wwv_flow_imp.id(115452681913284208454)
+,p_query_column_id=>3
 ,p_column_alias=>'STUDENT_ID'
 ,p_column_display_sequence=>20
 ,p_column_heading=>'Admission No'
@@ -70658,7 +70700,7 @@ wwv_flow_imp_page.create_report_columns(
 );
 wwv_flow_imp_page.create_report_columns(
  p_id=>wwv_flow_imp.id(115452682340392208454)
-,p_query_column_id=>3
+,p_query_column_id=>4
 ,p_column_alias=>'STUDENT_NAME'
 ,p_column_display_sequence=>30
 ,p_column_heading=>'Student Name'
@@ -70669,7 +70711,7 @@ wwv_flow_imp_page.create_report_columns(
 );
 wwv_flow_imp_page.create_report_columns(
  p_id=>wwv_flow_imp.id(115452682753312208455)
-,p_query_column_id=>4
+,p_query_column_id=>5
 ,p_column_alias=>'PARENT_NAME'
 ,p_column_display_sequence=>40
 ,p_column_heading=>'Parent Name'
@@ -70680,7 +70722,7 @@ wwv_flow_imp_page.create_report_columns(
 );
 wwv_flow_imp_page.create_report_columns(
  p_id=>wwv_flow_imp.id(115452683139868208455)
-,p_query_column_id=>5
+,p_query_column_id=>6
 ,p_column_alias=>'CLASS_NAME'
 ,p_column_display_sequence=>50
 ,p_column_heading=>'Year'
@@ -70691,7 +70733,7 @@ wwv_flow_imp_page.create_report_columns(
 );
 wwv_flow_imp_page.create_report_columns(
  p_id=>wwv_flow_imp.id(115452683516307208455)
-,p_query_column_id=>6
+,p_query_column_id=>7
 ,p_column_alias=>'TOTAL_FEE'
 ,p_column_display_sequence=>60
 ,p_column_heading=>'Monthly Fee'
@@ -70702,7 +70744,7 @@ wwv_flow_imp_page.create_report_columns(
 );
 wwv_flow_imp_page.create_report_columns(
  p_id=>wwv_flow_imp.id(115452683916337208456)
-,p_query_column_id=>7
+,p_query_column_id=>8
 ,p_column_alias=>'REGISTRATION_FEE'
 ,p_column_display_sequence=>70
 ,p_column_heading=>'Registration Fee'
@@ -70713,7 +70755,7 @@ wwv_flow_imp_page.create_report_columns(
 );
 wwv_flow_imp_page.create_report_columns(
  p_id=>wwv_flow_imp.id(115452684377334208456)
-,p_query_column_id=>8
+,p_query_column_id=>9
 ,p_column_alias=>'BOOK_FEE'
 ,p_column_display_sequence=>80
 ,p_column_heading=>'Book Fee'
@@ -70724,7 +70766,7 @@ wwv_flow_imp_page.create_report_columns(
 );
 wwv_flow_imp_page.create_report_columns(
  p_id=>wwv_flow_imp.id(115452684704361208456)
-,p_query_column_id=>9
+,p_query_column_id=>10
 ,p_column_alias=>'EXAM_FEE'
 ,p_column_display_sequence=>90
 ,p_column_heading=>'Exam Fee'
@@ -70735,7 +70777,7 @@ wwv_flow_imp_page.create_report_columns(
 );
 wwv_flow_imp_page.create_report_columns(
  p_id=>wwv_flow_imp.id(115452685120078208456)
-,p_query_column_id=>10
+,p_query_column_id=>11
 ,p_column_alias=>'HOURLY_FEE'
 ,p_column_display_sequence=>100
 ,p_column_heading=>'Hourly Fee'
@@ -70746,7 +70788,7 @@ wwv_flow_imp_page.create_report_columns(
 );
 wwv_flow_imp_page.create_report_columns(
  p_id=>wwv_flow_imp.id(115452685562975208457)
-,p_query_column_id=>11
+,p_query_column_id=>12
 ,p_column_alias=>'PAST_PAPER_FEE'
 ,p_column_display_sequence=>110
 ,p_column_heading=>'Past Paper Fee'
@@ -70757,22 +70799,11 @@ wwv_flow_imp_page.create_report_columns(
 );
 wwv_flow_imp_page.create_report_columns(
  p_id=>wwv_flow_imp.id(115452685963310208457)
-,p_query_column_id=>12
+,p_query_column_id=>13
 ,p_column_alias=>'DUE_DATE'
 ,p_column_display_sequence=>120
 ,p_column_heading=>'Due Date'
 ,p_heading_alignment=>'LEFT'
-,p_derived_column=>'N'
-,p_include_in_export=>'Y'
-);
-wwv_flow_imp_page.create_report_columns(
- p_id=>wwv_flow_imp.id(115452686319456208457)
-,p_query_column_id=>13
-,p_column_alias=>'FEE_STATUS'
-,p_column_display_sequence=>130
-,p_column_heading=>'Fee Status'
-,p_heading_alignment=>'LEFT'
-,p_default_sort_column_sequence=>1
 ,p_derived_column=>'N'
 ,p_include_in_export=>'Y'
 );
@@ -70782,15 +70813,26 @@ wwv_flow_imp_page.create_report_columns(
 ,p_column_alias=>'DERIVED$01'
 ,p_column_display_sequence=>10
 ,p_column_heading=>'Edit'
-,p_column_link=>'f?p=&APP_ID.:102:&SESSION.::&DEBUG.:Y,:P102_FEE_ID,P102_STUDENT_ID:#FEE_ID#,#STUDENT_ID#'
+,p_column_link=>'f?p=&APP_ID.:102:&SESSION.::&DEBUG.::P102_FEE_ID,P102_STUDENT_ID:#FEE_ID#,#STUDENT_NO#'
 ,p_column_linktext=>'<img src="#APEX_FILES#app_ui/img/icons/apex-edit-pencil-alt.png" class="apex-edit-pencil-alt" alt="">'
 ,p_column_alignment=>'CENTER'
 ,p_derived_column=>'Y'
 ,p_include_in_export=>'Y'
 );
 wwv_flow_imp_page.create_report_columns(
- p_id=>wwv_flow_imp.id(115456274669121314939)
+ p_id=>wwv_flow_imp.id(115452686319456208457)
 ,p_query_column_id=>14
+,p_column_alias=>'FEE_STATUS'
+,p_column_display_sequence=>130
+,p_column_heading=>'Fee Status'
+,p_heading_alignment=>'LEFT'
+,p_default_sort_column_sequence=>1
+,p_derived_column=>'N'
+,p_include_in_export=>'Y'
+);
+wwv_flow_imp_page.create_report_columns(
+ p_id=>wwv_flow_imp.id(115456274669121314939)
+,p_query_column_id=>15
 ,p_column_alias=>'STATUS'
 ,p_column_display_sequence=>150
 ,p_hidden_column=>'Y'
@@ -70984,7 +71026,7 @@ wwv_flow_imp_page.create_page(
 wwv_flow_imp_page.create_page_plug(
  p_id=>wwv_flow_imp.id(115474707239069101970)
 ,p_plug_name=>'Student Fee Status Update'
-,p_region_template_options=>'#DEFAULT#:t-Region--scrollBody'
+,p_region_template_options=>'#DEFAULT#:t-Region--removeHeader js-removeLandmark:t-Region--scrollBody'
 ,p_plug_template=>4072358936313175081
 ,p_plug_display_sequence=>10
 ,p_query_type=>'TABLE'
@@ -71039,7 +71081,8 @@ wwv_flow_imp_page.create_page_button(
 );
 wwv_flow_imp_page.create_page_branch(
  p_id=>wwv_flow_imp.id(115474727252499101990)
-,p_branch_action=>'f?p=&APP_ID.:1:&APP_SESSION.::&DEBUG.:::&success_msg=#SUCCESS_MSG#'
+,p_branch_name=>'Go To Page 1'
+,p_branch_action=>'f?p=&APP_ID.:100:&SESSION.::&DEBUG.:::&success_msg=#SUCCESS_MSG#'
 ,p_branch_point=>'AFTER_PROCESSING'
 ,p_branch_type=>'REDIRECT_URL'
 ,p_branch_sequence=>1
@@ -71072,7 +71115,7 @@ wwv_flow_imp_page.create_page_item(
 ,p_display_as=>'NATIVE_HIDDEN'
 ,p_is_persistent=>'N'
 ,p_attributes=>wwv_flow_t_plugin_attributes(wwv_flow_t_varchar2(
-  'value_protected', 'Y')).to_clob
+  'value_protected', 'N')).to_clob
 );
 wwv_flow_imp_page.create_page_item(
  p_id=>wwv_flow_imp.id(115474717691317101983)

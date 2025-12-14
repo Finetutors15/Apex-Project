@@ -33,12 +33,12 @@ prompt APPLICATION 246682 - Fine Tutors
 -- Application Export:
 --   Application:     246682
 --   Name:            Fine Tutors
---   Date and Time:   16:01 Sunday December 14, 2025
+--   Date and Time:   18:29 Sunday December 14, 2025
 --   Exported By:     MIANSAUED786@GMAIL.COM
 --   Flashback:       0
 --   Export Type:     Application Export
 --     Pages:                    118
---       Items:                  643
+--       Items:                  633
 --       Validations:             74
 --       Processes:              146
 --       Regions:                266
@@ -112,7 +112,7 @@ wwv_imp_workspace.create_flow(
 ,p_substitution_value_01=>'Fine Tutors'
 ,p_file_prefix => nvl(wwv_flow_application_install.get_static_app_file_prefix,'')
 ,p_files_version=>269
-,p_version_scn=>15683368578469
+,p_version_scn=>15683409033349
 ,p_print_server_type=>'INSTANCE'
 ,p_file_storage=>'DB'
 ,p_is_pwa=>'Y'
@@ -12282,7 +12282,7 @@ wwv_flow_imp_shared.create_list_of_values(
 'SELECT EMP_ID,EMP_NAME',
 '  FROM EMPLOYEES E',
 ' WHERE E.STATUS=''A''',
-'   AND E.SITE_ID=:P46_BRANCHES',
+'   AND E.SITE_ID=:APP_SITE_ID',
 '   ; '))
 ,p_source_type=>'SQL'
 ,p_location=>'LOCAL'
@@ -12291,7 +12291,7 @@ wwv_flow_imp_shared.create_list_of_values(
 ,p_group_sort_direction=>'ASC'
 ,p_default_sort_column_name=>'EMP_ID'
 ,p_default_sort_direction=>'ASC'
-,p_version_scn=>15635274283508
+,p_version_scn=>15683374723500
 );
 wwv_flow_imp_shared.create_list_of_values_cols(
  p_id=>wwv_flow_imp.id(59539381476506241889)
@@ -12318,7 +12318,7 @@ wwv_flow_imp_shared.create_list_of_values(
 'SELECT EMP_ID,EMP_NAME',
 '  FROM EMPLOYEES E',
 ' WHERE E.STATUS=''A''',
-'   AND E.SITE_ID=:P58_BRANCHES',
+'   AND E.SITE_ID=:APP_SITE_ID',
 '   ; '))
 ,p_source_type=>'SQL'
 ,p_location=>'LOCAL'
@@ -12327,7 +12327,7 @@ wwv_flow_imp_shared.create_list_of_values(
 ,p_group_sort_direction=>'ASC'
 ,p_default_sort_column_name=>'EMP_ID'
 ,p_default_sort_direction=>'ASC'
-,p_version_scn=>15635277249828
+,p_version_scn=>15683374936965
 );
 wwv_flow_imp_shared.create_list_of_values_cols(
  p_id=>wwv_flow_imp.id(59545926168014361008)
@@ -12959,7 +12959,7 @@ wwv_flow_imp_shared.create_list_of_values(
 ,p_lov_query=>wwv_flow_string.join(wwv_flow_t_varchar2(
 'SELECT STUDENT_ID,STUDENT_NAME||'' ''||LAST_NAME STUDENT_NAME',
 '  FROM STUDENTS S',
-' WHERE S.SITE_ID=:P72_BRANCHES ',
+' WHERE S.SITE_ID=:APP_SITE_ID ',
 '   --AND S.STATUS=''A'''))
 ,p_source_type=>'SQL'
 ,p_location=>'LOCAL'
@@ -12968,7 +12968,7 @@ wwv_flow_imp_shared.create_list_of_values(
 ,p_group_sort_direction=>'ASC'
 ,p_default_sort_column_name=>'STUDENT_ID'
 ,p_default_sort_direction=>'ASC'
-,p_version_scn=>15635253121973
+,p_version_scn=>15683378550903
 );
 wwv_flow_imp_shared.create_list_of_values_cols(
  p_id=>wwv_flow_imp.id(59501165985038499649)
@@ -12994,7 +12994,7 @@ wwv_flow_imp_shared.create_list_of_values(
 ,p_lov_query=>wwv_flow_string.join(wwv_flow_t_varchar2(
 'SELECT STUDENT_ID,STUDENT_NAME||'' ''||LAST_NAME STUDENT_NAME',
 '  FROM STUDENTS S',
-' WHERE S.SITE_ID=:P61_BRANCHES ',
+' WHERE S.SITE_ID=:APP_SITE_ID ',
 ';'))
 ,p_source_type=>'SQL'
 ,p_location=>'LOCAL'
@@ -13003,7 +13003,7 @@ wwv_flow_imp_shared.create_list_of_values(
 ,p_group_sort_direction=>'ASC'
 ,p_default_sort_column_name=>'STUDENT_ID'
 ,p_default_sort_direction=>'ASC'
-,p_version_scn=>15635285450733
+,p_version_scn=>15683378392705
 );
 wwv_flow_imp_shared.create_list_of_values_cols(
  p_id=>wwv_flow_imp.id(59554370496830626141)
@@ -13029,7 +13029,7 @@ wwv_flow_imp_shared.create_list_of_values(
 ,p_lov_query=>wwv_flow_string.join(wwv_flow_t_varchar2(
 'SELECT STUDENT_ID,STUDENT_NAME||'' ''||LAST_NAME STUDENT_NAME',
 '  FROM STUDENTS S',
-' WHERE S.SITE_ID=:P59_BRANCHES ',
+' WHERE S.SITE_ID=:APP_SITE_ID ',
 ';',
 ''))
 ,p_source_type=>'SQL'
@@ -13039,7 +13039,7 @@ wwv_flow_imp_shared.create_list_of_values(
 ,p_group_sort_direction=>'ASC'
 ,p_default_sort_column_name=>'STUDENT_ID'
 ,p_default_sort_direction=>'ASC'
-,p_version_scn=>15635443805634
+,p_version_scn=>15683378501072
 );
 wwv_flow_imp_shared.create_list_of_values_cols(
  p_id=>wwv_flow_imp.id(59697658077191168231)
@@ -13065,7 +13065,7 @@ wwv_flow_imp_shared.create_list_of_values(
 ,p_lov_query=>wwv_flow_string.join(wwv_flow_t_varchar2(
 'SELECT STUDENT_ID,STUDENT_NAME||'' ''||LAST_NAME STUDENT_NAME',
 '  FROM STUDENTS S',
-' WHERE S.SITE_ID=:P77_BRANCHES ',
+' WHERE S.SITE_ID=:APP_SITE_ID',
 ';',
 ''))
 ,p_source_type=>'SQL'
@@ -13075,21 +13075,7 @@ wwv_flow_imp_shared.create_list_of_values(
 ,p_group_sort_direction=>'ASC'
 ,p_default_sort_column_name=>'STUDENT_ID'
 ,p_default_sort_direction=>'ASC'
-,p_version_scn=>15635280909225
-);
-wwv_flow_imp_shared.create_list_of_values_cols(
- p_id=>wwv_flow_imp.id(59551570284424526149)
-,p_query_column_name=>'STUDENT_ID'
-,p_heading=>'Admission No'
-,p_display_sequence=>10
-,p_data_type=>'VARCHAR2'
-);
-wwv_flow_imp_shared.create_list_of_values_cols(
- p_id=>wwv_flow_imp.id(59551570644624526149)
-,p_query_column_name=>'STUDENT_NAME'
-,p_heading=>'Student Name'
-,p_display_sequence=>20
-,p_data_type=>'VARCHAR2'
+,p_version_scn=>15683380325091
 );
 end;
 /
@@ -13101,7 +13087,7 @@ wwv_flow_imp_shared.create_list_of_values(
 ,p_lov_query=>wwv_flow_string.join(wwv_flow_t_varchar2(
 'SELECT STUDENT_ID,STUDENT_NAME||'' ''||LAST_NAME STUDENT_NAME',
 '  FROM STUDENTS S',
-' WHERE S.SITE_ID=:P70_BRANCHES ',
+' WHERE S.SITE_ID=:APP_SITE_ID ',
 ';',
 ''))
 ,p_source_type=>'SQL'
@@ -13111,7 +13097,7 @@ wwv_flow_imp_shared.create_list_of_values(
 ,p_group_sort_direction=>'ASC'
 ,p_default_sort_column_name=>'STUDENT_ID'
 ,p_default_sort_direction=>'ASC'
-,p_version_scn=>15635284303855
+,p_version_scn=>15683378219077
 );
 wwv_flow_imp_shared.create_list_of_values_cols(
  p_id=>wwv_flow_imp.id(59552782422392596248)
@@ -13137,7 +13123,7 @@ wwv_flow_imp_shared.create_list_of_values(
 ,p_lov_query=>wwv_flow_string.join(wwv_flow_t_varchar2(
 'SELECT STUDENT_ID,STUDENT_NAME||'' ''||LAST_NAME STUDENT_NAME',
 '  FROM STUDENTS S',
-' WHERE S.SITE_ID=:P67_BRANCHES ',
+' WHERE S.SITE_ID=:APP_SITE_ID ',
 ';'))
 ,p_source_type=>'SQL'
 ,p_location=>'LOCAL'
@@ -13146,7 +13132,7 @@ wwv_flow_imp_shared.create_list_of_values(
 ,p_group_sort_direction=>'ASC'
 ,p_default_sort_column_name=>'STUDENT_ID'
 ,p_default_sort_direction=>'ASC'
-,p_version_scn=>15635251298801
+,p_version_scn=>15683378065907
 );
 wwv_flow_imp_shared.create_list_of_values_cols(
  p_id=>wwv_flow_imp.id(59500008381662471427)
@@ -13172,7 +13158,7 @@ wwv_flow_imp_shared.create_list_of_values(
 ,p_lov_query=>wwv_flow_string.join(wwv_flow_t_varchar2(
 'SELECT STUDENT_ID,STUDENT_NAME||'' ''||LAST_NAME STUDENT_NAME',
 '  FROM STUDENTS S',
-' WHERE S.SITE_ID=:P46_BRANCHES '))
+' WHERE S.SITE_ID=:APP_SITE_ID '))
 ,p_source_type=>'SQL'
 ,p_location=>'LOCAL'
 ,p_return_column_name=>'STUDENT_ID'
@@ -13180,7 +13166,7 @@ wwv_flow_imp_shared.create_list_of_values(
 ,p_group_sort_direction=>'ASC'
 ,p_default_sort_column_name=>'STUDENT_ID'
 ,p_default_sort_direction=>'ASC'
-,p_version_scn=>15635274916035
+,p_version_scn=>15683377921737
 );
 wwv_flow_imp_shared.create_list_of_values_cols(
  p_id=>wwv_flow_imp.id(59542164812646241652)
@@ -13206,7 +13192,7 @@ wwv_flow_imp_shared.create_list_of_values(
 ,p_lov_query=>wwv_flow_string.join(wwv_flow_t_varchar2(
 'SELECT STUDENT_ID,STUDENT_NAME||'' ''||LAST_NAME STUDENT_NAME',
 '  FROM STUDENTS S',
-' WHERE S.SITE_ID=:P58_BRANCHES ',
+' WHERE S.SITE_ID=:APP_SITE_ID ',
 ';'))
 ,p_source_type=>'SQL'
 ,p_location=>'LOCAL'
@@ -13215,7 +13201,7 @@ wwv_flow_imp_shared.create_list_of_values(
 ,p_group_sort_direction=>'ASC'
 ,p_default_sort_column_name=>'STUDENT_ID'
 ,p_default_sort_direction=>'ASC'
-,p_version_scn=>15635277743455
+,p_version_scn=>15683377658457
 );
 wwv_flow_imp_shared.create_list_of_values_cols(
  p_id=>wwv_flow_imp.id(59546382772583412694)
@@ -13241,7 +13227,7 @@ wwv_flow_imp_shared.create_list_of_values(
 ,p_lov_query=>wwv_flow_string.join(wwv_flow_t_varchar2(
 'SELECT STUDENT_ID,STUDENT_NAME||'' ''||LAST_NAME STUDENT_NAME',
 '  FROM STUDENTS S',
-' WHERE S.SITE_ID=:P48_BRANCHES ',
+' WHERE S.SITE_ID=:APP_SITE_ID',
 ';'))
 ,p_source_type=>'SQL'
 ,p_location=>'LOCAL'
@@ -13250,21 +13236,7 @@ wwv_flow_imp_shared.create_list_of_values(
 ,p_group_sort_direction=>'ASC'
 ,p_default_sort_column_name=>'STUDENT_ID'
 ,p_default_sort_direction=>'ASC'
-,p_version_scn=>15635278906164
-);
-wwv_flow_imp_shared.create_list_of_values_cols(
- p_id=>wwv_flow_imp.id(59549092503925477684)
-,p_query_column_name=>'STUDENT_ID'
-,p_heading=>'Admission No'
-,p_display_sequence=>10
-,p_data_type=>'VARCHAR2'
-);
-wwv_flow_imp_shared.create_list_of_values_cols(
- p_id=>wwv_flow_imp.id(59549092959674477685)
-,p_query_column_name=>'STUDENT_NAME'
-,p_heading=>'Student Name'
-,p_display_sequence=>20
-,p_data_type=>'VARCHAR2'
+,p_version_scn=>15683380509497
 );
 end;
 /
@@ -13276,7 +13248,7 @@ wwv_flow_imp_shared.create_list_of_values(
 ,p_lov_query=>wwv_flow_string.join(wwv_flow_t_varchar2(
 'SELECT STUDENT_ID,STUDENT_NAME||'' ''||LAST_NAME STUDENT_NAME',
 '  FROM STUDENTS S',
-' WHERE S.SITE_ID=:P88_BRANCHES '))
+' WHERE S.SITE_ID=:APP_SITE_ID '))
 ,p_source_type=>'SQL'
 ,p_location=>'LOCAL'
 ,p_return_column_name=>'STUDENT_ID'
@@ -13284,7 +13256,7 @@ wwv_flow_imp_shared.create_list_of_values(
 ,p_group_sort_direction=>'ASC'
 ,p_default_sort_column_name=>'STUDENT_ID'
 ,p_default_sort_direction=>'ASC'
-,p_version_scn=>15643126852751
+,p_version_scn=>15683377486289
 );
 wwv_flow_imp_shared.create_list_of_values_cols(
  p_id=>wwv_flow_imp.id(69670451515970539297)
@@ -13309,7 +13281,7 @@ wwv_flow_imp_shared.create_list_of_values(
 ,p_lov_query=>wwv_flow_string.join(wwv_flow_t_varchar2(
 'SELECT STUDENT_ID,STUDENT_NAME||'' ''||LAST_NAME STUDENT_NAME',
 '  FROM STUDENTS S',
-' WHERE S.SITE_ID=:P74_BRANCHES ',
+' WHERE S.SITE_ID=:APP_SITE_ID ',
 ';'))
 ,p_source_type=>'SQL'
 ,p_location=>'LOCAL'
@@ -13318,7 +13290,7 @@ wwv_flow_imp_shared.create_list_of_values(
 ,p_group_sort_direction=>'ASC'
 ,p_default_sort_column_name=>'STUDENT_ID'
 ,p_default_sort_direction=>'ASC'
-,p_version_scn=>15635441358612
+,p_version_scn=>15683377340968
 );
 wwv_flow_imp_shared.create_list_of_values_cols(
  p_id=>wwv_flow_imp.id(59693832449081059030)
@@ -13344,7 +13316,7 @@ wwv_flow_imp_shared.create_list_of_values(
 ,p_lov_query=>wwv_flow_string.join(wwv_flow_t_varchar2(
 'SELECT STUDENT_ID,STUDENT_NAME||'' ''||LAST_NAME STUDENT_NAME',
 '  FROM STUDENTS S',
-' WHERE S.SITE_ID=:P83_BRANCHES ',
+' WHERE S.SITE_ID=:APP_SITE_ID ',
 ';',
 ''))
 ,p_source_type=>'SQL'
@@ -13354,7 +13326,7 @@ wwv_flow_imp_shared.create_list_of_values(
 ,p_group_sort_direction=>'ASC'
 ,p_default_sort_column_name=>'STUDENT_ID'
 ,p_default_sort_direction=>'ASC'
-,p_version_scn=>15635440205997
+,p_version_scn=>15683377074228
 );
 wwv_flow_imp_shared.create_list_of_values_cols(
  p_id=>wwv_flow_imp.id(59676941232139656040)
@@ -13380,16 +13352,17 @@ wwv_flow_imp_shared.create_list_of_values(
 ,p_lov_query=>wwv_flow_string.join(wwv_flow_t_varchar2(
 'SELECT STUDENT_ID,STUDENT_NAME||'' ''||LAST_NAME STUDENT_NAME',
 '  FROM STUDENTS S',
-' WHERE S.SITE_ID=:P87_BRANCHES ',
+' WHERE S.SITE_ID=:APP_SITE_ID ',
 ';',
 ''))
 ,p_source_type=>'SQL'
 ,p_location=>'LOCAL'
 ,p_return_column_name=>'STUDENT_ID'
 ,p_display_column_name=>'STUDENT_ID'
+,p_group_sort_direction=>'ASC'
 ,p_default_sort_column_name=>'STUDENT_ID'
 ,p_default_sort_direction=>'ASC'
-,p_version_scn=>15635431300172
+,p_version_scn=>15683376608193
 );
 end;
 /
@@ -39024,7 +38997,7 @@ wwv_flow_imp_page.create_page_plug(
 '    AND UPPER(CLS.WEEKDAY)          = NVL(UPPER(:P46_WEEKDAY),UPPER(CLS.WEEKDAY))',
 '    AND CLS.START_TIME              = NVL(:P46_START_TIME,CLS.START_TIME)',
 '    AND CLS.END_TIME                = NVL(:P46_END_TIME,CLS.END_TIME)',
-'    AND T.SITE_ID                   = :P46_BRANCHES',
+'    AND T.SITE_ID                   = :APP_SITE_ID --P46_BRANCHES',
 '     /*ORDER BY    CASE',
 '        WHEN STUDENT_ID LIKE ''K%'' THEN 1',
 '        WHEN STUDENT_ID LIKE ''G%'' THEN 2',
@@ -39036,7 +39009,7 @@ wwv_flow_imp_page.create_page_plug(
 ' ',
 ''))
 ,p_plug_source_type=>'NATIVE_IR'
-,p_ajax_items_to_submit=>'P46_EMPLOYEE_ID,P46_STUDENT_ID,P46_SUBJECT,P46_BOOK,P46_WEEKDAY,P46_START_TIME,P46_END_TIME,P46_BRANCHES'
+,p_ajax_items_to_submit=>'P46_EMPLOYEE_ID,P46_STUDENT_ID,P46_SUBJECT,P46_BOOK,P46_WEEKDAY,P46_START_TIME,P46_END_TIME'
 ,p_prn_content_disposition=>'ATTACHMENT'
 ,p_prn_units=>'INCHES'
 ,p_prn_paper_size=>'LETTER'
@@ -39507,11 +39480,9 @@ wwv_flow_imp_page.create_page_item(
 'SELECT EMP_ID,EMP_NAME',
 '  FROM EMPLOYEES E',
 ' WHERE E.STATUS=''A''',
-'   AND E.SITE_ID=:P46_BRANCHES',
+'   AND E.SITE_ID=:APP_SITE_ID',
 '   ; '))
 ,p_lov_display_null=>'YES'
-,p_lov_cascade_parent_items=>'P46_BRANCHES'
-,p_ajax_optimize_refresh=>'Y'
 ,p_cSize=>30
 ,p_begin_on_new_line=>'N'
 ,p_field_template=>1609121967514267634
@@ -39541,11 +39512,9 @@ wwv_flow_imp_page.create_page_item(
 ,p_lov=>wwv_flow_string.join(wwv_flow_t_varchar2(
 'SELECT STUDENT_ID,STUDENT_NAME||'' ''||LAST_NAME STUDENT_NAME',
 '  FROM STUDENTS S',
-' WHERE S.SITE_ID=:P46_BRANCHES '))
+' WHERE S.SITE_ID=:APP_SITE_ID '))
 ,p_lov_display_null=>'YES'
 ,p_lov_null_text=>'All'
-,p_lov_cascade_parent_items=>'P46_BRANCHES'
-,p_ajax_optimize_refresh=>'Y'
 ,p_cSize=>30
 ,p_begin_on_new_line=>'N'
 ,p_field_template=>1609121967514267634
@@ -39703,55 +39672,12 @@ wwv_flow_imp_page.create_page_item(
   'subtype', 'TEXT',
   'trim_spaces', 'BOTH')).to_clob
 );
-wwv_flow_imp_page.create_page_item(
- p_id=>wwv_flow_imp.id(49781195433466553919)
-,p_name=>'P46_BRANCHES'
-,p_item_sequence=>10
-,p_item_plug_id=>wwv_flow_imp.id(27999199613084624101)
-,p_use_cache_before_default=>'NO'
-,p_item_default=>'APP_SITE_ID'
-,p_item_default_type=>'ITEM'
-,p_prompt=>'Branches'
-,p_display_as=>'NATIVE_POPUP_LOV'
-,p_lov=>wwv_flow_string.join(wwv_flow_t_varchar2(
-'SELECT DISTINCT SITE_NAME,SITE_ID',
-'  FROM(',
-'        SELECT S.SITE_NAME,ARB.SITE_ID',
-'          FROM ASSIGN_ROLE_USER ARU,ASSIGN_ROLE_BRANCH ARB,SITES S',
-'           WHERE ARU.APP_USER=:APP_USER',
-'             AND ARU.ROLE_ID = ARB.ROLE_ID',
-'             AND arb.SITE_ID = s.SITE_ID',
-'        UNION ALL  ',
-'        SELECT S.SITE_NAME,A.SITE_ID ',
-'          FROM APPLICATION_USER A, SITES S    ',
-'         WHERE A.SITE_ID=S.SITE_ID',
-'           AND UPPER(A.APP_USER)=:APP_USER  ',
-'  )      ',
-'ORDER BY SITE_NAME    ',
-''))
-,p_cSize=>30
-,p_begin_on_new_line=>'N'
-,p_display_when_type=>'NEVER'
-,p_field_template=>1609121967514267634
-,p_item_template_options=>'#DEFAULT#'
-,p_warn_on_unsaved_changes=>'I'
-,p_is_persistent=>'N'
-,p_lov_display_extra=>'NO'
-,p_attributes=>wwv_flow_t_plugin_attributes(wwv_flow_t_varchar2(
-  'case_sensitive', 'N',
-  'display_as', 'POPUP',
-  'fetch_on_search', 'N',
-  'initial_fetch', 'FIRST_ROWSET',
-  'manual_entry', 'N',
-  'match_type', 'CONTAINS',
-  'min_chars', '0')).to_clob
-);
 wwv_flow_imp_page.create_page_da_event(
  p_id=>wwv_flow_imp.id(27999200276962624107)
 ,p_name=>'REFRESH REGION'
 ,p_event_sequence=>10
 ,p_triggering_element_type=>'ITEM'
-,p_triggering_element=>'P46_EMPLOYEE_ID,P46_STUDENT_ID,P46_SUBJECT,P46_BOOK,P46_WEEKDAY,P46_BRANCHES'
+,p_triggering_element=>'P46_EMPLOYEE_ID,P46_STUDENT_ID,P46_SUBJECT,P46_BOOK,P46_WEEKDAY'
 ,p_bind_type=>'bind'
 ,p_execution_type=>'IMMEDIATE'
 ,p_bind_event_type=>'change'
@@ -39957,7 +39883,7 @@ wwv_flow_imp_page.create_report_region(
 '   AND S.CLASS_ID        = CS.CLASS_ID',
 '   AND STU.CLASS_ID      = CL.CLASS_ID',
 '   AND S.STATUS          = ''I''',
-'   AND S.SITE_ID         = :P47_BRANCHES',
+'   AND S.SITE_ID         = :APP_SITE_ID --P47_BRANCHES',
 '   AND S.STUDENT_ID      = NVL(:P47_STUDENT_ID,S.STUDENT_ID)',
 '   ORDER BY S.STUDENT_ID,TO_DATE(C.START_TIME, ''HH24:MI'') ASC'))
 ,p_ajax_enabled=>'Y'
@@ -40210,8 +40136,6 @@ wwv_flow_imp_page.create_page_item(
 '   AND */S.SITE_ID=:APP_SITE_ID ',
 '   AND S.STATUS=''A'''))
 ,p_lov_display_null=>'YES'
-,p_lov_cascade_parent_items=>'P47_BRANCHES'
-,p_ajax_optimize_refresh=>'Y'
 ,p_cSize=>30
 ,p_begin_on_new_line=>'N'
 ,p_field_template=>1609121967514267634
@@ -48994,7 +48918,7 @@ wwv_flow_imp_page.create_page_plug(
 '    AND SCR.SUBJECT_ID     = SB.SUBJECT_ID',
 '    AND SCR.BOOK_ID        = B.BOOK_ID(+)',
 '    AND SCR.EMPLOYEE_ID    = E.EMP_ID(+)',
-'    AND SCR.SITE_ID        = :P58_BRANCHES',
+'    AND SCR.SITE_ID        = :APP_SITE_ID',
 '    AND SCR.EMPLOYEE_ID    = NVL(:P58_EMPLOYEE_ID,SCR.EMPLOYEE_ID)    ',
 '    AND SCR.STUDENT_ID     = NVL(:P58_STUDENT_ID,SCR.STUDENT_ID)   ',
 '    AND SCR.SUBJECT_ID     = NVL(:P58_SUBJECT,SCR.SUBJECT_ID)',
@@ -49753,7 +49677,7 @@ wwv_flow_imp_page.create_report_region(
 '',
 '    FROM STUDENT_FEE_COLLECTION A, PAYMENT_TYPE P',
 '    WHERE A.PAYMENT_METHOD = P.PAY_ID    ',
-'      AND A.SITE_ID        = :P59_BRANCHES',
+'      AND A.SITE_ID        = :APP_SITE_ID--:P59_BRANCHES',
 '      AND PAYMENT_DATE BETWEEN NVL(:P59_FROM_DATE, PAYMENT_DATE) AND NVL(:P59_TO_DATE, PAYMENT_DATE)',
 '      AND TO_CHAR(TO_DATE(FEE_MONTH, ''MM-YYYY''), ''MON-YYYY'') =NVL(TO_CHAR(TO_DATE(:P59_FEE_MONTH, ''MM-YYYY''), ''MON-YYYY'') ,TO_CHAR(TO_DATE(FEE_MONTH, ''MM-YYYY''), ''MON-YYYY''))',
 '    GROUP BY A.STUDENT_ID,A.SITE_ID,FEE_MONTH,MONTHLY_FEE',
@@ -49765,7 +49689,7 @@ wwv_flow_imp_page.create_report_region(
 '',
 ''))
 ,p_ajax_enabled=>'Y'
-,p_ajax_items_to_submit=>'P59_FROM_DATE,P59_TO_DATE,P59_FEE_MONTH,P59_BRANCHES'
+,p_ajax_items_to_submit=>'P59_FROM_DATE,P59_TO_DATE,P59_FEE_MONTH'
 ,p_lazy_loading=>false
 ,p_query_row_template=>2104643962563030528
 ,p_query_num_rows=>15
@@ -49854,7 +49778,7 @@ wwv_flow_imp_page.create_report_region(
 'GROUP BY P.PAYMENT_NAME',
 ''))
 ,p_ajax_enabled=>'Y'
-,p_ajax_items_to_submit=>'P59_FROM_DATE,P59_TO_DATE,P59_FEE_MONTH,P59_BRANCHES'
+,p_ajax_items_to_submit=>'P59_FROM_DATE,P59_TO_DATE,P59_FEE_MONTH'
 ,p_lazy_loading=>false
 ,p_query_row_template=>2538654340625403440
 ,p_query_num_rows=>15
@@ -50113,47 +50037,6 @@ wwv_flow_imp_page.create_page_item(
 ,p_attributes=>wwv_flow_t_plugin_attributes(wwv_flow_t_varchar2(
   'case_sensitive', 'N',
   'display_as', 'DIALOG',
-  'fetch_on_search', 'N',
-  'initial_fetch', 'FIRST_ROWSET',
-  'manual_entry', 'N',
-  'match_type', 'CONTAINS',
-  'min_chars', '0')).to_clob
-);
-wwv_flow_imp_page.create_page_item(
- p_id=>wwv_flow_imp.id(59682956437883869623)
-,p_name=>'P59_BRANCHES'
-,p_item_sequence=>10
-,p_item_plug_id=>wwv_flow_imp.id(29791931325345683408)
-,p_use_cache_before_default=>'NO'
-,p_item_default=>'APP_SITE_ID'
-,p_item_default_type=>'ITEM'
-,p_prompt=>'Branches'
-,p_display_as=>'NATIVE_POPUP_LOV'
-,p_lov=>wwv_flow_string.join(wwv_flow_t_varchar2(
-'SELECT DISTINCT SITE_NAME,SITE_ID',
-'  FROM(',
-'        SELECT S.SITE_NAME,ARB.SITE_ID',
-'          FROM ASSIGN_ROLE_USER ARU,ASSIGN_ROLE_BRANCH ARB,SITES S',
-'           WHERE ARU.APP_USER=:APP_USER',
-'             AND ARU.ROLE_ID = ARB.ROLE_ID',
-'             AND arb.SITE_ID = s.SITE_ID',
-'        UNION ALL  ',
-'        SELECT S.SITE_NAME,A.SITE_ID ',
-'          FROM APPLICATION_USER A, SITES S    ',
-'         WHERE A.SITE_ID=S.SITE_ID',
-'           AND UPPER(A.APP_USER)=:APP_USER  ',
-'  )      ',
-'ORDER BY SITE_NAME    ',
-''))
-,p_cSize=>30
-,p_display_when_type=>'NEVER'
-,p_field_template=>1609121967514267634
-,p_item_template_options=>'#DEFAULT#'
-,p_is_persistent=>'N'
-,p_lov_display_extra=>'NO'
-,p_attributes=>wwv_flow_t_plugin_attributes(wwv_flow_t_varchar2(
-  'case_sensitive', 'N',
-  'display_as', 'POPUP',
   'fetch_on_search', 'N',
   'initial_fetch', 'FIRST_ROWSET',
   'manual_entry', 'N',
@@ -50433,7 +50316,7 @@ wwv_flow_imp_page.create_page_plug(
 '    AND TO_CHAR(ATT.ATTENDANCE_DATE, ''MM-YYYY'') = NVL(:P61_MONTH, TO_CHAR(SYSDATE, ''MM-YYYY''))',
 '',
 '  WHERE (:P61_ADMISSION_NO IS NULL OR (S.STUDENT_ID = NVL(:P61_ADMISSION_NO,S.STUDENT_ID)))',
-'    AND S.SITE_ID = :P61_BRANCHES',
+'    AND S.SITE_ID = :APP_SITE_ID--:P61_BRANCHES',
 '    AND (:P61_ATTENDANCE_STATUS IS NULL OR (ATT.ATTENDANCE_STATUS = NVL(:P61_ATTENDANCE_STATUS,ATT.ATTENDANCE_STATUS)))',
 ')',
 'PIVOT (',
@@ -50455,7 +50338,7 @@ wwv_flow_imp_page.create_page_plug(
 '          END,LENGTH(STUDENT_ID),STUDENT_ID',
 ''))
 ,p_plug_source_type=>'NATIVE_IR'
-,p_ajax_items_to_submit=>'P61_ADMISSION_NO,P61_ATTENDANCE_STATUS,P61_MONTH,P61_BRANCHES'
+,p_ajax_items_to_submit=>'P61_ADMISSION_NO,P61_ATTENDANCE_STATUS,P61_MONTH'
 ,p_prn_content_disposition=>'ATTACHMENT'
 ,p_prn_units=>'INCHES'
 ,p_prn_paper_size=>'LETTER'
@@ -51313,12 +51196,10 @@ wwv_flow_imp_page.create_page_item(
 ,p_lov=>wwv_flow_string.join(wwv_flow_t_varchar2(
 'SELECT STUDENT_ID,STUDENT_NAME||'' ''||LAST_NAME STUDENT_NAME',
 '  FROM STUDENTS S',
-' WHERE S.SITE_ID=:P61_BRANCHES ',
+' WHERE S.SITE_ID=:APP_SITE_ID ',
 ';'))
 ,p_lov_display_null=>'YES'
 ,p_lov_null_text=>'All'
-,p_lov_cascade_parent_items=>'P61_BRANCHES'
-,p_ajax_optimize_refresh=>'Y'
 ,p_cSize=>30
 ,p_begin_on_new_line=>'N'
 ,p_field_template=>1609121967514267634
@@ -51384,47 +51265,6 @@ wwv_flow_imp_page.create_page_item(
 ,p_lov_display_extra=>'NO'
 ,p_attributes=>wwv_flow_t_plugin_attributes(wwv_flow_t_varchar2(
   'page_action_on_selection', 'NONE')).to_clob
-);
-wwv_flow_imp_page.create_page_item(
- p_id=>wwv_flow_imp.id(49781195969730553924)
-,p_name=>'P61_BRANCHES'
-,p_item_sequence=>30
-,p_item_plug_id=>wwv_flow_imp.id(28009127947244590515)
-,p_use_cache_before_default=>'NO'
-,p_item_default=>'APP_SITE_ID'
-,p_item_default_type=>'ITEM'
-,p_prompt=>'Branches'
-,p_display_as=>'NATIVE_POPUP_LOV'
-,p_lov=>wwv_flow_string.join(wwv_flow_t_varchar2(
-'SELECT DISTINCT SITE_NAME,SITE_ID',
-'  FROM(',
-'        SELECT S.SITE_NAME,ARB.SITE_ID',
-'          FROM ASSIGN_ROLE_USER ARU,ASSIGN_ROLE_BRANCH ARB,SITES S',
-'           WHERE ARU.APP_USER=:APP_USER',
-'             AND ARU.ROLE_ID = ARB.ROLE_ID',
-'             AND arb.SITE_ID = s.SITE_ID',
-'        UNION ALL  ',
-'        SELECT S.SITE_NAME,A.SITE_ID ',
-'          FROM APPLICATION_USER A, SITES S    ',
-'         WHERE A.SITE_ID=S.SITE_ID',
-'           AND UPPER(A.APP_USER)=:APP_USER  ',
-'  )      ',
-'ORDER BY SITE_NAME    ',
-''))
-,p_cSize=>30
-,p_display_when_type=>'NEVER'
-,p_field_template=>1609121967514267634
-,p_item_template_options=>'#DEFAULT#'
-,p_is_persistent=>'N'
-,p_lov_display_extra=>'NO'
-,p_attributes=>wwv_flow_t_plugin_attributes(wwv_flow_t_varchar2(
-  'case_sensitive', 'N',
-  'display_as', 'POPUP',
-  'fetch_on_search', 'N',
-  'initial_fetch', 'FIRST_ROWSET',
-  'manual_entry', 'N',
-  'match_type', 'CONTAINS',
-  'min_chars', '0')).to_clob
 );
 wwv_flow_imp_page.create_page_da_event(
  p_id=>wwv_flow_imp.id(28009128692096590522)
@@ -53038,7 +52878,7 @@ wwv_flow_imp_page.create_page_plug(
 '  from STUDENT_MEETING_COMMENTS F,STUDENTS S',
 '  WHERE F.STUDENT_ID=S.STUDENT_ID',
 '    AND F.SITE_ID=S.SITE_ID',
-'    AND F.SITE_ID=:P67_BRANCHES',
+'    AND F.SITE_ID=:APP_SITE_ID ',
 '    AND F.STUDENT_ID = NVL(:P67_ADMISSION_NO,F.STUDENT_ID)',
 '    order by  CASE',
 '            WHEN STUDENT_ID LIKE ''K%'' THEN 1',
@@ -53046,7 +52886,7 @@ wwv_flow_imp_page.create_page_plug(
 '            WHEN STUDENT_ID LIKE ''A%'' THEN 3',
 '          END,LENGTH(STUDENT_ID),STUDENT_ID'))
 ,p_plug_source_type=>'NATIVE_IR'
-,p_ajax_items_to_submit=>'P67_ADMISSION_NO,P67_BRANCHES'
+,p_ajax_items_to_submit=>'P67_ADMISSION_NO'
 ,p_prn_content_disposition=>'ATTACHMENT'
 ,p_prn_units=>'INCHES'
 ,p_prn_paper_size=>'LETTER'
@@ -53293,60 +53133,16 @@ wwv_flow_imp_page.create_page_item(
 ,p_lov=>wwv_flow_string.join(wwv_flow_t_varchar2(
 'SELECT STUDENT_ID,STUDENT_NAME||'' ''||LAST_NAME STUDENT_NAME',
 '  FROM STUDENTS S',
-' WHERE S.SITE_ID=:P67_BRANCHES ',
+' WHERE S.SITE_ID=:APP_SITE_ID ',
 ';'))
 ,p_lov_display_null=>'YES'
 ,p_lov_null_text=>'All'
-,p_lov_cascade_parent_items=>'P67_BRANCHES'
-,p_ajax_optimize_refresh=>'Y'
 ,p_cSize=>30
 ,p_begin_on_new_line=>'N'
 ,p_field_template=>1609121967514267634
 ,p_item_template_options=>'#DEFAULT#'
 ,p_is_persistent=>'N'
 ,p_lov_display_extra=>'YES'
-,p_attributes=>wwv_flow_t_plugin_attributes(wwv_flow_t_varchar2(
-  'case_sensitive', 'N',
-  'display_as', 'POPUP',
-  'fetch_on_search', 'N',
-  'initial_fetch', 'FIRST_ROWSET',
-  'manual_entry', 'N',
-  'match_type', 'CONTAINS',
-  'min_chars', '0')).to_clob
-);
-wwv_flow_imp_page.create_page_item(
- p_id=>wwv_flow_imp.id(59413559892749328511)
-,p_name=>'P67_BRANCHES'
-,p_item_sequence=>10
-,p_item_plug_id=>wwv_flow_imp.id(30296351128963431950)
-,p_use_cache_before_default=>'NO'
-,p_item_default=>'APP_SITE_ID'
-,p_item_default_type=>'ITEM'
-,p_prompt=>'Branches'
-,p_display_as=>'NATIVE_POPUP_LOV'
-,p_lov=>wwv_flow_string.join(wwv_flow_t_varchar2(
-'SELECT DISTINCT SITE_NAME,SITE_ID',
-'  FROM(',
-'        SELECT S.SITE_NAME,ARB.SITE_ID',
-'          FROM ASSIGN_ROLE_USER ARU,ASSIGN_ROLE_BRANCH ARB,SITES S',
-'           WHERE ARU.APP_USER=:APP_USER',
-'             AND ARU.ROLE_ID = ARB.ROLE_ID',
-'             AND arb.SITE_ID = s.SITE_ID',
-'        UNION ALL  ',
-'        SELECT S.SITE_NAME,A.SITE_ID ',
-'          FROM APPLICATION_USER A, SITES S    ',
-'         WHERE A.SITE_ID=S.SITE_ID',
-'           AND UPPER(A.APP_USER)=:APP_USER  ',
-'  )      ',
-'ORDER BY SITE_NAME    ',
-''))
-,p_cSize=>30
-,p_begin_on_new_line=>'N'
-,p_display_when_type=>'NEVER'
-,p_field_template=>1609121967514267634
-,p_item_template_options=>'#DEFAULT#'
-,p_is_persistent=>'N'
-,p_lov_display_extra=>'NO'
 ,p_attributes=>wwv_flow_t_plugin_attributes(wwv_flow_t_varchar2(
   'case_sensitive', 'N',
   'display_as', 'POPUP',
@@ -53441,7 +53237,7 @@ wwv_flow_imp_page.create_page_da_event(
 ,p_name=>'REFRESH'
 ,p_event_sequence=>30
 ,p_triggering_element_type=>'ITEM'
-,p_triggering_element=>'P67_ADMISSION_NO,P67_BRANCHES'
+,p_triggering_element=>'P67_ADMISSION_NO'
 ,p_bind_type=>'bind'
 ,p_execution_type=>'IMMEDIATE'
 ,p_bind_event_type=>'change'
@@ -54352,7 +54148,7 @@ wwv_flow_imp_page.create_page_plug(
 '  from FEE_REMINDER F,STUDENTS S',
 '  WHERE F.STUDENT_ID=S.STUDENT_ID',
 '    AND F.SITE_ID=S.SITE_ID',
-'    AND F.SITE_ID=:P70_BRANCHES',
+'    AND F.SITE_ID=:APP_SITE_ID--:P70_BRANCHES',
 '    AND F.STUDENT_ID = NVL(:P70_ADMISSION_NO,F.STUDENT_ID)',
 '    AND TO_CHAR(F.REMINDER_DATE,''DD-MON-YYYY'') = NVL(:P70_REMINDER_DATE,TO_CHAR(F.REMINDER_DATE,''DD-MON-YYYY''))',
 '    AND (UPPER(:P70_REMINDER)    IS NULL OR (UPPER(F.REMINDER_COMMENT) = UPPER(:P70_REMINDER)))',
@@ -54361,7 +54157,7 @@ wwv_flow_imp_page.create_page_plug(
 '    order by REMINDER_ID desc',
 ''))
 ,p_plug_source_type=>'NATIVE_IR'
-,p_ajax_items_to_submit=>'P70_ADMISSION_NO,P70_BRANCHES,P70_REMINDER_DATE,P70_REMINDER,P70_COMMENTS_IF_ANY,P70_SUSPENSION'
+,p_ajax_items_to_submit=>'P70_ADMISSION_NO,P70_REMINDER_DATE,P70_REMINDER,P70_COMMENTS_IF_ANY,P70_SUSPENSION'
 ,p_prn_page_header=>'Fee Reminder Report'
 );
 wwv_flow_imp_page.create_worksheet(
@@ -54635,13 +54431,11 @@ wwv_flow_imp_page.create_page_item(
 ,p_lov=>wwv_flow_string.join(wwv_flow_t_varchar2(
 'SELECT STUDENT_ID,STUDENT_NAME||'' ''||LAST_NAME STUDENT_NAME',
 '  FROM STUDENTS S',
-' WHERE S.SITE_ID=:P70_BRANCHES ',
+' WHERE S.SITE_ID=:APP_SITE_ID ',
 ';',
 ''))
 ,p_lov_display_null=>'YES'
 ,p_lov_null_text=>'All'
-,p_lov_cascade_parent_items=>'P70_BRANCHES'
-,p_ajax_optimize_refresh=>'Y'
 ,p_cSize=>30
 ,p_begin_on_new_line=>'N'
 ,p_field_template=>1609121967514267634
@@ -54658,47 +54452,6 @@ wwv_flow_imp_page.create_page_item(
   'match_type', 'CONTAINS',
   'min_chars', '0',
   'width', '500')).to_clob
-);
-wwv_flow_imp_page.create_page_item(
- p_id=>wwv_flow_imp.id(49781195826623553923)
-,p_name=>'P70_BRANCHES'
-,p_item_sequence=>10
-,p_item_plug_id=>wwv_flow_imp.id(30228140820669549216)
-,p_use_cache_before_default=>'NO'
-,p_item_default=>'APP_SITE_ID'
-,p_item_default_type=>'ITEM'
-,p_prompt=>'Branches'
-,p_display_as=>'NATIVE_POPUP_LOV'
-,p_lov=>wwv_flow_string.join(wwv_flow_t_varchar2(
-'SELECT DISTINCT SITE_NAME,SITE_ID',
-'  FROM(',
-'        SELECT S.SITE_NAME,ARB.SITE_ID',
-'          FROM ASSIGN_ROLE_USER ARU,ASSIGN_ROLE_BRANCH ARB,SITES S',
-'           WHERE ARU.APP_USER=:APP_USER',
-'             AND ARU.ROLE_ID = ARB.ROLE_ID',
-'             AND arb.SITE_ID = s.SITE_ID',
-'        UNION ALL  ',
-'        SELECT S.SITE_NAME,A.SITE_ID ',
-'          FROM APPLICATION_USER A, SITES S    ',
-'         WHERE A.SITE_ID=S.SITE_ID',
-'           AND UPPER(A.APP_USER)=:APP_USER  ',
-'  )      ',
-'ORDER BY SITE_NAME    ',
-''))
-,p_cSize=>30
-,p_display_when_type=>'NEVER'
-,p_field_template=>1609121967514267634
-,p_item_template_options=>'#DEFAULT#'
-,p_is_persistent=>'N'
-,p_lov_display_extra=>'NO'
-,p_attributes=>wwv_flow_t_plugin_attributes(wwv_flow_t_varchar2(
-  'case_sensitive', 'N',
-  'display_as', 'POPUP',
-  'fetch_on_search', 'N',
-  'initial_fetch', 'FIRST_ROWSET',
-  'manual_entry', 'N',
-  'match_type', 'CONTAINS',
-  'min_chars', '0')).to_clob
 );
 wwv_flow_imp_page.create_page_item(
  p_id=>wwv_flow_imp.id(74067350180704691001)
@@ -54736,8 +54489,6 @@ wwv_flow_imp_page.create_page_item(
 ' ; '))
 ,p_lov_display_null=>'YES'
 ,p_lov_null_text=>'All'
-,p_lov_cascade_parent_items=>'P70_BRANCHES'
-,p_ajax_optimize_refresh=>'Y'
 ,p_cSize=>30
 ,p_begin_on_new_line=>'N'
 ,p_field_template=>1609121967514267634
@@ -54768,8 +54519,6 @@ wwv_flow_imp_page.create_page_item(
 ' ; '))
 ,p_lov_display_null=>'YES'
 ,p_lov_null_text=>'All'
-,p_lov_cascade_parent_items=>'P70_BRANCHES'
-,p_ajax_optimize_refresh=>'Y'
 ,p_cSize=>30
 ,p_begin_on_new_line=>'N'
 ,p_field_template=>1609121967514267634
@@ -54800,8 +54549,6 @@ wwv_flow_imp_page.create_page_item(
 ' ; '))
 ,p_lov_display_null=>'YES'
 ,p_lov_null_text=>'All'
-,p_lov_cascade_parent_items=>'P70_BRANCHES'
-,p_ajax_optimize_refresh=>'Y'
 ,p_cSize=>30
 ,p_begin_on_new_line=>'N'
 ,p_field_template=>1609121967514267634
@@ -54822,7 +54569,7 @@ wwv_flow_imp_page.create_page_da_event(
 ,p_name=>'REFRESH'
 ,p_event_sequence=>10
 ,p_triggering_element_type=>'ITEM'
-,p_triggering_element=>'P70_ADMISSION_NO,P70_REMINDER_DATE,P70_REMINDER,P70_COMMENTS_IF_ANY,P70_SUSPENSION,P70_BRANCHES'
+,p_triggering_element=>'P70_ADMISSION_NO,P70_REMINDER_DATE,P70_REMINDER,P70_COMMENTS_IF_ANY,P70_SUSPENSION'
 ,p_bind_type=>'bind'
 ,p_execution_type=>'IMMEDIATE'
 ,p_bind_event_type=>'change'
@@ -55654,7 +55401,7 @@ wwv_flow_imp_page.create_page_plug(
 'AND S.SITE_ID    =SCS.SITE_ID(+)',
 'AND SCS.CLASS_SHEDULE_ID=CS.SCHEDULE_ID(+)',
 'AND SCS.SITE_ID  =CS.SITE_ID(+)',
-'AND S.SITE_ID    = :P72_BRANCHES',
+'AND S.SITE_ID    = :APP_SITE_ID',
 'AND S.STUDENT_ID = NVL(:P72_ADMISSION_NO,S.STUDENT_ID)',
 'AND S.STATUS     = NVL(:P72_STATUS,S.STATUS)',
 'AND S.CLASS_ID = NVL(:P72_YEAR,S.CLASS_ID)',
@@ -55666,7 +55413,7 @@ wwv_flow_imp_page.create_page_plug(
 '          END,LENGTH(STUDENT_ID),STUDENT_ID',
 '  )'))
 ,p_plug_source_type=>'NATIVE_IR'
-,p_ajax_items_to_submit=>'P72_YEAR,P72_ADMISSION_NO,P72_STATUS,P72_BRANCHES'
+,p_ajax_items_to_submit=>'P72_YEAR,P72_ADMISSION_NO,P72_STATUS'
 ,p_prn_content_disposition=>'ATTACHMENT'
 ,p_prn_units=>'INCHES'
 ,p_prn_paper_size=>'LETTER'
@@ -56053,12 +55800,10 @@ wwv_flow_imp_page.create_page_item(
 ,p_lov=>wwv_flow_string.join(wwv_flow_t_varchar2(
 'SELECT STUDENT_ID,STUDENT_NAME||'' ''||LAST_NAME STUDENT_NAME',
 '  FROM STUDENTS S',
-' WHERE S.SITE_ID=:P72_BRANCHES ',
+' WHERE S.SITE_ID=:APP_SITE_ID ',
 '   --AND S.STATUS=''A'''))
 ,p_lov_display_null=>'YES'
 ,p_lov_null_text=>'All'
-,p_lov_cascade_parent_items=>'P72_BRANCHES'
-,p_ajax_optimize_refresh=>'Y'
 ,p_cSize=>30
 ,p_begin_on_new_line=>'N'
 ,p_field_template=>1609121967514267634
@@ -56092,49 +55837,6 @@ wwv_flow_imp_page.create_page_item(
 ,p_lov_display_extra=>'YES'
 ,p_attributes=>wwv_flow_t_plugin_attributes(wwv_flow_t_varchar2(
   'page_action_on_selection', 'NONE')).to_clob
-);
-wwv_flow_imp_page.create_page_item(
- p_id=>wwv_flow_imp.id(59413559646443328509)
-,p_name=>'P72_BRANCHES'
-,p_item_sequence=>10
-,p_item_plug_id=>wwv_flow_imp.id(30283315171303494701)
-,p_use_cache_before_default=>'NO'
-,p_item_default=>'APP_SITE_ID'
-,p_item_default_type=>'ITEM'
-,p_prompt=>'Branch'
-,p_display_as=>'NATIVE_POPUP_LOV'
-,p_lov=>wwv_flow_string.join(wwv_flow_t_varchar2(
-'SELECT DISTINCT SITE_NAME,SITE_ID',
-'  FROM(',
-'        SELECT S.SITE_NAME,ARB.SITE_ID',
-'          FROM ASSIGN_ROLE_USER ARU,ASSIGN_ROLE_BRANCH ARB,SITES S',
-'           WHERE ARU.APP_USER=:APP_USER',
-'             AND ARU.ROLE_ID = ARB.ROLE_ID',
-'             AND arb.SITE_ID = s.SITE_ID',
-'        UNION ALL  ',
-'        SELECT S.SITE_NAME,A.SITE_ID ',
-'          FROM APPLICATION_USER A, SITES S    ',
-'         WHERE A.SITE_ID=S.SITE_ID',
-'           AND UPPER(A.APP_USER)=:APP_USER  ',
-'  )      ',
-'ORDER BY SITE_NAME    ',
-'',
-''))
-,p_cSize=>30
-,p_begin_on_new_line=>'N'
-,p_display_when_type=>'NEVER'
-,p_field_template=>1609121967514267634
-,p_item_template_options=>'#DEFAULT#'
-,p_is_persistent=>'N'
-,p_lov_display_extra=>'NO'
-,p_attributes=>wwv_flow_t_plugin_attributes(wwv_flow_t_varchar2(
-  'case_sensitive', 'N',
-  'display_as', 'POPUP',
-  'fetch_on_search', 'N',
-  'initial_fetch', 'FIRST_ROWSET',
-  'manual_entry', 'N',
-  'match_type', 'CONTAINS',
-  'min_chars', '0')).to_clob
 );
 wwv_flow_imp_page.create_page_item(
  p_id=>wwv_flow_imp.id(77995140951340684406)
@@ -56245,7 +55947,7 @@ wwv_flow_imp_page.create_page_da_event(
 ,p_name=>'REFRESH'
 ,p_event_sequence=>30
 ,p_triggering_element_type=>'ITEM'
-,p_triggering_element=>'P72_ADMISSION_NO,P72_STATUS,P72_BRANCHES,P72_YEAR'
+,p_triggering_element=>'P72_ADMISSION_NO,P72_STATUS,P72_YEAR'
 ,p_bind_type=>'bind'
 ,p_execution_type=>'IMMEDIATE'
 ,p_bind_event_type=>'change'
@@ -57414,7 +57116,7 @@ wwv_flow_imp_page.create_report_region(
 'FROM STUDENT_PROGRESS P, STUDENTS S',
 'WHERE P.STUDENT_ID = S.STUDENT_ID',
 ' AND  P.SITE_ID = S.SITE_ID',
-' AND P.SITE_ID = :P74_BRANCHES',
+' AND P.SITE_ID = :APP_SITE_ID',
 ' AND p.STUDENT_ID = NVL(:P74_ADMISSION_NO,P.STUDENT_ID)',
 ' AND P.PROGRESS_TYPE = ''M''',
 '  AND (',
@@ -57428,7 +57130,7 @@ wwv_flow_imp_page.create_report_region(
 '    )',
 ' ORDER BY P.SP_ID DESC'))
 ,p_ajax_enabled=>'Y'
-,p_ajax_items_to_submit=>'P74_BRANCHES,P74_ADMISSION_NO'
+,p_ajax_items_to_submit=>'P74_ADMISSION_NO'
 ,p_lazy_loading=>false
 ,p_query_row_template=>2538654340625403440
 ,p_query_num_rows=>50
@@ -57541,47 +57243,6 @@ wwv_flow_imp_page.create_page_button(
 ,p_icon_css_classes=>'fa-search'
 );
 wwv_flow_imp_page.create_page_item(
- p_id=>wwv_flow_imp.id(59682954922328869608)
-,p_name=>'P74_BRANCHES'
-,p_item_sequence=>10
-,p_item_plug_id=>wwv_flow_imp.id(59682954889691869607)
-,p_use_cache_before_default=>'NO'
-,p_item_default=>'APP_SITE_ID'
-,p_item_default_type=>'ITEM'
-,p_prompt=>'Branches'
-,p_display_as=>'NATIVE_POPUP_LOV'
-,p_lov=>wwv_flow_string.join(wwv_flow_t_varchar2(
-'SELECT DISTINCT SITE_NAME,SITE_ID',
-'  FROM(',
-'        SELECT S.SITE_NAME,ARB.SITE_ID',
-'          FROM ASSIGN_ROLE_USER ARU,ASSIGN_ROLE_BRANCH ARB,SITES S',
-'           WHERE ARU.APP_USER=:APP_USER',
-'             AND ARU.ROLE_ID = ARB.ROLE_ID',
-'             AND arb.SITE_ID = s.SITE_ID',
-'        UNION ALL  ',
-'        SELECT S.SITE_NAME,A.SITE_ID ',
-'          FROM APPLICATION_USER A, SITES S    ',
-'         WHERE A.SITE_ID=S.SITE_ID',
-'           AND UPPER(A.APP_USER)=:APP_USER  ',
-'  )      ',
-'ORDER BY SITE_NAME    ',
-''))
-,p_cSize=>30
-,p_display_when_type=>'NEVER'
-,p_field_template=>1609121967514267634
-,p_item_template_options=>'#DEFAULT#'
-,p_is_persistent=>'N'
-,p_lov_display_extra=>'NO'
-,p_attributes=>wwv_flow_t_plugin_attributes(wwv_flow_t_varchar2(
-  'case_sensitive', 'N',
-  'display_as', 'POPUP',
-  'fetch_on_search', 'N',
-  'initial_fetch', 'FIRST_ROWSET',
-  'manual_entry', 'N',
-  'match_type', 'CONTAINS',
-  'min_chars', '0')).to_clob
-);
-wwv_flow_imp_page.create_page_item(
  p_id=>wwv_flow_imp.id(59682955353159869612)
 ,p_name=>'P74_ADMISSION_NO'
 ,p_item_sequence=>20
@@ -57593,11 +57254,9 @@ wwv_flow_imp_page.create_page_item(
 ,p_lov=>wwv_flow_string.join(wwv_flow_t_varchar2(
 'SELECT STUDENT_ID,STUDENT_NAME||'' ''||LAST_NAME STUDENT_NAME',
 '  FROM STUDENTS S',
-' WHERE S.SITE_ID=:P74_BRANCHES ',
+' WHERE S.SITE_ID=:APP_SITE_ID ',
 ';'))
 ,p_lov_display_null=>'YES'
-,p_lov_cascade_parent_items=>'P74_BRANCHES'
-,p_ajax_optimize_refresh=>'Y'
 ,p_cSize=>30
 ,p_begin_on_new_line=>'N'
 ,p_field_template=>1609121967514267634
@@ -57618,7 +57277,7 @@ wwv_flow_imp_page.create_page_da_event(
 ,p_name=>'REFRESH'
 ,p_event_sequence=>10
 ,p_triggering_element_type=>'ITEM'
-,p_triggering_element=>'P74_BRANCHES,P74_ADMISSION_NO'
+,p_triggering_element=>'P74_ADMISSION_NO'
 ,p_bind_type=>'bind'
 ,p_execution_type=>'IMMEDIATE'
 ,p_bind_event_type=>'change'
@@ -58702,7 +58361,7 @@ wwv_flow_imp_page.create_report_region(
 '   AND S.CLASS_ID=NVL(:P77_CLASS_ID,S.CLASS_ID)',
 '   AND SFC.STUDENT_ID=NVL(:P77_STUDENT_ID,SFC.STUDENT_ID)',
 '   AND TO_CHAR(TO_DATE(FEE_MONTH, ''MM-YYYY''), ''MON-YYYY'') =NVL(TO_CHAR(TO_DATE(:P77_FEE_MONTH, ''MM-YYYY''), ''MON-YYYY'') ,TO_CHAR(TO_DATE(FEE_MONTH, ''MM-YYYY''), ''MON-YYYY''))',
-'   AND SFC.SITE_ID=:P77_BRANCHES',
+'   AND SFC.SITE_ID=:APP_SITE_ID--P77_BRANCHES',
 ' order by STUDENT_ID,FEE_COLLECTION_ID,PAYMENT_COUNT '))
 ,p_ajax_enabled=>'Y'
 ,p_ajax_items_to_submit=>'P77_STUDENT_ID,P77_FEE_MONTH,P77_BRANCHES'
@@ -63654,12 +63313,12 @@ wwv_flow_imp_page.create_report_region(
 '  WHERE PC.STUDENT_ID=S.STUDENT_ID',
 '    AND PC.SITE_ID=S.SITE_ID',
 '    AND PC.CLASS_ID=C.CLASS_ID ',
-'    AND PC.SITE_ID=:P83_BRANCHES',
+'    AND PC.SITE_ID=:APP_SITE_ID',
 '    AND PC.STUDENT_ID= NVL(:P83_STUDENT_ID,PC.STUDENT_ID)',
 '    order by CONTRACT_ID desc',
 '    ;'))
 ,p_ajax_enabled=>'Y'
-,p_ajax_items_to_submit=>'P83_STUDENT_ID,P83_BRANCHES'
+,p_ajax_items_to_submit=>'P83_STUDENT_ID'
 ,p_lazy_loading=>false
 ,p_query_row_template=>2538654340625403440
 ,p_query_num_rows=>50
@@ -63859,59 +63518,16 @@ wwv_flow_imp_page.create_page_item(
 ,p_lov=>wwv_flow_string.join(wwv_flow_t_varchar2(
 'SELECT STUDENT_ID,STUDENT_NAME||'' ''||LAST_NAME STUDENT_NAME',
 '  FROM STUDENTS S',
-' WHERE S.SITE_ID=:P83_BRANCHES ',
+' WHERE S.SITE_ID=:APP_SITE_ID ',
 ';',
 ''))
 ,p_lov_display_null=>'YES'
-,p_lov_cascade_parent_items=>'P83_BRANCHES'
-,p_ajax_optimize_refresh=>'Y'
 ,p_cSize=>30
 ,p_begin_on_new_line=>'N'
 ,p_field_template=>1609121967514267634
 ,p_item_template_options=>'#DEFAULT#'
 ,p_is_persistent=>'N'
 ,p_lov_display_extra=>'YES'
-,p_attributes=>wwv_flow_t_plugin_attributes(wwv_flow_t_varchar2(
-  'case_sensitive', 'N',
-  'display_as', 'POPUP',
-  'fetch_on_search', 'N',
-  'initial_fetch', 'FIRST_ROWSET',
-  'manual_entry', 'N',
-  'match_type', 'CONTAINS',
-  'min_chars', '0')).to_clob
-);
-wwv_flow_imp_page.create_page_item(
- p_id=>wwv_flow_imp.id(49781196161006553926)
-,p_name=>'P83_BRANCHES'
-,p_item_sequence=>20
-,p_item_plug_id=>wwv_flow_imp.id(49781196841896553933)
-,p_use_cache_before_default=>'NO'
-,p_item_default=>'APP_SITE_ID'
-,p_item_default_type=>'ITEM'
-,p_prompt=>'Branches'
-,p_display_as=>'NATIVE_POPUP_LOV'
-,p_lov=>wwv_flow_string.join(wwv_flow_t_varchar2(
-'SELECT DISTINCT SITE_NAME,SITE_ID',
-'  FROM(',
-'        SELECT S.SITE_NAME,ARB.SITE_ID',
-'          FROM ASSIGN_ROLE_USER ARU,ASSIGN_ROLE_BRANCH ARB,SITES S',
-'           WHERE ARU.APP_USER=:APP_USER',
-'             AND ARU.ROLE_ID = ARB.ROLE_ID',
-'             AND arb.SITE_ID = s.SITE_ID',
-'        UNION ALL  ',
-'        SELECT S.SITE_NAME,A.SITE_ID ',
-'          FROM APPLICATION_USER A, SITES S    ',
-'         WHERE A.SITE_ID=S.SITE_ID',
-'           AND UPPER(A.APP_USER)=:APP_USER  ',
-'  )      ',
-'ORDER BY SITE_NAME    ',
-''))
-,p_cSize=>30
-,p_display_when_type=>'NEVER'
-,p_field_template=>1609121967514267634
-,p_item_template_options=>'#DEFAULT#'
-,p_is_persistent=>'N'
-,p_lov_display_extra=>'NO'
 ,p_attributes=>wwv_flow_t_plugin_attributes(wwv_flow_t_varchar2(
   'case_sensitive', 'N',
   'display_as', 'POPUP',
@@ -63966,7 +63582,7 @@ wwv_flow_imp_page.create_page_da_event(
 ,p_name=>'REFRESH'
 ,p_event_sequence=>20
 ,p_triggering_element_type=>'ITEM'
-,p_triggering_element=>'P83_BRANCHES,P83_STUDENT_ID'
+,p_triggering_element=>'P83_STUDENT_ID'
 ,p_bind_type=>'bind'
 ,p_execution_type=>'IMMEDIATE'
 ,p_bind_event_type=>'change'
@@ -66183,7 +65799,7 @@ wwv_flow_imp_page.create_report_region(
 'WHERE P.STUDENT_ID = S.STUDENT_ID',
 ' AND  P.SITE_ID = S.SITE_ID',
 ' AND  P.SUBJECT_ID = SP.SUBJECT_ID',
-' AND P.SITE_ID = :P87_BRANCHES',
+' AND P.SITE_ID = :APP_SITE_ID--:P87_BRANCHES',
 ' AND P.STUDENT_ID = NVL(:P87_ADMISSION_NO,P.STUDENT_ID)',
 ' AND P.PROGRESS_TYPE = ''W''',
 ' AND (',
@@ -66197,7 +65813,7 @@ wwv_flow_imp_page.create_report_region(
 '    )',
 ' ORDER BY P.SP_ID DESC'))
 ,p_ajax_enabled=>'Y'
-,p_ajax_items_to_submit=>'P87_BRANCHES,P87_ADMISSION_NO'
+,p_ajax_items_to_submit=>'P87_ADMISSION_NO'
 ,p_lazy_loading=>false
 ,p_query_row_template=>2538654340625403440
 ,p_query_num_rows=>50
@@ -66308,47 +65924,6 @@ wwv_flow_imp_page.create_page_button(
 ,p_icon_css_classes=>'fa-search'
 );
 wwv_flow_imp_page.create_page_item(
- p_id=>wwv_flow_imp.id(49781197820748553943)
-,p_name=>'P87_BRANCHES'
-,p_item_sequence=>10
-,p_item_plug_id=>wwv_flow_imp.id(49781197799357553942)
-,p_use_cache_before_default=>'NO'
-,p_item_default=>'APP_SITE_ID'
-,p_item_default_type=>'ITEM'
-,p_prompt=>'Branches'
-,p_display_as=>'NATIVE_POPUP_LOV'
-,p_lov=>wwv_flow_string.join(wwv_flow_t_varchar2(
-'SELECT DISTINCT SITE_NAME,SITE_ID',
-'  FROM(',
-'        SELECT S.SITE_NAME,ARB.SITE_ID',
-'          FROM ASSIGN_ROLE_USER ARU,ASSIGN_ROLE_BRANCH ARB,SITES S',
-'           WHERE ARU.APP_USER=:APP_USER',
-'             AND ARU.ROLE_ID = ARB.ROLE_ID',
-'             AND arb.SITE_ID = s.SITE_ID',
-'        UNION ALL  ',
-'        SELECT S.SITE_NAME,A.SITE_ID ',
-'          FROM APPLICATION_USER A, SITES S    ',
-'         WHERE A.SITE_ID=S.SITE_ID',
-'           AND UPPER(A.APP_USER)=:APP_USER  ',
-'  )      ',
-'ORDER BY SITE_NAME    ',
-''))
-,p_cSize=>30
-,p_display_when_type=>'NEVER'
-,p_field_template=>1609121967514267634
-,p_item_template_options=>'#DEFAULT#'
-,p_is_persistent=>'N'
-,p_lov_display_extra=>'NO'
-,p_attributes=>wwv_flow_t_plugin_attributes(wwv_flow_t_varchar2(
-  'case_sensitive', 'N',
-  'display_as', 'POPUP',
-  'fetch_on_search', 'N',
-  'initial_fetch', 'FIRST_ROWSET',
-  'manual_entry', 'N',
-  'match_type', 'CONTAINS',
-  'min_chars', '0')).to_clob
-);
-wwv_flow_imp_page.create_page_item(
  p_id=>wwv_flow_imp.id(49781197956141553944)
 ,p_name=>'P87_ADMISSION_NO'
 ,p_item_sequence=>20
@@ -66360,12 +65935,10 @@ wwv_flow_imp_page.create_page_item(
 ,p_lov=>wwv_flow_string.join(wwv_flow_t_varchar2(
 'SELECT STUDENT_ID,STUDENT_NAME||'' ''||LAST_NAME STUDENT_NAME',
 '  FROM STUDENTS S',
-' WHERE S.SITE_ID=:P87_BRANCHES ',
+' WHERE S.SITE_ID=:APP_SITE_ID ',
 ';',
 ''))
 ,p_lov_display_null=>'YES'
-,p_lov_cascade_parent_items=>'P87_BRANCHES'
-,p_ajax_optimize_refresh=>'Y'
 ,p_cSize=>30
 ,p_begin_on_new_line=>'N'
 ,p_field_template=>1609121967514267634
@@ -66386,7 +65959,7 @@ wwv_flow_imp_page.create_page_da_event(
 ,p_name=>'REFRESH'
 ,p_event_sequence=>10
 ,p_triggering_element_type=>'ITEM'
-,p_triggering_element=>'P87_BRANCHES,P87_ADMISSION_NO'
+,p_triggering_element=>'P87_ADMISSION_NO'
 ,p_bind_type=>'bind'
 ,p_execution_type=>'IMMEDIATE'
 ,p_bind_event_type=>'change'
@@ -66684,20 +66257,20 @@ wwv_flow_imp_page.create_report_region(
 '              AND F.SITE_ID(+)   =SFC.SITE_ID',
 '              AND TO_CHAR(F.REMINDER_DATE(+),''MM-YYYY'')=TO_CHAR(TO_DATE(SFC.FEE_MONTH, ''MM-YYYY''), ''MM-YYYY'')*/',
 '              --AND SFC.STUDENT_ID = ''K301''',
-'             AND SFC.SITE_ID = :P88_BRANCHES',
+'             AND SFC.STUDENT_ID=NVL(:P88_STUDENT_ID,SFC.STUDENT_ID)',
+'             AND SFC.SITE_ID = :APP_SITE_ID',
 '            GROUP BY SFC.FEE_MONTH, S.STAGE, SFC.STUDENT_ID, S.STUDENT_NAME, S.LAST_NAME,S.STUDENT_TYPE,S.STATUS,S.CLASS_ID,C.CLASS_NAME,SFC.SITE_ID, ST.SITE_NAME, SFC.MONTHLY_FEE',
 '            ORDER BY TO_DATE(SFC.FEE_MONTH, ''MM-YYYY'') ASC',
 '          )A',
 '        )B',
 '   )',
-'WHERE STUDENT_ID=NVL(:P88_STUDENT_ID,STUDENT_ID)',
-'  AND TO_CHAR(TO_DATE(FEE_MONTH, ''MM-YYYY''), ''MON-YYYY'') =NVL(TO_CHAR(TO_DATE(:P88_FEE_MONTH, ''MM-YYYY''), ''MON-YYYY'') ,TO_CHAR(TO_DATE(FEE_MONTH, ''MM-YYYY''), ''MON-YYYY''))',
+'WHERE TO_CHAR(TO_DATE(FEE_MONTH, ''MM-YYYY''), ''MON-YYYY'') =NVL(TO_CHAR(TO_DATE(:P88_FEE_MONTH, ''MM-YYYY''), ''MON-YYYY'') ,TO_CHAR(TO_DATE(FEE_MONTH, ''MM-YYYY''), ''MON-YYYY''))',
 '  AND ((:P88_FEE_STATUS=''P'' AND (CLOSING_BALANCE > 0)) OR (:P88_FEE_STATUS=''A'' AND (CLOSING_BALANCE < 0)) OR :P88_FEE_STATUS IS NULL)    ',
 'ORDER BY STUDENT_ID,SORTED_FEE_MONTH ASC,DENSE_RANK() OVER (',
 '                                 ORDER BY STUDENT_ID,SORTED_FEE_MONTH',
 '                               )'))
 ,p_ajax_enabled=>'Y'
-,p_ajax_items_to_submit=>'P88_STUDENT_ID,P88_FEE_MONTH,P88_FEE_STATUS,P88_BRANCHES'
+,p_ajax_items_to_submit=>'P88_STUDENT_ID,P88_FEE_MONTH,P88_FEE_STATUS'
 ,p_lazy_loading=>true
 ,p_query_row_template=>2538654340625403440
 ,p_query_num_rows=>15
@@ -67419,6 +66992,7 @@ wwv_flow_imp_page.create_page_plug(
 '              AND S.SITE_ID = SFC.SITE_ID',
 '              AND TO_CHAR(TO_DATE(SFC.FEE_MONTH, ''MM-YYYY''), ''MM-YYYY'') = TO_CHAR(SYSDATE, ''MM-YYYY'')',
 '            WHERE S.SITE_ID = :APP_SITE_ID',
+'             AND S.STUDENT_ID=NVL(:P88_STUDENT_ID,S.STUDENT_ID)',
 '              --AND S.STATUS=''A''',
 '            GROUP BY S.STAGE,S.ADMISSION_DATE,SFC.FEE_MONTH,S.STUDENT_ID,S.STUDENT_NAME,S.LAST_NAME,S.STUDENT_TYPE,S.STATUS,S.SITE_ID,C.CLASS_NAME,SFC.MONTHLY_FEE',
 '          ) A',
@@ -67429,8 +67003,7 @@ wwv_flow_imp_page.create_page_plug(
 '          AND F.FEE_START_DATE <= TRUNC(SYSDATE)',
 '          )',
 '  )  ',
-' WHERE STUDENT_ID=NVL(:P88_STUDENT_ID,STUDENT_ID)',
-'   AND (STATUS = ''Active'' OR CLOSING_BALANCE <> 0 AND FEE_MONTH IS NOT NULL)',
+'   WHERE (STATUS = ''Active'' OR CLOSING_BALANCE <> 0 AND FEE_MONTH IS NOT NULL)',
 '   AND ((:P88_FEE_STATUS=''P'' AND (CLOSING_BALANCE > 0)) OR (:P88_FEE_STATUS=''A'' AND (CLOSING_BALANCE < 0)) OR :P88_FEE_STATUS IS NULL)      ',
 'ORDER BY CASE',
 '            WHEN STUDENT_ID LIKE ''K%'' THEN 1',
@@ -67442,7 +67015,7 @@ wwv_flow_imp_page.create_page_plug(
 '',
 ''))
 ,p_plug_source_type=>'NATIVE_IR'
-,p_ajax_items_to_submit=>'P88_STUDENT_ID,P88_FEE_STATUS'
+,p_ajax_items_to_submit=>'P88_STUDENT_ID,P88_FEE_MONTH,P88_FEE_STATUS'
 ,p_prn_content_disposition=>'ATTACHMENT'
 ,p_prn_units=>'INCHES'
 ,p_prn_paper_size=>'LETTER'
@@ -68375,11 +67948,9 @@ wwv_flow_imp_page.create_page_item(
 ,p_lov=>wwv_flow_string.join(wwv_flow_t_varchar2(
 'SELECT STUDENT_ID,STUDENT_NAME||'' ''||LAST_NAME STUDENT_NAME',
 '  FROM STUDENTS S',
-' WHERE S.SITE_ID=:P88_BRANCHES '))
+' WHERE S.SITE_ID=:APP_SITE_ID '))
 ,p_lov_display_null=>'YES'
 ,p_lov_null_text=>'All'
-,p_lov_cascade_parent_items=>'P88_BRANCHES'
-,p_ajax_optimize_refresh=>'Y'
 ,p_cSize=>30
 ,p_begin_on_new_line=>'N'
 ,p_colspan=>3
@@ -68509,55 +68080,12 @@ wwv_flow_imp_page.create_page_item(
   'page_action_on_selection', 'NONE')).to_clob
 ,p_ai_enabled=>false
 );
-wwv_flow_imp_page.create_page_item(
- p_id=>wwv_flow_imp.id(119437924182814831674)
-,p_name=>'P88_BRANCHES'
-,p_item_sequence=>40
-,p_item_plug_id=>wwv_flow_imp.id(91819431233009281073)
-,p_use_cache_before_default=>'NO'
-,p_item_default=>'APP_SITE_ID'
-,p_item_default_type=>'ITEM'
-,p_prompt=>'Branches'
-,p_display_as=>'NATIVE_POPUP_LOV'
-,p_lov=>wwv_flow_string.join(wwv_flow_t_varchar2(
-'SELECT DISTINCT SITE_NAME,SITE_ID',
-'  FROM(',
-'        SELECT S.SITE_NAME,ARB.SITE_ID',
-'          FROM ASSIGN_ROLE_USER ARU,ASSIGN_ROLE_BRANCH ARB,SITES S',
-'           WHERE ARU.APP_USER=:APP_USER',
-'             AND ARU.ROLE_ID = ARB.ROLE_ID',
-'             AND arb.SITE_ID = s.SITE_ID',
-'        UNION ALL  ',
-'        SELECT S.SITE_NAME,A.SITE_ID ',
-'          FROM APPLICATION_USER A, SITES S    ',
-'         WHERE A.SITE_ID=S.SITE_ID',
-'           AND UPPER(A.APP_USER)=:APP_USER  ',
-'  )      ',
-'ORDER BY SITE_NAME    ',
-''))
-,p_cSize=>30
-,p_begin_on_new_line=>'N'
-,p_display_when_type=>'NEVER'
-,p_field_template=>1609121967514267634
-,p_item_template_options=>'#DEFAULT#'
-,p_warn_on_unsaved_changes=>'I'
-,p_is_persistent=>'N'
-,p_lov_display_extra=>'NO'
-,p_attributes=>wwv_flow_t_plugin_attributes(wwv_flow_t_varchar2(
-  'case_sensitive', 'N',
-  'display_as', 'POPUP',
-  'fetch_on_search', 'N',
-  'initial_fetch', 'FIRST_ROWSET',
-  'manual_entry', 'N',
-  'match_type', 'CONTAINS',
-  'min_chars', '0')).to_clob
-);
 wwv_flow_imp_page.create_page_da_event(
  p_id=>wwv_flow_imp.id(69656752735574277785)
 ,p_name=>'Refresh Region'
 ,p_event_sequence=>10
 ,p_triggering_element_type=>'ITEM'
-,p_triggering_element=>'P88_CLASS_ID,P88_STUDENT_ID,P88_FEE_MONTH,P88_BRANCHES'
+,p_triggering_element=>'P88_CLASS_ID,P88_STUDENT_ID,P88_FEE_MONTH'
 ,p_bind_type=>'bind'
 ,p_execution_type=>'IMMEDIATE'
 ,p_bind_event_type=>'change'

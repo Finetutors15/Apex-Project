@@ -33,7 +33,7 @@ prompt APPLICATION 246682 - Fine Tutors
 -- Application Export:
 --   Application:     246682
 --   Name:            Fine Tutors
---   Date and Time:   09:14 Friday December 12, 2025
+--   Date and Time:   16:01 Sunday December 14, 2025
 --   Exported By:     MIANSAUED786@GMAIL.COM
 --   Flashback:       0
 --   Export Type:     Application Export
@@ -112,7 +112,7 @@ wwv_imp_workspace.create_flow(
 ,p_substitution_value_01=>'Fine Tutors'
 ,p_file_prefix => nvl(wwv_flow_application_install.get_static_app_file_prefix,'')
 ,p_files_version=>269
-,p_version_scn=>15682469245080
+,p_version_scn=>15683368578469
 ,p_print_server_type=>'INSTANCE'
 ,p_file_storage=>'DB'
 ,p_is_pwa=>'Y'
@@ -2329,7 +2329,7 @@ wwv_flow_imp_shared.create_list(
  p_id=>wwv_flow_imp.id(15575769199269332150)
 ,p_name=>'Navigation Bar'
 ,p_list_status=>'PUBLIC'
-,p_version_scn=>15682212492568
+,p_version_scn=>15683365172491
 );
 wwv_flow_imp_shared.create_list_item(
  p_id=>wwv_flow_imp.id(15576436303173332539)
@@ -2384,6 +2384,24 @@ wwv_flow_imp_shared.create_list_item(
 ,p_list_item_link_text=>'Branches'
 ,p_list_item_link_target=>'f?p=&APP_ID.:105:&SESSION.::&DEBUG.::::'
 ,p_list_item_icon=>'fa-square-selected-o'
+,p_list_item_disp_cond_type=>'FUNCTION_BODY'
+,p_list_item_disp_condition=>wwv_flow_string.join(wwv_flow_t_varchar2(
+'DECLARE  ',
+'  V_CNT NUMBER;',
+'BEGIN',
+'  SELECT COUNT(*) INTO V_CNT',
+'    FROM ASSIGN_ROLE_USER ARU,ASSIGN_ROLE_BRANCH ARB,SITES S',
+'   WHERE ARU.APP_USER=:APP_USER',
+'     AND ARU.ROLE_ID = ARB.ROLE_ID',
+'     AND arb.SITE_ID = s.SITE_ID',
+';',
+'  IF V_CNT >= 1 THEN',
+'    RETURN TRUE;',
+'  ELSE',
+'   RETURN FALSE;',
+'  END IF;',
+'END;'))
+,p_list_item_disp_condition2=>'PLSQL'
 ,p_list_item_current_type=>'TARGET_PAGE'
 );
 wwv_flow_imp_shared.create_list_item(
@@ -36056,6 +36074,7 @@ wwv_flow_imp_page.create_page_item(
 ,p_lov=>wwv_flow_string.join(wwv_flow_t_varchar2(
 'SELECT SITE_NAME,SITE_ID',
 '  FROM SITES',
+' WHERE SITE_ID <> :APP_SITE_ID ',
 '  ORDER BY SITE_NAME',
 '  ;'))
 ,p_field_template=>1609121967514267634
@@ -65553,12 +65572,20 @@ wwv_flow_imp_page.create_page_item(
 ,p_item_sequence=>120
 ,p_item_plug_id=>wwv_flow_imp.id(82375862527694672118)
 ,p_item_source_plug_id=>wwv_flow_imp.id(82375862527694672118)
+,p_prompt=>'Class Work'
 ,p_source=>'CLASS_WORKS'
 ,p_source_type=>'REGION_SOURCE_COLUMN'
-,p_display_as=>'NATIVE_HIDDEN'
+,p_display_as=>'NATIVE_TEXTAREA'
+,p_cSize=>30
+,p_cHeight=>5
+,p_field_template=>1609121967514267634
+,p_item_template_options=>'#DEFAULT#'
 ,p_is_persistent=>'N'
 ,p_attributes=>wwv_flow_t_plugin_attributes(wwv_flow_t_varchar2(
-  'value_protected', 'N')).to_clob
+  'auto_height', 'N',
+  'character_counter', 'N',
+  'resizable', 'Y',
+  'trim_spaces', 'BOTH')).to_clob
 );
 wwv_flow_imp_page.create_page_item(
  p_id=>wwv_flow_imp.id(38894436144502446227)
@@ -68994,7 +69021,9 @@ unistr('        ''  <h4 style="color:#27ae60;">\2705 What Went Well (WWW)</h4>''
 '        ''  <p>'' || NVL(r.WHAT_WANT_WELL, ''-'') || ''</p>'' ||',
 unistr('        ''  <h4 style="color:#e67e22; margin-top:20px;">\D83D\DD01 Even Better If (EBI)</h4>'' ||'),
 '        ''  <p>'' || NVL(r.EVEN_BETTER_IF, ''-'') || ''</p>'' ||',
-unistr('        ''  <h4 style="color:#c0392b; margin-top:20px;">\D83C\DFE0 Homeworks</h4>'' ||'),
+unistr('        ''  <h4 style="color:#c0392b; margin-top:20px;">\D83C\DFEB Class Works</h4>'' ||'),
+'        ''  <p>'' || NVL(r.CLASS_WORKS, ''-'') || ''</p>'' ||',
+unistr('        ''  <h4 style="color:#c0392b; margin-top:20px;">\D83C\DFE0 Home Works</h4>'' ||'),
 '        ''  <p>'' || NVL(r.HOME_WORKS, ''-'') || ''</p>'' ||',
 '',
 '        ''<p style="text-align:left; color:#7f8c8d; font-size:13px; margin-top:30px;">Regards</p>'' ||',
@@ -69034,9 +69063,7 @@ wwv_flow_imp_page.create_page_item(
 ,p_name=>'P89_STUDENT_ID'
 ,p_item_sequence=>10
 ,p_item_plug_id=>wwv_flow_imp.id(45517020571344944112)
-,p_use_cache_before_default=>'NO'
 ,p_display_as=>'NATIVE_HIDDEN'
-,p_is_persistent=>'N'
 ,p_attributes=>wwv_flow_t_plugin_attributes(wwv_flow_t_varchar2(
   'value_protected', 'N')).to_clob
 );
@@ -69045,9 +69072,7 @@ wwv_flow_imp_page.create_page_item(
 ,p_name=>'P89_SP_ID'
 ,p_item_sequence=>20
 ,p_item_plug_id=>wwv_flow_imp.id(45517020571344944112)
-,p_use_cache_before_default=>'NO'
 ,p_display_as=>'NATIVE_HIDDEN'
-,p_is_persistent=>'N'
 ,p_attributes=>wwv_flow_t_plugin_attributes(wwv_flow_t_varchar2(
   'value_protected', 'N')).to_clob
 );
@@ -75037,7 +75062,8 @@ wwv_flow_imp_page.create_page_item(
 '          FROM APPLICATION_USER A, SITES S    ',
 '         WHERE A.SITE_ID=S.SITE_ID',
 '           AND UPPER(A.APP_USER)=:APP_USER  ',
-'  )      ',
+'  )    ',
+'WHERE SITE_ID <> :APP_SITE_ID    ',
 'ORDER BY SITE_NAME    ',
 ''))
 ,p_cSize=>30

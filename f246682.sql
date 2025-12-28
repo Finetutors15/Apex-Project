@@ -33,15 +33,15 @@ prompt APPLICATION 246682 - Fine Tutors
 -- Application Export:
 --   Application:     246682
 --   Name:            Fine Tutors
---   Date and Time:   18:29 Sunday December 14, 2025
+--   Date and Time:   17:01 Sunday December 28, 2025
 --   Exported By:     MIANSAUED786@GMAIL.COM
 --   Flashback:       0
 --   Export Type:     Application Export
 --     Pages:                    118
---       Items:                  633
---       Validations:             74
+--       Items:                  635
+--       Validations:             75
 --       Processes:              146
---       Regions:                266
+--       Regions:                268
 --       Buttons:                328
 --       Dynamic Actions:        310
 --     Shared Components:
@@ -112,14 +112,11 @@ wwv_imp_workspace.create_flow(
 ,p_substitution_value_01=>'Fine Tutors'
 ,p_file_prefix => nvl(wwv_flow_application_install.get_static_app_file_prefix,'')
 ,p_files_version=>269
-,p_version_scn=>15683409033349
+,p_version_scn=>15688937153366
 ,p_print_server_type=>'INSTANCE'
 ,p_file_storage=>'DB'
 ,p_is_pwa=>'Y'
-,p_pwa_is_installable=>'Y'
-,p_pwa_manifest_display=>'standalone'
-,p_pwa_manifest_orientation=>'any'
-,p_pwa_apple_status_bar_style=>'default'
+,p_pwa_is_installable=>'N'
 ,p_pwa_is_push_enabled=>'Y'
 ,p_pwa_push_credential_id=>wwv_flow_imp.id(15576458708881332852)
 );
@@ -164,7 +161,7 @@ wwv_flow_imp_shared.create_list(
  p_id=>wwv_flow_imp.id(15575767932923332147)
 ,p_name=>'Navigation Menu'
 ,p_list_status=>'PUBLIC'
-,p_version_scn=>15682212773184
+,p_version_scn=>15686999725271
 );
 wwv_flow_imp_shared.create_list_item(
  p_id=>wwv_flow_imp.id(15575782217124332167)
@@ -1094,7 +1091,7 @@ wwv_flow_imp_shared.create_list_item(
 '   AND RP.PERMISSION_ID IN (60,76);',
 '',
 '   IF V_PERM > 0 THEN',
-'      RETURN TRUE;',
+'      RETURN False;--TRUE;',
 '   ELSE',
 '      RETURN FALSE;',
 '   END IF;',
@@ -1126,7 +1123,7 @@ wwv_flow_imp_shared.create_list_item(
 '   AND RP.PERMISSION_ID IN (60,78);',
 '',
 '   IF V_PERM > 0 THEN',
-'      RETURN TRUE;',
+'      RETURN FALSE;--TRUE;',
 '   ELSE',
 '      RETURN FALSE;',
 '   END IF;',
@@ -1760,7 +1757,7 @@ wwv_flow_imp_shared.create_list_item(
 wwv_flow_imp_shared.create_list_item(
  p_id=>wwv_flow_imp.id(115452680324049208451)
 ,p_list_item_display_sequence=>163
-,p_list_item_link_text=>'In Active Fee Status'
+,p_list_item_link_text=>'Inactive Fee Status'
 ,p_list_item_link_target=>'f?p=&APP_ID.:100:&SESSION.::&DEBUG.::::'
 ,p_list_item_icon=>'fa-table'
 ,p_list_item_disp_cond_type=>'FUNCTION_BODY'
@@ -2329,16 +2326,7 @@ wwv_flow_imp_shared.create_list(
  p_id=>wwv_flow_imp.id(15575769199269332150)
 ,p_name=>'Navigation Bar'
 ,p_list_status=>'PUBLIC'
-,p_version_scn=>15683365172491
-);
-wwv_flow_imp_shared.create_list_item(
- p_id=>wwv_flow_imp.id(15576436303173332539)
-,p_list_item_display_sequence=>10
-,p_list_item_link_text=>'Install App'
-,p_list_item_link_target=>'#action$a-pwa-install'
-,p_list_item_icon=>'fa-cloud-download'
-,p_list_text_02=>'a-pwaInstall'
-,p_list_item_current_type=>'NEVER'
+,p_version_scn=>15687007241458
 );
 wwv_flow_imp_shared.create_list_item(
  p_id=>wwv_flow_imp.id(15576436690114332539)
@@ -13378,7 +13366,7 @@ wwv_flow_imp_shared.create_list_of_values(
 '   AND E.SUBJECT_ID=S.SUBJECT_ID',
 '   AND E.STATUS=''A''',
 '   --AND E.SUBJECT_ID=NVL(:P45_SUBJECT_ID,:P55_SUBJECT_ID)',
-'   AND E.SITE_ID=:APP_SITE_ID--NVL(:P45_SITE_ID,:P55_SITE_ID)'))
+'  -- AND E.SITE_ID=:APP_SITE_ID--NVL(:P45_SITE_ID,:P55_SITE_ID)'))
 ,p_source_type=>'SQL'
 ,p_location=>'LOCAL'
 ,p_return_column_name=>'EMPLOYEE_ID'
@@ -13386,7 +13374,7 @@ wwv_flow_imp_shared.create_list_of_values(
 ,p_group_sort_direction=>'ASC'
 ,p_default_sort_column_name=>'EMPLOYEE_ID'
 ,p_default_sort_direction=>'ASC'
-,p_version_scn=>15658779271725
+,p_version_scn=>15688936868272
 );
 wwv_flow_imp_shared.create_list_of_values_cols(
  p_id=>wwv_flow_imp.id(19268873238862823338)
@@ -15710,129 +15698,417 @@ wwv_flow_imp_page.create_page(
 ,p_alias=>'HOME'
 ,p_step_title=>'Fine Tutors'
 ,p_autocomplete_on_off=>'OFF'
+,p_inline_css=>wwv_flow_string.join(wwv_flow_t_varchar2(
+'/*----no of admission region css*/',
+'#R123992658951355429629{',
+'    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15) !important;',
+'}',
+'',
+'/* 1. REGION & HEADER: PURE WHITE */',
+'#student_region, ',
+'#student_region .t-Region-header, ',
+'#student_region .t-Region-body {',
+'    background: #ffffff !important;',
+'    border: none !important;',
+'    box-shadow: none !important;',
+'}',
+'',
+'#student_region .t-Region-title {',
+'    color: #000000 !important;',
+'    font-weight: 800 !important;',
+'    font-size: 1.8rem !important;',
+'}',
+'',
+'/* 2. BADGE LIST ITEM: COLORS & DESIGN */',
+'.t-BadgeList-item {',
+'    border-radius: 16px !important;',
+'    overflow: hidden !important;',
+'    position: relative !important;',
+'    min-width: 200px !important;',
+'    transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1) !important;',
+'    /* Grey/Black Shadow */',
+'    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15) !important;',
+'}',
+'',
+'/* 3. HOVER: LARGE ZOOM & DEEP BLACK SHADOW */',
+'.t-BadgeList-item:hover {',
+'    transform: scale(1.1) translateY(-10px) !important;',
+'    box-shadow: 0 30px 60px rgba(0, 0, 0, 0.45) !important;',
+'    z-index: 100 !important;',
+'}',
+'',
+'/* 4. INDIVIDUAL COLORS (Matches your picture) */',
+'.t-BadgeList-item:nth-child(4n+1) .t-BadgeList-wrap { background: linear-gradient(135deg, #7b1fa2, #4a148c) !important; }',
+'.t-BadgeList-item:nth-child(4n+2) .t-BadgeList-wrap { background: linear-gradient(135deg, #ff7043, #e64a19) !important; }',
+'.t-BadgeList-item:nth-child(4n+3) .t-BadgeList-wrap { background: linear-gradient(135deg, #26a69a, #00796b) !important; }',
+'.t-BadgeList-item:nth-child(4n+4) .t-BadgeList-wrap { background: linear-gradient(135deg, #42a5f5, #1976d2) !important; }',
+'',
+'/* 5. TEXT STYLING (White & Aligned Right) */',
+'.t-BadgeList-wrap {',
+'    padding: 25px !important;',
+'    display: flex !important;',
+'    flex-direction: column !important;',
+'    align-items: flex-end !important;',
+'    border: none !important;',
+'}',
+'',
+'.t-BadgeList-label {',
+'    color: rgba(255, 255, 255, 0.9) !important;',
+'    font-size: 0.9rem !important;',
+'    font-weight: 600 !important;',
+'    text-transform: uppercase !important;',
+'    order: 2; /* Moves text below the number */',
+'}',
+'',
+'.t-BadgeList-value {',
+'    color: #ffffff !important;',
+'    font-size: 2.8rem !important;',
+'    font-weight: 900 !important;',
+'    margin-bottom: 5px !important;',
+'    order: 1; /* Moves number to the top */',
+'}',
+'',
+'/* 6. THE WAVE EFFECT */',
+'.t-BadgeList-item::after {',
+'    content: '''';',
+'    position: absolute;',
+'    bottom: -60px;',
+'    left: -10%;',
+'    width: 120%;',
+'    height: 120px;',
+'    background: rgba(255, 255, 255, 0.15);',
+'    border-radius: 50%;',
+'    pointer-events: none;',
+'    z-index: 1;',
+'}',
+'',
+'/* Ensure text stays above the wave */',
+'.t-BadgeList-wrap * {',
+'    position: relative;',
+'    z-index: 2;',
+'}'))
 ,p_page_template_options=>'#DEFAULT#'
 ,p_protection_level=>'C'
 ,p_page_component_map=>'13'
 );
-wwv_flow_imp_page.create_report_region(
- p_id=>wwv_flow_imp.id(114250270090678734002)
-,p_name=>'STUDNET_CARD'
-,p_template=>4072358936313175081
-,p_display_sequence=>10
-,p_region_template_options=>'#DEFAULT#:t-Region--noPadding:t-Region--removeHeader js-removeLandmark:t-Region--noBorder:t-Region--scrollBody'
-,p_component_template_options=>'#DEFAULT#:u-colors:t-BadgeList--xlarge:t-BadgeList--dash:t-BadgeList--fixed'
-,p_source_type=>'NATIVE_SQL_REPORT'
-,p_query_type=>'SQL'
-,p_source=>wwv_flow_string.join(wwv_flow_t_varchar2(
-'SELECT SUM(Student_Active)Student_Active, SUM(Student_inactive)Student_inactive, SUM(Student_Pending)Student_Pending, SUM(Student_Alumni)Student_Alumni, SUM(Student_Archive)Student_Archive',
-'  FROM(',
-'        SELECT COUNT(*) Student_Active, NULL Student_inactive, NULL Student_Pending, NULL Student_Alumni, NULL Student_Archive',
-'          FROM STUDENTS S',
-'         WHERE S.STATUS = ''A''',
-'           AND S.SITE_ID = :APP_SITE_ID  ',
-'         UNION ALL',
-'          SELECT NULL Student_Active ,COUNT(*) Student_inactive, NULL Student_Pending, NULL Student_Alumni, NULL Student_Archive',
-'          FROM STUDENTS S',
-'         WHERE S.STATUS = ''I''',
-'           AND S.SITE_ID = :APP_SITE_ID  ',
-'         UNION ALL',
-'          SELECT NULL Student_Active, NULL Student_inactive, COUNT(*) Student_Pending, NULL Student_Alumni, NULL Student_Archive',
-'          FROM STUDENTS S',
-'         WHERE S.STATUS = ''P''',
-'           AND S.SITE_ID = :APP_SITE_ID  ',
-'          UNION ALL',
-'          SELECT NULL Student_Active, NULL Student_inactive, NULL Student_Pending, COUNT(*) Student_Alumni, NULL Student_Archive',
-'          FROM STUDENTS S',
-'         WHERE S.STATUS = ''AL''',
-'           AND S.SITE_ID = :APP_SITE_ID  ',
-'          UNION ALL',
-'          SELECT NULL Student_Active ,NULL Student_inactive, NULL Student_Pending, NULL Student_Alumni, COUNT(*) Student_Archive',
-'          FROM STUDENTS S',
-'         WHERE S.STATUS = ''AR''',
-'           AND S.SITE_ID = :APP_SITE_ID  ',
-'  )   '))
-,p_query_row_template=>2104643962563030528
-,p_query_num_rows=>15
-,p_query_options=>'DERIVED_REPORT_COLUMNS'
-,p_csv_output=>'N'
-,p_prn_output=>'N'
-,p_sort_null=>'L'
-,p_plug_query_strip_html=>'N'
-);
-wwv_flow_imp_page.create_report_columns(
- p_id=>wwv_flow_imp.id(114250272432363734026)
-,p_query_column_id=>1
-,p_column_alias=>'STUDENT_ACTIVE'
-,p_column_display_sequence=>10
-,p_column_heading=>'Student Active'
-,p_column_alignment=>'RIGHT'
-,p_heading_alignment=>'RIGHT'
-,p_disable_sort_column=>'N'
-,p_derived_column=>'N'
-,p_include_in_export=>'Y'
-);
-wwv_flow_imp_page.create_report_columns(
- p_id=>wwv_flow_imp.id(114250272579709734027)
-,p_query_column_id=>2
-,p_column_alias=>'STUDENT_INACTIVE'
-,p_column_display_sequence=>20
-,p_column_heading=>'Student Inactive'
-,p_column_alignment=>'RIGHT'
-,p_heading_alignment=>'RIGHT'
-,p_disable_sort_column=>'N'
-,p_derived_column=>'N'
-,p_include_in_export=>'Y'
-);
-wwv_flow_imp_page.create_report_columns(
- p_id=>wwv_flow_imp.id(114250272635863734028)
-,p_query_column_id=>3
-,p_column_alias=>'STUDENT_PENDING'
-,p_column_display_sequence=>30
-,p_column_heading=>'Student Pending'
-,p_column_alignment=>'RIGHT'
-,p_heading_alignment=>'RIGHT'
-,p_disable_sort_column=>'N'
-,p_derived_column=>'N'
-,p_include_in_export=>'Y'
-);
-wwv_flow_imp_page.create_report_columns(
- p_id=>wwv_flow_imp.id(114250272782993734029)
-,p_query_column_id=>4
-,p_column_alias=>'STUDENT_ALUMNI'
-,p_column_display_sequence=>40
-,p_column_heading=>'Student Alumni'
-,p_column_alignment=>'RIGHT'
-,p_heading_alignment=>'RIGHT'
-,p_disable_sort_column=>'N'
-,p_derived_column=>'N'
-,p_include_in_export=>'Y'
-);
-wwv_flow_imp_page.create_report_columns(
- p_id=>wwv_flow_imp.id(114250272841690734030)
-,p_query_column_id=>5
-,p_column_alias=>'STUDENT_ARCHIVE'
-,p_column_display_sequence=>50
-,p_column_heading=>'Student Archive'
-,p_column_alignment=>'RIGHT'
-,p_heading_alignment=>'RIGHT'
-,p_disable_sort_column=>'N'
-,p_derived_column=>'N'
-,p_include_in_export=>'Y'
-);
 wwv_flow_imp_page.create_page_plug(
- p_id=>wwv_flow_imp.id(114250273989083734041)
-,p_plug_name=>'STUDNET_CHART'
-,p_region_template_options=>'#DEFAULT#:t-Region--noPadding:t-Region--removeHeader js-removeLandmark:t-Region--scrollBody'
-,p_component_template_options=>'#DEFAULT#'
+ p_id=>wwv_flow_imp.id(116430630526812605528)
+,p_plug_name=>'STUDNET_TYPE'
+,p_title=>'No Of Registration'
+,p_region_template_options=>'#DEFAULT#:t-Region--noPadding:t-Region--noBorder:t-Region--scrollBody'
 ,p_escape_on_http_output=>'Y'
 ,p_plug_template=>4072358936313175081
-,p_plug_display_sequence=>20
-,p_location=>null
+,p_plug_display_sequence=>40
+,p_query_type=>'SQL'
+,p_plug_source=>wwv_flow_string.join(wwv_flow_t_varchar2(
+'SELECT SUM(No_of_Registration)No_of_Registration , ''Registration'' TITLE, SUM(No_of_UC)No_of_UC, ''UC'' TITLE1',
+'FROM (',
+'    SELECT COUNT(*) No_of_Registration, NULL No_of_UC',
+'    FROM STUDENTS S',
+'    WHERE S.SITE_ID = :APP_SITE_ID',
+'      AND S.STUDENT_TYPE = ''REG''',
+'',
+'    UNION ALL',
+'',
+'    SELECT  NULL No_of_Registration,COUNT(*) No_of_UC',
+'    FROM STUDENTS S',
+'    WHERE S.SITE_ID = :APP_SITE_ID',
+'      AND S.STUDENT_TYPE = ''UC''',
+'    ',
+')'))
 ,p_plug_source_type=>'NATIVE_JET_CHART'
 );
 wwv_flow_imp_page.create_jet_chart(
- p_id=>wwv_flow_imp.id(114250274555060734047)
-,p_region_id=>wwv_flow_imp.id(114250273989083734041)
+ p_id=>wwv_flow_imp.id(123631625495302747820)
+,p_region_id=>wwv_flow_imp.id(116430630526812605528)
+,p_chart_type=>'bar'
+,p_width=>'800'
+,p_height=>'400'
+,p_animation_on_display=>'auto'
+,p_animation_on_data_change=>'auto'
+,p_orientation=>'vertical'
+,p_data_cursor=>'auto'
+,p_data_cursor_behavior=>'auto'
+,p_hide_and_show_behavior=>'withRescale'
+,p_hover_behavior=>'dim'
+,p_stack=>'off'
+,p_connect_nulls=>'Y'
+,p_sorting=>'label-asc'
+,p_fill_multi_series_gaps=>true
+,p_zoom_and_scroll=>'off'
+,p_tooltip_rendered=>'Y'
+,p_show_series_name=>false
+,p_show_group_name=>true
+,p_show_value=>true
+,p_legend_rendered=>'on'
+,p_legend_position=>'auto'
+,p_legend_font_family=>'Times New Roman'
+,p_legend_font_style=>'normal'
+,p_legend_font_size=>'20'
+);
+wwv_flow_imp_page.create_jet_chart_series(
+ p_id=>wwv_flow_imp.id(123631625534291747821)
+,p_chart_id=>wwv_flow_imp.id(123631625495302747820)
+,p_seq=>10
+,p_name=>'NO OF REG'
+,p_location=>'REGION_SOURCE'
+,p_series_name_column_name=>'TITLE'
+,p_items_value_column_name=>'NO_OF_REGISTRATION'
+,p_items_label_column_name=>'TITLE'
+,p_color=>'#e9967a'
+,p_assigned_to_y2=>'off'
+,p_items_label_rendered=>true
+,p_items_label_position=>'auto'
+,p_items_label_font_size=>'22'
+,p_link_target=>'f?p=&APP_ID.:72:&SESSION.::&DEBUG.::P72_STUDENT_TYPE:REG'
+,p_link_target_type=>'REDIRECT_PAGE'
+);
+wwv_flow_imp_page.create_jet_chart_series(
+ p_id=>wwv_flow_imp.id(123631626476832747830)
+,p_chart_id=>wwv_flow_imp.id(123631625495302747820)
+,p_seq=>20
+,p_name=>'NO OF UC'
+,p_location=>'REGION_SOURCE'
+,p_series_name_column_name=>'TITLE1'
+,p_items_value_column_name=>'NO_OF_UC'
+,p_items_label_column_name=>'TITLE1'
+,p_color=>'#bba562'
+,p_assigned_to_y2=>'off'
+,p_items_label_rendered=>true
+,p_items_label_position=>'auto'
+,p_items_label_font_family=>'Courier'
+,p_items_label_font_style=>'normal'
+,p_items_label_font_size=>'22'
+,p_items_label_font_color=>'#000000'
+,p_link_target=>'f?p=&APP_ID.:72:&SESSION.::&DEBUG.::P72_STUDENT_TYPE:UC'
+,p_link_target_type=>'REDIRECT_PAGE'
+);
+wwv_flow_imp_page.create_jet_chart_axis(
+ p_id=>wwv_flow_imp.id(123631626270134747828)
+,p_chart_id=>wwv_flow_imp.id(123631625495302747820)
+,p_axis=>'x'
+,p_is_rendered=>'on'
+,p_format_scaling=>'auto'
+,p_scaling=>'linear'
+,p_baseline_scaling=>'zero'
+,p_major_tick_rendered=>'on'
+,p_minor_tick_rendered=>'off'
+,p_tick_label_rendered=>'on'
+,p_tick_label_rotation=>'auto'
+,p_tick_label_position=>'outside'
+);
+wwv_flow_imp_page.create_jet_chart_axis(
+ p_id=>wwv_flow_imp.id(123631626378748747829)
+,p_chart_id=>wwv_flow_imp.id(123631625495302747820)
+,p_axis=>'y'
+,p_is_rendered=>'on'
+,p_format_type=>'decimal'
+,p_decimal_places=>0
+,p_format_scaling=>'none'
+,p_scaling=>'linear'
+,p_baseline_scaling=>'zero'
+,p_position=>'auto'
+,p_major_tick_rendered=>'on'
+,p_minor_tick_rendered=>'off'
+,p_tick_label_rendered=>'on'
+);
+wwv_flow_imp_page.create_jet_chart_axis(
+ p_id=>wwv_flow_imp.id(123631626529064747831)
+,p_chart_id=>wwv_flow_imp.id(123631625495302747820)
+,p_axis=>'y2'
+,p_is_rendered=>'on'
+,p_format_scaling=>'auto'
+,p_scaling=>'linear'
+,p_baseline_scaling=>'zero'
+,p_position=>'auto'
+,p_major_tick_rendered=>'on'
+,p_minor_tick_rendered=>'off'
+,p_tick_label_rendered=>'on'
+,p_split_dual_y=>'auto'
+);
+wwv_flow_imp_page.create_page_plug(
+ p_id=>wwv_flow_imp.id(116430631792203605540)
+,p_plug_name=>'STAGES'
+,p_title=>'No of Students in Stages '
+,p_region_template_options=>'#DEFAULT#:t-CardsRegion--hideHeader js-addHiddenHeadingRoleDesc'
+,p_escape_on_http_output=>'Y'
+,p_plug_template=>2072724515482255512
+,p_plug_display_sequence=>50
+,p_plug_new_grid_row=>false
+,p_query_type=>'SQL'
+,p_plug_source=>wwv_flow_string.join(wwv_flow_t_varchar2(
+'SELECT SUM(Key_Stage_Student)Key_Stage_Student, ''KeyStage'' TITLE,SUM(GCSC_Student)GCSC_Student,''GCSC'' TITLE1,SUM(A_Level_Student)A_Level_Student,''A Level'' TITLE2',
+'FROM (',
+'   SELECT COUNT(*) Key_Stage_Student,NULL GCSC_Student,NULL A_Level_Student',
+'    FROM STUDENTS S',
+'    WHERE S.SITE_ID = :APP_SITE_ID',
+'      AND S.STAGE = ''K''',
+'    UNION ALL',
+'',
+'    SELECT  NULL Key_Stage_Student,COUNT(*) GCSC_Student,NULL A_Level_Student',
+'    FROM STUDENTS S',
+'    WHERE S.SITE_ID = :APP_SITE_ID',
+'      AND S.STAGE = ''G''',
+'    UNION ALL',
+'',
+'    SELECT   NULL Key_Stage_Student,NULL GCSC_Student,COUNT(*) A_Level_Student',
+'    FROM STUDENTS S',
+'    WHERE S.SITE_ID = :APP_SITE_ID',
+'      AND S.STAGE = ''A''',
+');'))
+,p_plug_source_type=>'NATIVE_JET_CHART'
+);
+wwv_flow_imp_page.create_jet_chart(
+ p_id=>wwv_flow_imp.id(123631626754437747833)
+,p_region_id=>wwv_flow_imp.id(116430631792203605540)
+,p_chart_type=>'bar'
+,p_title=>'No of Students in Stages '
+,p_height=>'400'
+,p_animation_on_display=>'auto'
+,p_animation_on_data_change=>'auto'
+,p_orientation=>'horizontal'
+,p_data_cursor=>'auto'
+,p_data_cursor_behavior=>'smooth'
+,p_hide_and_show_behavior=>'withRescale'
+,p_hover_behavior=>'dim'
+,p_stack=>'on'
+,p_stack_label=>'off'
+,p_connect_nulls=>'Y'
+,p_sorting=>'label-asc'
+,p_fill_multi_series_gaps=>true
+,p_zoom_and_scroll=>'off'
+,p_tooltip_rendered=>'Y'
+,p_show_series_name=>false
+,p_show_group_name=>true
+,p_show_value=>true
+,p_legend_rendered=>'on'
+,p_legend_position=>'auto'
+,p_legend_font_family=>'Times New Roman'
+,p_legend_font_style=>'normal'
+,p_legend_font_size=>'20'
+);
+wwv_flow_imp_page.create_jet_chart_series(
+ p_id=>wwv_flow_imp.id(123631626896584747834)
+,p_chart_id=>wwv_flow_imp.id(123631626754437747833)
+,p_seq=>10
+,p_name=>'KeyStage'
+,p_location=>'REGION_SOURCE'
+,p_items_value_column_name=>'KEY_STAGE_STUDENT'
+,p_items_label_column_name=>'TITLE'
+,p_color=>'#044b37'
+,p_assigned_to_y2=>'off'
+,p_items_label_rendered=>true
+,p_items_label_position=>'auto'
+,p_items_label_font_family=>'Times New Roman'
+,p_items_label_font_style=>'normal'
+,p_items_label_font_size=>'22'
+,p_items_label_font_color=>'#ffffff'
+,p_link_target=>'f?p=&APP_ID.:72:&SESSION.::&DEBUG.::P72_STAGES:K'
+,p_link_target_type=>'REDIRECT_PAGE'
+);
+wwv_flow_imp_page.create_jet_chart_series(
+ p_id=>wwv_flow_imp.id(123631627142926747837)
+,p_chart_id=>wwv_flow_imp.id(123631626754437747833)
+,p_seq=>20
+,p_name=>'GCSC'
+,p_location=>'REGION_SOURCE'
+,p_items_value_column_name=>'GCSC_STUDENT'
+,p_items_label_column_name=>'TITLE1'
+,p_color=>'#041749'
+,p_assigned_to_y2=>'off'
+,p_items_label_rendered=>true
+,p_items_label_position=>'auto'
+,p_items_label_font_family=>'Times New Roman'
+,p_items_label_font_style=>'normal'
+,p_items_label_font_size=>'22'
+,p_items_label_font_color=>'#ffffff'
+,p_link_target=>'f?p=&APP_ID.:72:&SESSION.::&DEBUG.::P72_STAGES:G'
+,p_link_target_type=>'REDIRECT_PAGE'
+);
+wwv_flow_imp_page.create_jet_chart_series(
+ p_id=>wwv_flow_imp.id(123631627276247747838)
+,p_chart_id=>wwv_flow_imp.id(123631626754437747833)
+,p_seq=>30
+,p_name=>'A Level'
+,p_location=>'REGION_SOURCE'
+,p_items_value_column_name=>'A_LEVEL_STUDENT'
+,p_items_label_column_name=>'TITLE2'
+,p_color=>'#ffddeb'
+,p_assigned_to_y2=>'off'
+,p_items_label_rendered=>true
+,p_items_label_position=>'auto'
+,p_items_label_font_family=>'Times New Roman'
+,p_items_label_font_style=>'normal'
+,p_items_label_font_size=>'22'
+,p_items_label_font_color=>'#ffffff'
+,p_link_target=>'f?p=&APP_ID.:72:&SESSION.::&DEBUG.::P72_STAGES:A'
+,p_link_target_type=>'REDIRECT_PAGE'
+);
+wwv_flow_imp_page.create_jet_chart_axis(
+ p_id=>wwv_flow_imp.id(123631626985541747835)
+,p_chart_id=>wwv_flow_imp.id(123631626754437747833)
+,p_axis=>'x'
+,p_is_rendered=>'on'
+,p_format_scaling=>'auto'
+,p_scaling=>'linear'
+,p_baseline_scaling=>'zero'
+,p_major_tick_rendered=>'on'
+,p_minor_tick_rendered=>'off'
+,p_tick_label_rendered=>'on'
+,p_tick_label_rotation=>'auto'
+,p_tick_label_position=>'outside'
+);
+wwv_flow_imp_page.create_jet_chart_axis(
+ p_id=>wwv_flow_imp.id(123631627067807747836)
+,p_chart_id=>wwv_flow_imp.id(123631626754437747833)
+,p_axis=>'y'
+,p_is_rendered=>'on'
+,p_format_type=>'decimal'
+,p_decimal_places=>0
+,p_format_scaling=>'none'
+,p_scaling=>'linear'
+,p_baseline_scaling=>'zero'
+,p_position=>'auto'
+,p_major_tick_rendered=>'on'
+,p_minor_tick_rendered=>'off'
+,p_tick_label_rendered=>'on'
+);
+wwv_flow_imp_page.create_page_plug(
+ p_id=>wwv_flow_imp.id(116430632630534605549)
+,p_plug_name=>'EMP_TYPES'
+,p_title=>'No Of  Employees'
+,p_region_template_options=>'#DEFAULT#:t-Region--noPadding:t-Region--noBorder:t-Region--scrollBody'
+,p_escape_on_http_output=>'Y'
+,p_plug_template=>4072358936313175081
+,p_plug_display_sequence=>60
+,p_plug_new_grid_row=>false
+,p_query_type=>'SQL'
+,p_plug_source=>wwv_flow_string.join(wwv_flow_t_varchar2(
+'SELECT SUM(Total_Staff) Total_Staff,''Total Staff'' TITLE,SUM(Teacher)Teacher ,''Teachers'' TITLE1, SUM(Supervisor) Supervisor,''Supervisor'' TITLE2',
+'FROM ( ',
+'     SELECT COUNT(*) Total_Staff, NULL Teacher,NULL Supervisor',
+'    FROM EMPLOYEES E',
+'    WHERE E.SITE_ID = :APP_SITE_ID',
+'',
+'    UNION ALL',
+'    SELECT NULL Total_Staff, COUNT(*) Teacher, NULL Supervisor',
+'    FROM EMPLOYEES E',
+'    WHERE E.SITE_ID = :APP_SITE_ID',
+'      AND UPPER(TRIM(E.JOB_TITLE)) = ''TEACHER''',
+'',
+'    UNION ALL',
+'',
+'    SELECT  NULL Total_Staff,NULL Teacher,COUNT(*) Supervisor',
+'    FROM EMPLOYEES E',
+'    WHERE E.SITE_ID = :APP_SITE_ID',
+'      AND UPPER(TRIM(E.JOB_TITLE)) = ''SUPERVISOR''',
+'    ',
+')'))
+,p_plug_source_type=>'NATIVE_JET_CHART'
+);
+wwv_flow_imp_page.create_jet_chart(
+ p_id=>wwv_flow_imp.id(123631627486307747840)
+,p_region_id=>wwv_flow_imp.id(116430632630534605549)
 ,p_chart_type=>'pie'
 ,p_height=>'400'
 ,p_animation_on_display=>'auto'
@@ -15845,49 +16121,215 @@ wwv_flow_imp_page.create_jet_chart(
 ,p_value_decimal_places=>0
 ,p_value_format_scaling=>'none'
 ,p_tooltip_rendered=>'Y'
-,p_show_series_name=>true
+,p_show_series_name=>false
 ,p_show_value=>true
 ,p_legend_rendered=>'on'
 ,p_legend_position=>'auto'
+,p_legend_font_family=>'Times New Roman'
+,p_legend_font_style=>'normal'
+,p_legend_font_size=>'20'
+,p_legend_font_color=>'#000000'
 ,p_pie_other_threshold=>0
 ,p_pie_selection_effect=>'highlight'
+,p_javascript_code=>wwv_flow_string.join(wwv_flow_t_varchar2(
+'function(options) {',
+'    options.styleDefaults = options.styleDefaults || {};',
+'    options.styleDefaults.threeDEffect = "on";',
+'    return options;',
+'}'))
 );
 wwv_flow_imp_page.create_jet_chart_series(
- p_id=>wwv_flow_imp.id(114250274631883734048)
-,p_chart_id=>wwv_flow_imp.id(114250274555060734047)
+ p_id=>wwv_flow_imp.id(123631627566573747841)
+,p_chart_id=>wwv_flow_imp.id(123631627486307747840)
 ,p_seq=>10
-,p_name=>'CHART'
-,p_data_source_type=>'SQL'
-,p_data_source=>wwv_flow_string.join(wwv_flow_t_varchar2(
-'        SELECT COUNT(*) Student_Active, ''Student Active''',
+,p_name=>'Total Staff'
+,p_location=>'REGION_SOURCE'
+,p_items_value_column_name=>'TOTAL_STAFF'
+,p_items_label_column_name=>'TITLE'
+,p_color=>'#c00020'
+,p_items_label_rendered=>true
+,p_items_label_position=>'auto'
+,p_items_label_display_as=>'LABEL'
+);
+wwv_flow_imp_page.create_jet_chart_series(
+ p_id=>wwv_flow_imp.id(123631628284414747848)
+,p_chart_id=>wwv_flow_imp.id(123631627486307747840)
+,p_seq=>20
+,p_name=>'Teachers'
+,p_location=>'REGION_SOURCE'
+,p_items_value_column_name=>'TEACHER'
+,p_items_label_column_name=>'TITLE1'
+,p_color=>'#8c00a2'
+,p_items_label_rendered=>true
+,p_items_label_position=>'auto'
+,p_items_label_display_as=>'LABEL'
+);
+wwv_flow_imp_page.create_jet_chart_series(
+ p_id=>wwv_flow_imp.id(123631628322595747849)
+,p_chart_id=>wwv_flow_imp.id(123631627486307747840)
+,p_seq=>30
+,p_name=>'Supervisor'
+,p_location=>'REGION_SOURCE'
+,p_items_value_column_name=>'SUPERVISOR'
+,p_items_label_column_name=>'TITLE2'
+,p_color=>'#ff3d3d'
+,p_items_label_rendered=>true
+,p_items_label_position=>'auto'
+,p_items_label_display_as=>'LABEL'
+);
+wwv_flow_imp_page.create_report_region(
+ p_id=>wwv_flow_imp.id(123992658951355429629)
+,p_name=>'STUDNET_CARD'
+,p_title=>'No Of Admissions'
+,p_template=>4072358936313175081
+,p_display_sequence=>30
+,p_region_template_options=>'#DEFAULT#:t-Region--noPadding:t-Region--noBorder:t-Region--scrollBody'
+,p_component_template_options=>'#DEFAULT#:u-colors:t-BadgeList--large:t-BadgeList--dash'
+,p_source_type=>'NATIVE_SQL_REPORT'
+,p_query_type=>'SQL'
+,p_source=>wwv_flow_string.join(wwv_flow_t_varchar2(
+'SELECT SUM(No_of_New_Admissions) No_of_New_Admissions,SUM(Total_student)Total_student,SUM(Student_Active)Student_Active, SUM(Student_inactive)Student_inactive, SUM(Student_Pending)Student_Pending, SUM(Student_Alumni)Student_Alumni, SUM(Student_Archiv'
+||'e)Student_Archive',
+'from (',
+'        SELECT COUNT(*) No_of_New_Admissions,NULL Total_student, NULL Student_Active ,NULL Student_inactive, NULL Student_Pending, NULL Student_Alumni, NULL Student_Archive',
+'        FROM STUDENTS',
+'        WHERE SITE_ID = :APP_SITE_ID',
+'        AND ADMISSION_DATE >= TRUNC(SYSDATE, ''MM'')',
+'        AND ADMISSION_DATE <  ADD_MONTHS(TRUNC(SYSDATE, ''MM''), 1)',
+'        UNION ALL ',
+'       SELECT NULL No_of_New_Admissions, COUNT(*) Total_student, NULL Student_Active, NULL Student_inactive, NULL Student_Pending, NULL Student_Alumni, NULL Student_Archive',
+'          FROM STUDENTS S',
+'         WHERE S.SITE_ID = :APP_SITE_ID ',
+'        UNION ALL   ',
+'        SELECT NULL No_of_New_Admissions, NULL Total_student, COUNT(*) Student_Active, NULL Student_inactive, NULL Student_Pending, NULL Student_Alumni, NULL Student_Archive',
 '          FROM STUDENTS S',
 '         WHERE S.STATUS = ''A''',
 '           AND S.SITE_ID = :APP_SITE_ID  ',
 '         UNION ALL',
-'          SELECT COUNT(*) Student_inactive, ''Student Inactive''',
+'          SELECT NULL No_of_New_Admissions, NULL Total_student, NULL Student_Active ,COUNT(*) Student_inactive, NULL Student_Pending, NULL Student_Alumni, NULL Student_Archive',
 '          FROM STUDENTS S',
 '         WHERE S.STATUS = ''I''',
 '           AND S.SITE_ID = :APP_SITE_ID  ',
 '         UNION ALL',
-'          SELECT COUNT(*) Student_Pending, ''Student Pending''',
+'          SELECT NULL No_of_New_Admissions, NULL Total_student, NULL Student_Active, NULL Student_inactive, COUNT(*) Student_Pending, NULL Student_Alumni, NULL Student_Archive',
 '          FROM STUDENTS S',
 '         WHERE S.STATUS = ''P''',
 '           AND S.SITE_ID = :APP_SITE_ID  ',
 '          UNION ALL',
-'          SELECT COUNT(*) Student_Alumni, ''Student Alumni''',
+'          SELECT NULL No_of_New_Admissions, NULL Total_student, NULL Student_Active, NULL Student_inactive, NULL Student_Pending, COUNT(*) Student_Alumni, NULL Student_Archive',
 '          FROM STUDENTS S',
 '         WHERE S.STATUS = ''AL''',
 '           AND S.SITE_ID = :APP_SITE_ID  ',
 '          UNION ALL',
-'          SELECT  COUNT(*) Student_Archive, ''Student Archive''',
+'          SELECT NULL No_of_New_Admissions, NULL Total_student, NULL Student_Active ,NULL Student_inactive, NULL Student_Pending, NULL Student_Alumni, COUNT(*) Student_Archive',
 '          FROM STUDENTS S',
 '         WHERE S.STATUS = ''AR''',
-'           AND S.SITE_ID = :APP_SITE_ID  '))
-,p_items_value_column_name=>'STUDENT_ACTIVE'
-,p_items_label_column_name=>'''STUDENTACTIVE'''
-,p_items_label_rendered=>true
-,p_items_label_position=>'auto'
-,p_items_label_display_as=>'LABEL'
+'           AND S.SITE_ID = :APP_SITE_ID ',
+'       ',
+'  )   '))
+,p_query_row_template=>2104643962563030528
+,p_query_num_rows=>15
+,p_query_options=>'DERIVED_REPORT_COLUMNS'
+,p_csv_output=>'N'
+,p_prn_output=>'N'
+,p_sort_null=>'L'
+,p_plug_query_strip_html=>'N'
+);
+wwv_flow_imp_page.create_report_columns(
+ p_id=>wwv_flow_imp.id(123992659045174429630)
+,p_query_column_id=>1
+,p_column_alias=>'NO_OF_NEW_ADMISSIONS'
+,p_column_display_sequence=>10
+,p_column_heading=>'No Of New Admissions'
+,p_column_alignment=>'RIGHT'
+,p_heading_alignment=>'RIGHT'
+,p_disable_sort_column=>'N'
+,p_derived_column=>'N'
+,p_include_in_export=>'Y'
+);
+wwv_flow_imp_page.create_report_columns(
+ p_id=>wwv_flow_imp.id(123992659101775429631)
+,p_query_column_id=>2
+,p_column_alias=>'TOTAL_STUDENT'
+,p_column_display_sequence=>20
+,p_column_heading=>'Total Student'
+,p_column_link=>'f?p=&APP_ID.:72:&SESSION.::&DEBUG.:::'
+,p_column_linktext=>'#TOTAL_STUDENT#'
+,p_column_alignment=>'RIGHT'
+,p_heading_alignment=>'RIGHT'
+,p_disable_sort_column=>'N'
+,p_derived_column=>'N'
+,p_include_in_export=>'Y'
+);
+wwv_flow_imp_page.create_report_columns(
+ p_id=>wwv_flow_imp.id(123992659223246429632)
+,p_query_column_id=>3
+,p_column_alias=>'STUDENT_ACTIVE'
+,p_column_display_sequence=>30
+,p_column_heading=>'Student Active'
+,p_column_link=>'f?p=&APP_ID.:72:&SESSION.::&DEBUG.::P72_STATUS:A'
+,p_column_linktext=>'#STUDENT_ACTIVE#'
+,p_column_alignment=>'RIGHT'
+,p_heading_alignment=>'RIGHT'
+,p_disable_sort_column=>'N'
+,p_derived_column=>'N'
+,p_include_in_export=>'Y'
+);
+wwv_flow_imp_page.create_report_columns(
+ p_id=>wwv_flow_imp.id(123992659332377429633)
+,p_query_column_id=>4
+,p_column_alias=>'STUDENT_INACTIVE'
+,p_column_display_sequence=>40
+,p_column_heading=>'Student Inactive'
+,p_column_link=>'f?p=&APP_ID.:72:&SESSION.::&DEBUG.::P72_STATUS:I'
+,p_column_linktext=>'#STUDENT_INACTIVE#'
+,p_column_alignment=>'RIGHT'
+,p_heading_alignment=>'RIGHT'
+,p_disable_sort_column=>'N'
+,p_derived_column=>'N'
+,p_include_in_export=>'Y'
+);
+wwv_flow_imp_page.create_report_columns(
+ p_id=>wwv_flow_imp.id(123992659432503429634)
+,p_query_column_id=>5
+,p_column_alias=>'STUDENT_PENDING'
+,p_column_display_sequence=>50
+,p_column_heading=>'Student Pending'
+,p_column_link=>'f?p=&APP_ID.:72:&SESSION.::&DEBUG.::P72_STATUS:P'
+,p_column_linktext=>'#STUDENT_PENDING#'
+,p_column_alignment=>'RIGHT'
+,p_heading_alignment=>'RIGHT'
+,p_disable_sort_column=>'N'
+,p_derived_column=>'N'
+,p_include_in_export=>'Y'
+);
+wwv_flow_imp_page.create_report_columns(
+ p_id=>wwv_flow_imp.id(123992659536096429635)
+,p_query_column_id=>6
+,p_column_alias=>'STUDENT_ALUMNI'
+,p_column_display_sequence=>60
+,p_column_heading=>'Student Alumni'
+,p_column_link=>'f?p=&APP_ID.:72:&SESSION.::&DEBUG.::P72_STATUS:AL'
+,p_column_linktext=>'#STUDENT_ALUMNI#'
+,p_column_alignment=>'RIGHT'
+,p_heading_alignment=>'RIGHT'
+,p_disable_sort_column=>'N'
+,p_derived_column=>'N'
+,p_include_in_export=>'Y'
+);
+wwv_flow_imp_page.create_report_columns(
+ p_id=>wwv_flow_imp.id(123992659617505429636)
+,p_query_column_id=>7
+,p_column_alias=>'STUDENT_ARCHIVE'
+,p_column_display_sequence=>70
+,p_column_heading=>'Student Archive'
+,p_column_link=>'f?p=&APP_ID.:72:&SESSION.::&DEBUG.::P72_STATUS:AR'
+,p_column_linktext=>'#STUDENT_ARCHIVE#'
+,p_column_alignment=>'RIGHT'
+,p_heading_alignment=>'RIGHT'
+,p_disable_sort_column=>'N'
+,p_derived_column=>'N'
+,p_include_in_export=>'Y'
 );
 end;
 /
@@ -20223,7 +20665,7 @@ wwv_flow_imp_page.create_report_region(
 '       DEPT_NAME,',
 '       SITE_NAME,',
 '       SHIFT_NAME,',
-'       DECODE(E.STATUS,''A'',''Active'',''I'',''In-Active'')STATUS,',
+'       DECODE(E.STATUS,''A'',''Active'',''I'',''Inactive'')STATUS,',
 '       E.FEED_BY,',
 '       TO_CHAR(E.FEED_DATE,''DD-MON-YYYY'')FEED_DATE',
 '  from EMPLOYEES E,DEPARTMENTS D,SITES S,SHIFTS H',
@@ -22097,7 +22539,7 @@ wwv_flow_imp_page.create_page_item(
 ,p_source=>'STATUS'
 ,p_source_type=>'REGION_SOURCE_COLUMN'
 ,p_display_as=>'NATIVE_SELECT_LIST'
-,p_lov=>'STATIC2:Active;A,In-Active;I'
+,p_lov=>'STATIC2:Active;A,Inactive;I'
 ,p_cHeight=>1
 ,p_begin_on_new_line=>'N'
 ,p_field_template=>1609121967514267634
@@ -28590,6 +29032,20 @@ wwv_flow_imp_page.create_page_button(
 ,p_icon_css_classes=>'fa-save'
 );
 wwv_flow_imp_page.create_page_button(
+ p_id=>wwv_flow_imp.id(38894437826997446244)
+,p_button_sequence=>10
+,p_button_plug_id=>wwv_flow_imp.id(16561568641110458405)
+,p_button_name=>'PARENT_CONTRACT_FORM'
+,p_button_action=>'REDIRECT_PAGE'
+,p_button_template_options=>'#DEFAULT#'
+,p_button_template_id=>4072362960822175091
+,p_button_is_hot=>'Y'
+,p_button_image_alt=>'Parent Contract Form'
+,p_button_position=>'EDIT'
+,p_button_redirect_url=>'f?p=&APP_ID.:82:&SESSION.::&DEBUG.:::'
+,p_button_condition_type=>'NEVER'
+);
+wwv_flow_imp_page.create_page_button(
  p_id=>wwv_flow_imp.id(35761459808925152942)
 ,p_button_sequence=>80
 ,p_button_plug_id=>wwv_flow_imp.id(31612498467447900416)
@@ -28768,41 +29224,6 @@ wwv_flow_imp_page.create_page_button(
 ,p_button_condition_type=>'NEVER'
 ,p_icon_css_classes=>'fa-save'
 ,p_database_action=>'UPDATE'
-);
-wwv_flow_imp_page.create_page_button(
- p_id=>wwv_flow_imp.id(38894437826997446244)
-,p_button_sequence=>10
-,p_button_plug_id=>wwv_flow_imp.id(16561568641110458405)
-,p_button_name=>'PARENT_CONTRACT_FORM'
-,p_button_action=>'REDIRECT_PAGE'
-,p_button_template_options=>'#DEFAULT#'
-,p_button_template_id=>4072362960822175091
-,p_button_is_hot=>'Y'
-,p_button_image_alt=>'Parent Contract Form'
-,p_button_position=>'NEXT'
-,p_button_redirect_url=>'f?p=&APP_ID.:82:&SESSION.::&DEBUG.:::'
-,p_button_condition=>wwv_flow_string.join(wwv_flow_t_varchar2(
-'DECLARE',
-'   V_PERM NUMBER;',
-'BEGIN',
-'   SELECT COUNT(*)',
-'   INTO V_PERM',
-'   FROM ROLE_PERMISSIONS RP',
-'   WHERE RP.ROLE_ID IN (',
-'                       SELECT ROLE_ID',
-'                         FROM ASSIGN_ROLE_USER',
-'                        WHERE APP_USER = :APP_USER',
-'                        )',
-'   AND RP.PERMISSION_ID IN (60,78);',
-'',
-'   IF V_PERM > 0 THEN',
-'      RETURN TRUE;',
-'   ELSE',
-'      RETURN FALSE;',
-'   END IF;',
-'END;'))
-,p_button_condition2=>'PLSQL'
-,p_button_condition_type=>'FUNCTION_BODY'
 );
 wwv_flow_imp_page.create_page_button(
  p_id=>wwv_flow_imp.id(17222388024197656302)
@@ -29135,7 +29556,7 @@ wwv_flow_imp_page.create_page_item(
 ,p_source=>'STATUS'
 ,p_source_type=>'REGION_SOURCE_COLUMN'
 ,p_display_as=>'NATIVE_SELECT_LIST'
-,p_lov=>'STATIC2:Active;A,In Active;I,Pending;P,Archive;AR,Alumni;AL'
+,p_lov=>'STATIC2:Active;A,Inactive;I,Pending;P,Archive;AR,Alumni;AL'
 ,p_cHeight=>1
 ,p_begin_on_new_line=>'N'
 ,p_field_template=>1609121967514267634
@@ -30122,7 +30543,7 @@ wwv_flow_imp_page.create_page_item(
 ,p_source=>'STATUS'
 ,p_source_type=>'REGION_SOURCE_COLUMN'
 ,p_display_as=>'NATIVE_SELECT_LIST'
-,p_lov=>'STATIC2:Active;A,In Active;I'
+,p_lov=>'STATIC2:Active;A,Inactive;I'
 ,p_cHeight=>1
 ,p_begin_on_new_line=>'N'
 ,p_field_template=>1609121967514267634
@@ -30520,6 +30941,33 @@ wwv_flow_imp_page.create_page_validation(
 ,p_validation2=>'PLSQL'
 ,p_validation_type=>'FUNC_BODY_RETURNING_BOOLEAN'
 ,p_error_message=>'Student is active you can''t pending it.'
+,p_error_display_location=>'INLINE_WITH_FIELD_AND_NOTIFICATION'
+);
+wwv_flow_imp_page.create_page_validation(
+ p_id=>wwv_flow_imp.id(116430629928155605522)
+,p_validation_name=>'comment mandatory'
+,p_validation_sequence=>30
+,p_validation=>wwv_flow_string.join(wwv_flow_t_varchar2(
+'DECLARE',
+'  V_CNT NUMBER;',
+'BEGIN',
+' IF :P30_STATUS <>''A'' THEN',
+'      SELECT COUNT(*) INTO V_CNT',
+'        FROM STUDENTS S ',
+'       WHERE S.STUDENT_ID=:P30_STUDENT_ID_1',
+'         AND SITE_ID=:APP_SITE_ID',
+'         AND STATUS=''A''',
+'         ;',
+'      IF V_CNT > 0 AND :P30_COMMENTS IS NULL THEN',
+'         RETURN FALSE;',
+'      ELSE',
+'         RETURN TRUE;',
+'      END IF;',
+' END IF;  ',
+'END;'))
+,p_validation2=>'PLSQL'
+,p_validation_type=>'FUNC_BODY_RETURNING_BOOLEAN'
+,p_error_message=>'Please enter comments when changing status from Active'
 ,p_error_display_location=>'INLINE_WITH_FIELD_AND_NOTIFICATION'
 );
 wwv_flow_imp_page.create_page_validation(
@@ -30926,7 +31374,7 @@ wwv_flow_imp_page.create_page_validation(
 wwv_flow_imp_page.create_page_validation(
  p_id=>wwv_flow_imp.id(89332705468294115630)
 ,p_validation_name=>'ref name valid'
-,p_validation_sequence=>290
+,p_validation_sequence=>280
 ,p_validation=>wwv_flow_string.join(wwv_flow_t_varchar2(
 'IF :P30_REF_NAME IS NULL THEN   ',
 '    RETURN FALSE;',
@@ -30943,7 +31391,7 @@ wwv_flow_imp_page.create_page_validation(
 wwv_flow_imp_page.create_page_validation(
  p_id=>wwv_flow_imp.id(89332705568162115631)
 ,p_validation_name=>'reference student id valid'
-,p_validation_sequence=>300
+,p_validation_sequence=>290
 ,p_validation=>wwv_flow_string.join(wwv_flow_t_varchar2(
 'IF :P30_REFRENCE_STUDENT_ID IS NULL THEN   ',
 '    RETURN FALSE;',
@@ -30960,7 +31408,7 @@ wwv_flow_imp_page.create_page_validation(
 wwv_flow_imp_page.create_page_validation(
  p_id=>wwv_flow_imp.id(89332705679651115632)
 ,p_validation_name=>'registration fee valid'
-,p_validation_sequence=>310
+,p_validation_sequence=>300
 ,p_validation=>wwv_flow_string.join(wwv_flow_t_varchar2(
 'IF :P30_REGISTRATION_FEE IS NULL THEN   ',
 '    RETURN FALSE;',
@@ -30977,7 +31425,7 @@ wwv_flow_imp_page.create_page_validation(
 wwv_flow_imp_page.create_page_validation(
  p_id=>wwv_flow_imp.id(89332705791162115633)
 ,p_validation_name=>'reg fee disc  valid'
-,p_validation_sequence=>320
+,p_validation_sequence=>310
 ,p_validation=>wwv_flow_string.join(wwv_flow_t_varchar2(
 'IF :P30_REG_FEE_DISC IS NULL THEN   ',
 '    RETURN FALSE;',
@@ -30994,7 +31442,7 @@ wwv_flow_imp_page.create_page_validation(
 wwv_flow_imp_page.create_page_validation(
  p_id=>wwv_flow_imp.id(89332705869743115634)
 ,p_validation_name=>'no of books valid'
-,p_validation_sequence=>330
+,p_validation_sequence=>320
 ,p_validation=>wwv_flow_string.join(wwv_flow_t_varchar2(
 'IF :P30_NO_OF_BOOKS IS NULL THEN   ',
 '    RETURN FALSE;',
@@ -31011,7 +31459,7 @@ wwv_flow_imp_page.create_page_validation(
 wwv_flow_imp_page.create_page_validation(
  p_id=>wwv_flow_imp.id(89332705991212115635)
 ,p_validation_name=>'book fee valid'
-,p_validation_sequence=>340
+,p_validation_sequence=>330
 ,p_validation=>wwv_flow_string.join(wwv_flow_t_varchar2(
 'IF :P30_BOOK_FEE IS NULL THEN   ',
 '    RETURN FALSE;',
@@ -31028,7 +31476,7 @@ wwv_flow_imp_page.create_page_validation(
 wwv_flow_imp_page.create_page_validation(
  p_id=>wwv_flow_imp.id(89332706003413115636)
 ,p_validation_name=>'books fee disc valid'
-,p_validation_sequence=>350
+,p_validation_sequence=>340
 ,p_validation=>wwv_flow_string.join(wwv_flow_t_varchar2(
 'IF :P30_BOOKS_FEE_DISC IS NULL THEN   ',
 '    RETURN FALSE;',
@@ -31045,7 +31493,7 @@ wwv_flow_imp_page.create_page_validation(
 wwv_flow_imp_page.create_page_validation(
  p_id=>wwv_flow_imp.id(89332706166567115637)
 ,p_validation_name=>'past paper fee valid'
-,p_validation_sequence=>360
+,p_validation_sequence=>350
 ,p_validation=>wwv_flow_string.join(wwv_flow_t_varchar2(
 'IF :P30_PAST_PAPER_FEE IS NULL THEN   ',
 '    RETURN FALSE;',
@@ -31062,7 +31510,7 @@ wwv_flow_imp_page.create_page_validation(
 wwv_flow_imp_page.create_page_validation(
  p_id=>wwv_flow_imp.id(89332706260074115638)
 ,p_validation_name=>'past paper fee disc valid'
-,p_validation_sequence=>370
+,p_validation_sequence=>360
 ,p_validation=>wwv_flow_string.join(wwv_flow_t_varchar2(
 'IF :P30_PAST_PAPER_DISC IS NULL THEN   ',
 '    RETURN FALSE;',
@@ -31079,7 +31527,7 @@ wwv_flow_imp_page.create_page_validation(
 wwv_flow_imp_page.create_page_validation(
  p_id=>wwv_flow_imp.id(89332706379154115639)
 ,p_validation_name=>'tuition fee type valid'
-,p_validation_sequence=>380
+,p_validation_sequence=>370
 ,p_validation=>wwv_flow_string.join(wwv_flow_t_varchar2(
 'IF :P30_TUITION_FEE_TYPE IS NULL THEN   ',
 '    RETURN FALSE;',
@@ -31096,7 +31544,7 @@ wwv_flow_imp_page.create_page_validation(
 wwv_flow_imp_page.create_page_validation(
  p_id=>wwv_flow_imp.id(89332706446798115640)
 ,p_validation_name=>'tuition time valid'
-,p_validation_sequence=>390
+,p_validation_sequence=>380
 ,p_validation=>wwv_flow_string.join(wwv_flow_t_varchar2(
 'IF :P30_TUTION_TIME IS NULL THEN   ',
 '    RETURN FALSE;',
@@ -31113,7 +31561,7 @@ wwv_flow_imp_page.create_page_validation(
 wwv_flow_imp_page.create_page_validation(
  p_id=>wwv_flow_imp.id(89332706566749115641)
 ,p_validation_name=>'hourly fee valid'
-,p_validation_sequence=>400
+,p_validation_sequence=>390
 ,p_validation=>wwv_flow_string.join(wwv_flow_t_varchar2(
 'IF :P30_HOURLY_FEE IS NULL THEN   ',
 '    RETURN FALSE;',
@@ -31130,7 +31578,7 @@ wwv_flow_imp_page.create_page_validation(
 wwv_flow_imp_page.create_page_validation(
  p_id=>wwv_flow_imp.id(89332706634916115642)
 ,p_validation_name=>'TOTAL fee valid'
-,p_validation_sequence=>410
+,p_validation_sequence=>400
 ,p_validation=>wwv_flow_string.join(wwv_flow_t_varchar2(
 'IF :P30_TOTAL_FEE IS NULL THEN   ',
 '    RETURN FALSE;',
@@ -31147,7 +31595,7 @@ wwv_flow_imp_page.create_page_validation(
 wwv_flow_imp_page.create_page_validation(
  p_id=>wwv_flow_imp.id(89332706763988115643)
 ,p_validation_name=>'DISCOUNT TYPE valid'
-,p_validation_sequence=>420
+,p_validation_sequence=>410
 ,p_validation=>wwv_flow_string.join(wwv_flow_t_varchar2(
 'IF :P30_DISCOUNT_TYPE IS NULL THEN   ',
 '    RETURN FALSE;',
@@ -31164,7 +31612,7 @@ wwv_flow_imp_page.create_page_validation(
 wwv_flow_imp_page.create_page_validation(
  p_id=>wwv_flow_imp.id(89332706800797115644)
 ,p_validation_name=>'hourly fee disc valid'
-,p_validation_sequence=>430
+,p_validation_sequence=>420
 ,p_validation=>wwv_flow_string.join(wwv_flow_t_varchar2(
 'IF :P30_HOURLY_FEE_DISC IS NULL THEN   ',
 '    RETURN FALSE;',
@@ -31181,7 +31629,7 @@ wwv_flow_imp_page.create_page_validation(
 wwv_flow_imp_page.create_page_validation(
  p_id=>wwv_flow_imp.id(89332706909978115645)
 ,p_validation_name=>'special disc valid'
-,p_validation_sequence=>440
+,p_validation_sequence=>430
 ,p_validation=>wwv_flow_string.join(wwv_flow_t_varchar2(
 'IF :P30_SPECIAL_DISC IS NULL THEN   ',
 '    RETURN FALSE;',
@@ -31198,7 +31646,7 @@ wwv_flow_imp_page.create_page_validation(
 wwv_flow_imp_page.create_page_validation(
  p_id=>wwv_flow_imp.id(89332707024894115646)
 ,p_validation_name=>'total payable valid'
-,p_validation_sequence=>450
+,p_validation_sequence=>440
 ,p_validation=>wwv_flow_string.join(wwv_flow_t_varchar2(
 'IF :P30_TOTAL_PAYABLE IS NULL THEN   ',
 '    RETURN FALSE;',
@@ -31215,7 +31663,7 @@ wwv_flow_imp_page.create_page_validation(
 wwv_flow_imp_page.create_page_validation(
  p_id=>wwv_flow_imp.id(89332707139689115647)
 ,p_validation_name=>'fee start date valid'
-,p_validation_sequence=>460
+,p_validation_sequence=>450
 ,p_validation=>wwv_flow_string.join(wwv_flow_t_varchar2(
 'IF :P30_FEE_START_DATE IS NULL THEN   ',
 '    RETURN FALSE;',
@@ -31232,7 +31680,7 @@ wwv_flow_imp_page.create_page_validation(
 wwv_flow_imp_page.create_page_validation(
  p_id=>wwv_flow_imp.id(89332707284929115648)
 ,p_validation_name=>'pay id valid'
-,p_validation_sequence=>470
+,p_validation_sequence=>460
 ,p_validation=>wwv_flow_string.join(wwv_flow_t_varchar2(
 'IF :P30_PAY_ID IS NULL THEN   ',
 '    RETURN FALSE;',
@@ -31249,7 +31697,7 @@ wwv_flow_imp_page.create_page_validation(
 wwv_flow_imp_page.create_page_validation(
  p_id=>wwv_flow_imp.id(77995143719305684434)
 ,p_validation_name=>'due date valid'
-,p_validation_sequence=>480
+,p_validation_sequence=>470
 ,p_validation=>wwv_flow_string.join(wwv_flow_t_varchar2(
 'IF :P30_DUE_DATE IS NULL THEN   ',
 '    RETURN FALSE;',
@@ -31266,7 +31714,7 @@ wwv_flow_imp_page.create_page_validation(
 wwv_flow_imp_page.create_page_validation(
  p_id=>wwv_flow_imp.id(89332707356559115649)
 ,p_validation_name=>'disc reason valid'
-,p_validation_sequence=>490
+,p_validation_sequence=>480
 ,p_validation=>wwv_flow_string.join(wwv_flow_t_varchar2(
 'IF :P30_DISC_REASON IS NULL THEN   ',
 '    RETURN FALSE;',
@@ -31283,7 +31731,7 @@ wwv_flow_imp_page.create_page_validation(
 wwv_flow_imp_page.create_page_validation(
  p_id=>wwv_flow_imp.id(77995144040556684437)
 ,p_validation_name=>'fee status valid'
-,p_validation_sequence=>500
+,p_validation_sequence=>490
 ,p_validation=>wwv_flow_string.join(wwv_flow_t_varchar2(
 'IF :P30_STATUS IS NULL THEN   ',
 '    RETURN FALSE;',
@@ -31300,7 +31748,7 @@ wwv_flow_imp_page.create_page_validation(
 wwv_flow_imp_page.create_page_validation(
  p_id=>wwv_flow_imp.id(77995144145791684438)
 ,p_validation_name=>'fee status valid_1'
-,p_validation_sequence=>510
+,p_validation_sequence=>500
 ,p_validation=>wwv_flow_string.join(wwv_flow_t_varchar2(
 'IF :P30_STATUS IS NULL THEN   ',
 '    RETURN FALSE;',
@@ -31317,7 +31765,7 @@ wwv_flow_imp_page.create_page_validation(
 wwv_flow_imp_page.create_page_validation(
  p_id=>wwv_flow_imp.id(77995144247721684439)
 ,p_validation_name=>'fee status valid_2'
-,p_validation_sequence=>520
+,p_validation_sequence=>510
 ,p_validation=>wwv_flow_string.join(wwv_flow_t_varchar2(
 'IF :P30_FEE_STATUS IS NULL THEN   ',
 '    RETURN FALSE;',
@@ -31334,7 +31782,7 @@ wwv_flow_imp_page.create_page_validation(
 wwv_flow_imp_page.create_page_validation(
  p_id=>wwv_flow_imp.id(116427920949772251101)
 ,p_validation_name=>'Check email is valid'
-,p_validation_sequence=>530
+,p_validation_sequence=>520
 ,p_validation=>'regexp_like(:P30_EMAIL, ''^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$'')'
 ,p_validation2=>'PLSQL'
 ,p_validation_type=>'EXPRESSION'
@@ -36652,7 +37100,7 @@ wwv_flow_imp_page.create_report_region(
 '       CLASS_ID,',
 '       SESSIONS,',
 '       SITE_ID,',
-'       DECODE(STATUS,''A'',''Active'',''I'',''In-Active'')STATUS  ',
+'       DECODE(STATUS,''A'',''Active'',''I'',''Inactive'')STATUS  ',
 '  from STUDENTS S',
 '  WHERE S.STATUS=''I''',
 '    AND S.SITE_ID=:APP_SITE_ID',
@@ -37007,10 +37455,8 @@ wwv_flow_imp_page.create_report_columns(
 ,p_query_column_id=>2
 ,p_column_alias=>'EMP_ID'
 ,p_column_display_sequence=>2
-,p_column_heading=>'Teacher'
-,p_heading_alignment=>'LEFT'
+,p_hidden_column=>'Y'
 ,p_derived_column=>'N'
-,p_include_in_export=>'Y'
 );
 wwv_flow_imp_page.create_report_columns(
  p_id=>wwv_flow_imp.id(19276151942647269704)
@@ -37635,6 +38081,7 @@ wwv_flow_imp_page.create_page_da_event(
 ,p_event_sequence=>60
 ,p_bind_type=>'bind'
 ,p_bind_event_type=>'ready'
+,p_display_when_type=>'NEVER'
 );
 wwv_flow_imp_page.create_page_da_action(
  p_id=>wwv_flow_imp.id(47225188017440897105)
@@ -38518,7 +38965,7 @@ wwv_flow_imp_page.create_page_item(
 ,p_source=>'STATUS'
 ,p_source_type=>'REGION_SOURCE_COLUMN'
 ,p_display_as=>'NATIVE_SELECT_LIST'
-,p_lov=>'STATIC2:Active;A,In Active;I'
+,p_lov=>'STATIC2:Active;A,Inactive;I'
 ,p_cHeight=>1
 ,p_field_template=>1609121967514267634
 ,p_item_template_options=>'#DEFAULT#'
@@ -39042,27 +39489,13 @@ wwv_flow_imp_page.create_page_plug(
 wwv_flow_imp_page.create_worksheet(
  p_id=>wwv_flow_imp.id(104685127354714267509)
 ,p_max_row_count=>'1000000'
-,p_allow_report_saving=>'N'
 ,p_show_display_row_count=>'Y'
 ,p_show_search_textbox=>'N'
+,p_show_actions_menu=>'N'
 ,p_report_list_mode=>'NONE'
 ,p_lazy_loading=>false
 ,p_show_detail_link=>'N'
-,p_show_select_columns=>'N'
-,p_show_filter=>'N'
-,p_show_sort=>'N'
-,p_show_control_break=>'N'
-,p_show_highlight=>'N'
-,p_show_computation=>'N'
-,p_show_aggregate=>'N'
-,p_show_chart=>'N'
-,p_show_group_by=>'N'
-,p_show_pivot=>'N'
-,p_show_flashback=>'N'
-,p_show_reset=>'N'
-,p_show_help=>'N'
-,p_download_formats=>'XLSX:PDF'
-,p_enable_mail_download=>'N'
+,p_enable_mail_download=>'Y'
 ,p_owner=>'MIANSAUED786@GMAIL.COM'
 ,p_internal_uid=>104685127354714267509
 );
@@ -39869,7 +40302,7 @@ wwv_flow_imp_page.create_report_region(
 '       C.START_TIME,',
 '       C.END_TIME,',
 '       CLASS_SHEDULE_ID,',
-'       DECODE(S.STATUS,''A'',''Active'',''I'',''In-Active'')STATUS,',
+'       DECODE(S.STATUS,''A'',''Active'',''I'',''Inactive'')STATUS,',
 '       S.FEED_BY,',
 '       S.FEED_DATE,',
 '       S.SITE_ID',
@@ -40349,7 +40782,7 @@ wwv_flow_imp_page.create_report_region(
 '       INACTIVE_DATE,',
 '       STAGE,',
 '       SIBLING_AD_NO,',
-'       DECODE(S.STATUS,''A'',''Active'',''I'',''in-Active'',''P'',''Pending'',''AR'',''Archive'',''AL'',''Alumni'')STATUS',
+'       DECODE(S.STATUS,''A'',''Active'',''I'',''inactive'',''P'',''Pending'',''AR'',''Archive'',''AL'',''Alumni'')STATUS',
 '  from STUDENTS S,CLASSES C',
 ' where S.CLASS_ID = C.CLASS_ID  ',
 '  AND STUDENT_ID=:P48_STUDENT_ID_1',
@@ -41511,28 +41944,7 @@ wwv_flow_imp_page.create_page_button(
 ,p_button_image_alt=>'Parent Contract Form'
 ,p_button_position=>'EDIT'
 ,p_button_redirect_url=>'f?p=&APP_ID.:82:&SESSION.::&DEBUG.:::'
-,p_button_condition=>wwv_flow_string.join(wwv_flow_t_varchar2(
-'DECLARE',
-'   V_PERM NUMBER;',
-'BEGIN',
-'   SELECT COUNT(*)',
-'   INTO V_PERM',
-'   FROM ROLE_PERMISSIONS RP',
-'   WHERE RP.ROLE_ID IN (',
-'                       SELECT ROLE_ID',
-'                         FROM ASSIGN_ROLE_USER',
-'                        WHERE APP_USER = :APP_USER',
-'                        )',
-'   AND RP.PERMISSION_ID IN (60,78);',
-'',
-'   IF V_PERM > 0 THEN',
-'      RETURN TRUE;',
-'   ELSE',
-'      RETURN FALSE;',
-'   END IF;',
-'END;'))
-,p_button_condition2=>'PLSQL'
-,p_button_condition_type=>'FUNCTION_BODY'
+,p_button_condition_type=>'NEVER'
 );
 wwv_flow_imp_page.create_page_button(
  p_id=>wwv_flow_imp.id(80067973523248737285)
@@ -48941,27 +49353,13 @@ wwv_flow_imp_page.create_worksheet(
 ,p_name=>'Student lesson reshedule'
 ,p_max_row_count_message=>'The maximum row count for this report is #MAX_ROW_COUNT# rows.  Please apply a filter to reduce the number of records in your query.'
 ,p_no_data_found_message=>'No data found.'
-,p_allow_report_saving=>'N'
+,p_show_display_row_count=>'Y'
 ,p_show_search_textbox=>'N'
+,p_show_actions_menu=>'N'
 ,p_report_list_mode=>'NONE'
 ,p_lazy_loading=>false
 ,p_show_detail_link=>'N'
-,p_show_select_columns=>'N'
-,p_show_rows_per_page=>'N'
-,p_show_filter=>'N'
-,p_show_sort=>'N'
-,p_show_control_break=>'N'
-,p_show_highlight=>'N'
-,p_show_computation=>'N'
-,p_show_aggregate=>'N'
-,p_show_chart=>'N'
-,p_show_group_by=>'N'
-,p_show_pivot=>'N'
-,p_show_flashback=>'N'
-,p_show_reset=>'N'
-,p_show_help=>'N'
-,p_download_formats=>'XLSX:PDF'
-,p_enable_mail_download=>'N'
+,p_enable_mail_download=>'Y'
 ,p_owner=>'MIANSAUED786@GMAIL.COM'
 ,p_internal_uid=>27676075217114326729
 );
@@ -50375,25 +50773,11 @@ wwv_flow_imp_page.create_worksheet(
 ,p_pagination_display_pos=>'BOTTOM_RIGHT'
 ,p_show_display_row_count=>'Y'
 ,p_show_search_textbox=>'N'
+,p_show_actions_menu=>'N'
 ,p_report_list_mode=>'TABS'
 ,p_lazy_loading=>false
 ,p_show_detail_link=>'N'
-,p_show_select_columns=>'N'
-,p_show_rows_per_page=>'N'
-,p_show_filter=>'N'
-,p_show_sort=>'N'
-,p_show_control_break=>'N'
-,p_show_highlight=>'N'
-,p_show_computation=>'N'
-,p_show_aggregate=>'N'
-,p_show_chart=>'N'
-,p_show_group_by=>'N'
-,p_show_pivot=>'N'
-,p_show_flashback=>'N'
-,p_show_reset=>'N'
-,p_show_help=>'N'
-,p_download_formats=>'PDF'
-,p_enable_mail_download=>'N'
+,p_enable_mail_download=>'Y'
 ,p_owner=>'MIANSAUED786@GMAIL.COM'
 ,p_internal_uid=>30296346956978431908
 );
@@ -51640,7 +52024,7 @@ wwv_flow_imp_page.create_report_region(
 '       CLASS_ID,',
 '       SESSIONS,',
 '       SITE_ID,',
-'       DECODE(STATUS,''A'',''Active'',''I'',''In-Active'',''P'',''Pending'')STATUS  ',
+'       DECODE(STATUS,''A'',''Active'',''I'',''Inactive'',''P'',''Pending'')STATUS  ',
 '  from STUDENTS S',
 '  WHERE S.STATUS=''P''',
 '    AND S.SITE_ID=:APP_SITE_ID',
@@ -52919,28 +53303,14 @@ wwv_flow_imp_page.create_page_plug(
 wwv_flow_imp_page.create_worksheet(
  p_id=>wwv_flow_imp.id(30296350110645431940)
 ,p_max_row_count=>'1000000'
-,p_allow_report_saving=>'N'
 ,p_pagination_type=>'ROWS_X_TO_Y'
 ,p_pagination_display_pos=>'BOTTOM_RIGHT'
 ,p_show_display_row_count=>'Y'
 ,p_show_search_textbox=>'N'
+,p_show_actions_menu=>'N'
 ,p_report_list_mode=>'NONE'
 ,p_lazy_loading=>false
 ,p_show_detail_link=>'N'
-,p_show_select_columns=>'N'
-,p_show_filter=>'N'
-,p_show_sort=>'N'
-,p_show_control_break=>'N'
-,p_show_highlight=>'N'
-,p_show_computation=>'N'
-,p_show_aggregate=>'N'
-,p_show_chart=>'N'
-,p_show_group_by=>'N'
-,p_show_pivot=>'N'
-,p_show_flashback=>'N'
-,p_show_reset=>'N'
-,p_show_help=>'N'
-,p_download_formats=>'PDF'
 ,p_enable_mail_download=>'Y'
 ,p_owner=>'MIANSAUED786@GMAIL.COM'
 ,p_internal_uid=>30296350110645431940
@@ -54165,29 +54535,15 @@ wwv_flow_imp_page.create_worksheet(
 ,p_name=>'Fee Reminder Report'
 ,p_max_row_count_message=>'The maximum row count for this report is #MAX_ROW_COUNT# rows.  Please apply a filter to reduce the number of records in your query.'
 ,p_no_data_found_message=>'No data found.'
-,p_allow_report_saving=>'N'
 ,p_pagination_type=>'ROWS_X_TO_Y'
 ,p_pagination_display_pos=>'BOTTOM_RIGHT'
 ,p_show_display_row_count=>'Y'
 ,p_show_search_textbox=>'N'
+,p_show_actions_menu=>'N'
 ,p_report_list_mode=>'NONE'
 ,p_lazy_loading=>false
 ,p_show_detail_link=>'N'
-,p_show_select_columns=>'N'
-,p_show_filter=>'N'
-,p_show_sort=>'N'
-,p_show_control_break=>'N'
-,p_show_highlight=>'N'
-,p_show_computation=>'N'
-,p_show_aggregate=>'N'
-,p_show_chart=>'N'
-,p_show_group_by=>'N'
-,p_show_pivot=>'N'
-,p_show_flashback=>'N'
-,p_show_reset=>'N'
-,p_show_help=>'N'
-,p_download_formats=>'PDF'
-,p_enable_mail_download=>'N'
+,p_enable_mail_download=>'Y'
 ,p_owner=>'MIANSAUED786@GMAIL.COM'
 ,p_internal_uid=>30100252572926731545
 );
@@ -55369,7 +55725,7 @@ wwv_flow_imp_page.create_page_plug(
 ,p_plug_display_sequence=>20
 ,p_query_type=>'SQL'
 ,p_plug_source=>wwv_flow_string.join(wwv_flow_t_varchar2(
-' SELECT ROWNUM,STUDENT_ID,STUDENT_NAME,GENDER,PARENT_NAME,ADMISSION_DATE,CLASS_NAME,STATUS,TOTAL_FEE,TOTAL_STUDY_HOURS',
+' SELECT ROWNUM,STUDENT_ID,STUDENT_NAME,STUDENT_TYPE,GENDER,PARENT_NAME,ADMISSION_DATE,CLASS_NAME,STATUS,TOTAL_FEE,TOTAL_STUDY_HOURS',
 '  FROM(  ',
 '   SELECT S.STAGE||''-''||S.STUDENT_ID AS STUDENT_ID,',
 '       S.STUDENT_NAME||'' ''||S.LAST_NAME AS STUDENT_NAME,',
@@ -55378,7 +55734,7 @@ wwv_flow_imp_page.create_page_plug(
 '       P.PARENT_NAME,',
 '       S.ADMISSION_DATE,',
 '       C.CLASS_NAME,',
-'       DECODE(S.STATUS, ''A'',''Active'',''I'',''In active'',''AR'',''Archive'',''AL'',''Alumni'')AS STATUS,',
+'       DECODE(S.STATUS, ''A'',''Active'',''I'',''Inactive'',''AR'',''Archive'',''AL'',''Alumni'')AS STATUS,',
 '       F.TOTAL_FEE,',
 '       NVL(SUM(',
 '              CASE ',
@@ -55405,6 +55761,8 @@ wwv_flow_imp_page.create_page_plug(
 'AND S.STUDENT_ID = NVL(:P72_ADMISSION_NO,S.STUDENT_ID)',
 'AND S.STATUS     = NVL(:P72_STATUS,S.STATUS)',
 'AND S.CLASS_ID = NVL(:P72_YEAR,S.CLASS_ID)',
+'AND S.STUDENT_TYPE = NVL(:P72_STUDENT_TYPE,S.STUDENT_TYPE)',
+'AND S.STAGE = NVL(:P72_STAGES,S.STAGE)',
 'GROUP BY S.STUDENT_ID,S.STUDENT_NAME,S.LAST_NAME,S.STUDENT_TYPE,S.STAGE,S.GENDER,P.PARENT_NAME,S.ADMISSION_DATE,C.CLASS_NAME,S.STATUS,F.TOTAL_FEE',
 'ORDER BY  CASE',
 '            WHEN STUDENT_ID LIKE ''K%'' THEN 1',
@@ -55413,7 +55771,7 @@ wwv_flow_imp_page.create_page_plug(
 '          END,LENGTH(STUDENT_ID),STUDENT_ID',
 '  )'))
 ,p_plug_source_type=>'NATIVE_IR'
-,p_ajax_items_to_submit=>'P72_YEAR,P72_ADMISSION_NO,P72_STATUS'
+,p_ajax_items_to_submit=>'P72_YEAR,P72_ADMISSION_NO,P72_STATUS,P72_STUDENT_TYPE,P72_STAGES'
 ,p_prn_content_disposition=>'ATTACHMENT'
 ,p_prn_units=>'INCHES'
 ,p_prn_paper_size=>'LETTER'
@@ -55446,29 +55804,14 @@ wwv_flow_imp_page.create_page_plug(
 wwv_flow_imp_page.create_worksheet(
  p_id=>wwv_flow_imp.id(30283320307026494750)
 ,p_max_row_count=>'1000000'
-,p_allow_report_saving=>'N'
 ,p_pagination_type=>'ROWS_X_TO_Y'
 ,p_pagination_display_pos=>'BOTTOM_RIGHT'
 ,p_show_display_row_count=>'Y'
 ,p_show_search_textbox=>'N'
-,p_report_list_mode=>'TABS'
+,p_show_actions_menu=>'N'
+,p_report_list_mode=>'NONE'
 ,p_lazy_loading=>false
 ,p_show_detail_link=>'N'
-,p_show_select_columns=>'N'
-,p_show_rows_per_page=>'N'
-,p_show_filter=>'N'
-,p_show_sort=>'N'
-,p_show_control_break=>'N'
-,p_show_highlight=>'N'
-,p_show_computation=>'N'
-,p_show_aggregate=>'N'
-,p_show_chart=>'N'
-,p_show_group_by=>'N'
-,p_show_pivot=>'N'
-,p_show_flashback=>'N'
-,p_show_reset=>'N'
-,p_show_help=>'N'
-,p_download_formats=>'PDF'
 ,p_enable_mail_download=>'Y'
 ,p_owner=>'MIANSAUED786@GMAIL.COM'
 ,p_internal_uid=>30283320307026494750
@@ -55535,9 +55878,29 @@ wwv_flow_imp_page.create_worksheet_column(
 ,p_use_as_row_header=>'N'
 );
 wwv_flow_imp_page.create_worksheet_column(
+ p_id=>wwv_flow_imp.id(116430630035816605523)
+,p_db_column_name=>'STUDENT_TYPE'
+,p_display_order=>40
+,p_column_identifier=>'L'
+,p_column_label=>'Student Type'
+,p_allow_sorting=>'N'
+,p_allow_filtering=>'N'
+,p_allow_highlighting=>'N'
+,p_allow_ctrl_breaks=>'N'
+,p_allow_aggregations=>'N'
+,p_allow_computations=>'N'
+,p_allow_charting=>'N'
+,p_allow_group_by=>'N'
+,p_allow_pivot=>'N'
+,p_allow_hide=>'N'
+,p_column_type=>'STRING'
+,p_heading_alignment=>'LEFT'
+,p_use_as_row_header=>'N'
+);
+wwv_flow_imp_page.create_worksheet_column(
  p_id=>wwv_flow_imp.id(30296346456340431903)
 ,p_db_column_name=>'GENDER'
-,p_display_order=>40
+,p_display_order=>50
 ,p_column_identifier=>'C'
 ,p_column_label=>'Gender'
 ,p_allow_sorting=>'N'
@@ -55557,7 +55920,7 @@ wwv_flow_imp_page.create_worksheet_column(
 wwv_flow_imp_page.create_worksheet_column(
  p_id=>wwv_flow_imp.id(30296346500199431904)
 ,p_db_column_name=>'PARENT_NAME'
-,p_display_order=>50
+,p_display_order=>60
 ,p_column_identifier=>'D'
 ,p_column_label=>'Parent Name'
 ,p_allow_sorting=>'N'
@@ -55577,7 +55940,7 @@ wwv_flow_imp_page.create_worksheet_column(
 wwv_flow_imp_page.create_worksheet_column(
  p_id=>wwv_flow_imp.id(30296346627688431905)
 ,p_db_column_name=>'ADMISSION_DATE'
-,p_display_order=>60
+,p_display_order=>70
 ,p_column_identifier=>'E'
 ,p_column_label=>'Admission Date'
 ,p_allow_sorting=>'N'
@@ -55599,7 +55962,7 @@ wwv_flow_imp_page.create_worksheet_column(
 wwv_flow_imp_page.create_worksheet_column(
  p_id=>wwv_flow_imp.id(30296346775164431906)
 ,p_db_column_name=>'CLASS_NAME'
-,p_display_order=>70
+,p_display_order=>80
 ,p_column_identifier=>'F'
 ,p_column_label=>'School Year'
 ,p_allow_sorting=>'N'
@@ -55619,7 +55982,7 @@ wwv_flow_imp_page.create_worksheet_column(
 wwv_flow_imp_page.create_worksheet_column(
  p_id=>wwv_flow_imp.id(30296348968217431928)
 ,p_db_column_name=>'TOTAL_FEE'
-,p_display_order=>80
+,p_display_order=>90
 ,p_column_identifier=>'H'
 ,p_column_label=>'Monthly fee'
 ,p_allow_sorting=>'N'
@@ -55822,12 +56185,12 @@ wwv_flow_imp_page.create_page_item(
 wwv_flow_imp_page.create_page_item(
  p_id=>wwv_flow_imp.id(30283315379982494703)
 ,p_name=>'P72_STATUS'
-,p_item_sequence=>30
+,p_item_sequence=>40
 ,p_item_plug_id=>wwv_flow_imp.id(30283315171303494701)
 ,p_use_cache_before_default=>'NO'
 ,p_prompt=>'Status'
 ,p_display_as=>'NATIVE_SELECT_LIST'
-,p_lov=>'STATIC:Active;A,In Active;I'
+,p_lov=>'STATIC:Active;A,Inactive;I,Pending;P,Archive;AR,Alumni;AL'
 ,p_lov_display_null=>'YES'
 ,p_cHeight=>1
 ,p_begin_on_new_line=>'N'
@@ -55841,7 +56204,7 @@ wwv_flow_imp_page.create_page_item(
 wwv_flow_imp_page.create_page_item(
  p_id=>wwv_flow_imp.id(77995140951340684406)
 ,p_name=>'P72_YEAR'
-,p_item_sequence=>40
+,p_item_sequence=>10
 ,p_item_plug_id=>wwv_flow_imp.id(30283315171303494701)
 ,p_use_cache_before_default=>'NO'
 ,p_prompt=>'Year'
@@ -55861,6 +56224,36 @@ wwv_flow_imp_page.create_page_item(
 ,p_lov_display_extra=>'YES'
 ,p_attributes=>wwv_flow_t_plugin_attributes(wwv_flow_t_varchar2(
   'page_action_on_selection', 'NONE')).to_clob
+);
+wwv_flow_imp_page.create_page_item(
+ p_id=>wwv_flow_imp.id(123631628465793747850)
+,p_name=>'P72_STUDENT_TYPE'
+,p_item_sequence=>30
+,p_item_plug_id=>wwv_flow_imp.id(30283315171303494701)
+,p_use_cache_before_default=>'NO'
+,p_prompt=>'Student Type'
+,p_display_as=>'NATIVE_SELECT_LIST'
+,p_lov=>'STATIC:REG;REG,UC;UC'
+,p_lov_display_null=>'YES'
+,p_cHeight=>1
+,p_begin_on_new_line=>'N'
+,p_field_template=>1609121967514267634
+,p_item_template_options=>'#DEFAULT#'
+,p_is_persistent=>'N'
+,p_lov_display_extra=>'YES'
+,p_attributes=>wwv_flow_t_plugin_attributes(wwv_flow_t_varchar2(
+  'page_action_on_selection', 'NONE')).to_clob
+);
+wwv_flow_imp_page.create_page_item(
+ p_id=>wwv_flow_imp.id(123992656211063429602)
+,p_name=>'P72_STAGES'
+,p_item_sequence=>50
+,p_item_plug_id=>wwv_flow_imp.id(30283315171303494701)
+,p_use_cache_before_default=>'NO'
+,p_display_as=>'NATIVE_HIDDEN'
+,p_is_persistent=>'N'
+,p_attributes=>wwv_flow_t_plugin_attributes(wwv_flow_t_varchar2(
+  'value_protected', 'Y')).to_clob
 );
 wwv_flow_imp_page.create_page_da_event(
  p_id=>wwv_flow_imp.id(30283315726069494706)
@@ -55947,7 +56340,7 @@ wwv_flow_imp_page.create_page_da_event(
 ,p_name=>'REFRESH'
 ,p_event_sequence=>30
 ,p_triggering_element_type=>'ITEM'
-,p_triggering_element=>'P72_ADMISSION_NO,P72_STATUS,P72_YEAR'
+,p_triggering_element=>'P72_ADMISSION_NO,P72_STATUS,P72_YEAR,P72_STUDENT_TYPE'
 ,p_bind_type=>'bind'
 ,p_execution_type=>'IMMEDIATE'
 ,p_bind_event_type=>'change'
@@ -56023,7 +56416,7 @@ wwv_flow_imp_page.create_report_region(
 '       C.START_TIME,',
 '       C.END_TIME,',
 '       CLASS_SHEDULE_ID,',
-'       DECODE(S.STATUS,''A'',''Active'',''I'',''In-Active'')STATUS,',
+'       DECODE(S.STATUS,''A'',''Active'',''I'',''Inactive'')STATUS,',
 '       S.FEED_BY,',
 '       S.FEED_DATE,',
 '       S.SITE_ID',
@@ -56434,7 +56827,7 @@ wwv_flow_imp_page.create_page_item(
 ,p_source=>'STATUS'
 ,p_source_type=>'REGION_SOURCE_COLUMN'
 ,p_display_as=>'NATIVE_SELECT_LIST'
-,p_lov=>'STATIC2:Active;A,In Active;I'
+,p_lov=>'STATIC2:Active;A,Inactive;I'
 ,p_cHeight=>1
 ,p_begin_on_new_line=>'N'
 ,p_colspan=>2
@@ -61201,10 +61594,8 @@ wwv_flow_imp_page.create_report_columns(
 ,p_query_column_id=>2
 ,p_column_alias=>'EMP_ID'
 ,p_column_display_sequence=>2
-,p_column_heading=>'Teacher'
-,p_heading_alignment=>'LEFT'
+,p_hidden_column=>'Y'
 ,p_derived_column=>'N'
-,p_include_in_export=>'Y'
 );
 wwv_flow_imp_page.create_report_columns(
  p_id=>wwv_flow_imp.id(36255605096762277817)
@@ -61813,10 +62204,8 @@ wwv_flow_imp_page.create_report_columns(
 ,p_query_column_id=>4
 ,p_column_alias=>'EMPLOYEE_ID'
 ,p_column_display_sequence=>50
-,p_column_heading=>'Teacher'
-,p_heading_alignment=>'LEFT'
+,p_hidden_column=>'Y'
 ,p_derived_column=>'N'
-,p_include_in_export=>'Y'
 );
 wwv_flow_imp_page.create_report_columns(
  p_id=>wwv_flow_imp.id(36260681916718607599)
@@ -66172,7 +66561,7 @@ wwv_flow_imp_page.create_report_region(
 ||'ATION_FEE),0)ADMISSION_FEE, NVL(SUM(SFC.DISCOUNT),0) AS TOTAL_DISCOUNT,  ',
 '                NVL(SUM(SFC.EXAM_FEE),0) AS TOTAL_EXAM_FEE,  NVL(SUM(SFC.BOOKS_FEE),0) AS TOTAL_BOOK_FEE,  NVL(SUM(SFC.PAST_PAPER_FEE),0) AS TOTAL_PAST_PAPER_FEE,  ((NVL(SFC.MONTHLY_FEE,0)) +NVL(SUM(REGISTRATION_FEE),0)+ NVL(SUM(SFC.DISCOUNT),0) + NV'
 ||'L(SUM(SFC.EXAM_FEE),0) + NVL(SUM(SFC.PAST_PAPER_FEE),0)+NVL(SUM(SFC.BOOKS_FEE),0) ) AS TOTAL_FEE,  ',
-'                NVL(SUM(SFC.RECEIVED_AMOUNT),0) AS TOTAL_RECEIVED_AMOUNT,DECODE(S.STATUS,''A'',''Active'',''I'',''In-Active'')STATUS,',
+'                NVL(SUM(SFC.RECEIVED_AMOUNT),0) AS TOTAL_RECEIVED_AMOUNT,DECODE(S.STATUS,''A'',''Active'',''I'',''Inactive'')STATUS,',
 '                MAX(CASE WHEN PAYMENT_COUNT = 1 THEN ''Payment '' || PAYMENT_COUNT ELSE NULL END) AS PAYMENT_COUNT1,',
 '                MAX(CASE WHEN PAYMENT_COUNT = 2 THEN ''Payment '' || PAYMENT_COUNT ELSE NULL END) AS PAYMENT_COUNT2,',
 '                MAX(CASE WHEN PAYMENT_COUNT = 3 THEN ''Payment '' || PAYMENT_COUNT ELSE NULL END) AS PAYMENT_COUNT3,',
@@ -66278,7 +66667,7 @@ wwv_flow_imp_page.create_report_region(
 ,p_query_num_rows_type=>'NEXT_PREVIOUS_LINKS'
 ,p_pagination_display_position=>'BOTTOM_RIGHT'
 ,p_csv_output=>'Y'
-,p_csv_output_link_text=>'Download In Excel'
+,p_csv_output_link_text=>'Download'
 ,p_prn_output=>'Y'
 ,p_prn_format=>'PDF'
 ,p_prn_output_link_text=>'Download In PDF'
@@ -66313,7 +66702,6 @@ wwv_flow_imp_page.create_report_region(
 ,p_prn_page_footer_alignment=>'CENTER'
 ,p_prn_border_color=>'#666666'
 ,p_sort_null=>'L'
-,p_plug_query_exp_filename=>'Student Monthly Fee Detail'
 ,p_plug_query_strip_html=>'N'
 );
 wwv_flow_imp_page.create_report_columns(
@@ -66744,7 +67132,7 @@ wwv_flow_imp_page.create_page_plug(
 '         PAYMENT_NAME3,COMMENTS,REMINDER_DATE1,REMINDER_DATE2,REMINDER_DATE3,REMINDER_COMMENTS,SUSPENDED,COMMENTS_IF_ANY',
 '          FROM(',
 '        SELECT',
-'          TO_CHAR(TO_DATE(FEE_MONTH, ''MM-YYYY''), ''MON-YYYY'') AS FEE_MONTH,STAGE||''-''||B.STUDENT_ID STUDENT_ID,STUDENT_NAME,STUDENT_TYPE,F.STATUS,B.SITE_ID,CLASS_NAME,DUE_DATE,NVL(OPENING_BALANCE,0) OPENING_BALANCE,',
+'          TO_CHAR(TO_DATE(FEE_MONTH, ''MM-YYYY''), ''MON-YYYY'') AS FEE_MONTH,STAGE||''-''||B.STUDENT_ID STUDENT_ID,STUDENT_NAME,STUDENT_TYPE,B.STATUS,B.SITE_ID,CLASS_NAME,DUE_DATE,NVL(OPENING_BALANCE,0) OPENING_BALANCE,',
 '           CASE WHEN NVL(TOTAL_MONTHLY_FEE,0) > 0 THEN TOTAL_MONTHLY_FEE ELSE NVL(F.TOTAL_FEE,0) END AS TOTAL_MONTHLY_FEE',
 '          ,TOTAL_DISCOUNT,CASE WHEN NVL(ADMISSION_FEE,0) > 0 OR NVL(ADD_FEE_COLLECTION,0) > 0 THEN ADMISSION_FEE ELSE NVL(F.REGISTRATION_FEE,0) END AS ADMISSION_FEE,',
 '          CASE WHEN NVL(TOTAL_EXAM_FEE,0) > 0 OR NVL(EXAM_FEE_COLLECTION,0) > 0 THEN TOTAL_EXAM_FEE ELSE NVL(F.EXAM_FEE,0) END AS TOTAL_EXAM_FEE,',
@@ -66894,8 +67282,8 @@ wwv_flow_imp_page.create_page_plug(
 '                   ) AS COMMENTS_IF_ANY ',
 '          FROM (  ',
 '            SELECT',
-'              NVL(TO_CHAR(TO_DATE(SFC.FEE_MONTH, ''MM-YYYY''), ''MM-YYYY''), TO_CHAR(SYSDATE, ''MM-YYYY'')) AS FEE_MONTH, S.STAGE,S.STUDENT_ID,S.STUDENT_NAME || '' '' || S.LAST_NAME AS STUDENT_NAME,S.STUDENT_TYPE,DECODE(S.STATUS,''A'',''Active'',''I'',''In-Active'')'
-||'STATUS,S.SITE_ID,C.CLASS_NAME,NVL(SFC.MONTHLY_FEE, 0) AS TOTAL_MONTHLY_FEE,',
+'              NVL(TO_CHAR(TO_DATE(SFC.FEE_MONTH, ''MM-YYYY''), ''MM-YYYY''), TO_CHAR(SYSDATE, ''MM-YYYY'')) AS FEE_MONTH, S.STAGE,S.STUDENT_ID,S.STUDENT_NAME || '' '' || S.LAST_NAME AS STUDENT_NAME,S.STUDENT_TYPE,DECODE(S.STATUS,''A'',''Active'',''I'',''Inactive'')S'
+||'TATUS,S.SITE_ID,C.CLASS_NAME,NVL(SFC.MONTHLY_FEE, 0) AS TOTAL_MONTHLY_FEE,',
 '              NVL(SUM(SFC.REGISTRATION_FEE), 0) AS ADMISSION_FEE,NVL(SUM(SFC.DISCOUNT), 0) AS TOTAL_DISCOUNT,NVL(SUM(SFC.EXAM_FEE), 0) AS TOTAL_EXAM_FEE,NVL(SUM(SFC.BOOKS_FEE),0) AS TOTAL_BOOK_FEE,NVL(SUM(SFC.PAST_PAPER_FEE), 0) AS TOTAL_PAST_PAPER_F'
 ||'EE,',
 '              (NVL(SFC.MONTHLY_FEE, 0) + NVL(SUM(SFC.REGISTRATION_FEE), 0) + NVL(SUM(SFC.DISCOUNT), 0) + NVL(SUM(SFC.EXAM_FEE), 0) + NVL(SUM(SFC.PAST_PAPER_FEE), 0)+NVL(SUM(SFC.BOOKS_FEE),0)) AS TOTAL_FEE,',
@@ -66999,7 +67387,7 @@ wwv_flow_imp_page.create_page_plug(
 '        ) B,STUDENT_FEES F   ',
 '        WHERE B.STUDENT_ID=F.STUDENT_ID(+)  ',
 '          AND B.SITE_ID   =F.SITE_ID(+)',
-'          AND F.STATUS = ''A''',
+'          --AND F.STATUS = ''A''',
 '          AND F.FEE_START_DATE <= TRUNC(SYSDATE)',
 '          )',
 '  )  ',
@@ -67049,26 +67437,12 @@ wwv_flow_imp_page.create_page_plug(
 wwv_flow_imp_page.create_worksheet(
  p_id=>wwv_flow_imp.id(103620536753001992566)
 ,p_max_row_count=>'1000000'
-,p_allow_report_saving=>'N'
+,p_show_display_row_count=>'Y'
 ,p_show_search_textbox=>'N'
+,p_show_actions_menu=>'N'
 ,p_report_list_mode=>'NONE'
 ,p_lazy_loading=>false
 ,p_show_detail_link=>'N'
-,p_show_select_columns=>'N'
-,p_show_rows_per_page=>'N'
-,p_show_filter=>'N'
-,p_show_sort=>'N'
-,p_show_control_break=>'N'
-,p_show_highlight=>'N'
-,p_show_computation=>'N'
-,p_show_aggregate=>'N'
-,p_show_chart=>'N'
-,p_show_group_by=>'N'
-,p_show_pivot=>'N'
-,p_show_flashback=>'N'
-,p_show_reset=>'N'
-,p_show_help=>'N'
-,p_download_formats=>'XLSX:PDF'
 ,p_enable_mail_download=>'Y'
 ,p_owner=>'MIANSAUED786@GMAIL.COM'
 ,p_internal_uid=>103620536753001992566
@@ -73422,9 +73796,9 @@ prompt --application/pages/page_00100
 begin
 wwv_flow_imp_page.create_page(
  p_id=>100
-,p_name=>'In Active Fee Status'
-,p_alias=>'IN-ACTIVE-FEES-STATUS'
-,p_step_title=>'In Active Fee Status'
+,p_name=>'Inactive Fee Status'
+,p_alias=>'INACTIVE-FEES-STATUS'
+,p_step_title=>'Inactive Fee Status'
 ,p_autocomplete_on_off=>'OFF'
 ,p_page_template_options=>'#DEFAULT#'
 ,p_protection_level=>'C'
@@ -73443,8 +73817,8 @@ wwv_flow_imp_page.create_page_plug(
 );
 wwv_flow_imp_page.create_report_region(
  p_id=>wwv_flow_imp.id(115452681478596208453)
-,p_name=>'In Active Fee Status'
-,p_title=>'In Active Fee Status'
+,p_name=>'Inactive Fee Status'
+,p_title=>'Inactive Fee Status'
 ,p_template=>4072358936313175081
 ,p_display_sequence=>20
 ,p_region_template_options=>'#DEFAULT#:t-Region--noPadding:t-Region--scrollBody'
@@ -73465,7 +73839,7 @@ wwv_flow_imp_page.create_report_region(
 'SF.HOURLY_FEE,',
 'SF.PAST_PAPER_FEE,',
 'SF.DUE_DATE,',
-'DECODE(SF.STATUS, ''A'', ''Active'', ''I'', ''In Active'') AS FEE_STATUS,',
+'DECODE(SF.STATUS, ''A'', ''Active'', ''I'', ''Inactive'') AS FEE_STATUS,',
 'SF.STATUS',
 'FROM STUDENTS S, STUDENT_PARENTS P, CLASSES C, STUDENT_FEES SF',
 'WHERE S.STUDENT_ID = P.STUDENT_ID',

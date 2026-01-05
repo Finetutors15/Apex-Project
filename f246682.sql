@@ -33,7 +33,7 @@ prompt APPLICATION 246682 - Fine Tutors
 -- Application Export:
 --   Application:     246682
 --   Name:            Fine Tutors
---   Date and Time:   17:08 Monday December 29, 2025
+--   Date and Time:   16:01 Monday January 5, 2026
 --   Exported By:     MIANSAUED786@GMAIL.COM
 --   Flashback:       0
 --   Export Type:     Application Export
@@ -42,7 +42,7 @@ prompt APPLICATION 246682 - Fine Tutors
 --       Validations:             75
 --       Processes:              146
 --       Regions:                268
---       Buttons:                328
+--       Buttons:                329
 --       Dynamic Actions:        310
 --     Shared Components:
 --       Logic:
@@ -112,7 +112,7 @@ wwv_imp_workspace.create_flow(
 ,p_substitution_value_01=>'Fine Tutors'
 ,p_file_prefix => nvl(wwv_flow_application_install.get_static_app_file_prefix,'')
 ,p_files_version=>270
-,p_version_scn=>15689340238299
+,p_version_scn=>15692016280936
 ,p_print_server_type=>'INSTANCE'
 ,p_file_storage=>'DB'
 ,p_is_pwa=>'Y'
@@ -31863,6 +31863,19 @@ wwv_flow_imp_page.create_page_button(
 ,p_database_action=>'UPDATE'
 );
 wwv_flow_imp_page.create_page_button(
+ p_id=>wwv_flow_imp.id(123992659744846429637)
+,p_button_sequence=>320
+,p_button_plug_id=>wwv_flow_imp.id(31172479249583568016)
+,p_button_name=>'Inactive_Fee_Status'
+,p_button_action=>'REDIRECT_PAGE'
+,p_button_template_options=>'#DEFAULT#'
+,p_button_template_id=>4072362960822175091
+,p_button_is_hot=>'Y'
+,p_button_image_alt=>'Inactive Fee Status'
+,p_button_position=>'EDIT'
+,p_button_redirect_url=>'f?p=&APP_ID.:100:&SESSION.::&DEBUG.:::'
+);
+wwv_flow_imp_page.create_page_button(
  p_id=>wwv_flow_imp.id(17222388024197656302)
 ,p_button_sequence=>20
 ,p_button_plug_id=>wwv_flow_imp.id(16561568641110458405)
@@ -32747,6 +32760,7 @@ wwv_flow_imp_page.create_page_item(
 '  ;'))
 ,p_lov_display_null=>'YES'
 ,p_cHeight=>1
+,p_begin_on_new_line=>'N'
 ,p_field_template=>1609121967514267634
 ,p_item_template_options=>'#DEFAULT#'
 ,p_is_persistent=>'N'
@@ -33076,7 +33090,6 @@ wwv_flow_imp_page.create_page_item(
 ,p_source_type=>'REGION_SOURCE_COLUMN'
 ,p_display_as=>'NATIVE_DATE_PICKER_APEX'
 ,p_cSize=>30
-,p_begin_on_new_line=>'N'
 ,p_field_template=>1609121967514267634
 ,p_item_template_options=>'#DEFAULT#'
 ,p_is_persistent=>'N'
@@ -33837,6 +33850,7 @@ wwv_flow_imp_page.create_page_validation(
 ,p_validation2=>'PLSQL'
 ,p_validation_type=>'FUNC_BODY_RETURNING_BOOLEAN'
 ,p_error_message=>'Sibling Admission No must have some value.'
+,p_validation_condition_type=>'NEVER'
 ,p_when_button_pressed=>wwv_flow_imp.id(89332703940775115615)
 ,p_associated_item=>wwv_flow_imp.id(78621547237808091501)
 ,p_error_display_location=>'INLINE_WITH_FIELD'
@@ -33854,6 +33868,7 @@ wwv_flow_imp_page.create_page_validation(
 ,p_validation2=>'PLSQL'
 ,p_validation_type=>'FUNC_BODY_RETURNING_BOOLEAN'
 ,p_error_message=>'comments must have some value.'
+,p_validation_condition_type=>'NEVER'
 ,p_when_button_pressed=>wwv_flow_imp.id(89332703940775115615)
 ,p_associated_item=>wwv_flow_imp.id(77995142293823684419)
 ,p_error_display_location=>'INLINE_WITH_FIELD'
@@ -76435,9 +76450,11 @@ wwv_flow_imp_page.create_page(
  p_id=>100
 ,p_name=>'Inactive Fee Status'
 ,p_alias=>'INACTIVE-FEES-STATUS'
+,p_page_mode=>'MODAL'
 ,p_step_title=>'Inactive Fee Status'
 ,p_autocomplete_on_off=>'OFF'
-,p_page_template_options=>'#DEFAULT#'
+,p_page_template_options=>'#DEFAULT#:ui-dialog--stretch'
+,p_dialog_resizable=>'Y'
 ,p_protection_level=>'C'
 ,p_page_component_map=>'03'
 );
@@ -76463,6 +76480,7 @@ wwv_flow_imp_page.create_report_region(
 ,p_source_type=>'NATIVE_SQL_REPORT'
 ,p_query_type=>'SQL'
 ,p_source=>wwv_flow_string.join(wwv_flow_t_varchar2(
+'',
 'SELECT FEE_ID,',
 'S.STUDENT_ID STUDENT_NO,',
 'S.STAGE||''-''||S.STUDENT_ID STUDENT_ID,',

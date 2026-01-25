@@ -33,7 +33,7 @@ prompt APPLICATION 246682 - Fine Tutors
 -- Application Export:
 --   Application:     246682
 --   Name:            Fine Tutors
---   Date and Time:   16:48 Wednesday January 7, 2026
+--   Date and Time:   13:18 Sunday January 25, 2026
 --   Exported By:     MIANSAUED786@GMAIL.COM
 --   Flashback:       0
 --   Export Type:     Application Export
@@ -43,7 +43,7 @@ prompt APPLICATION 246682 - Fine Tutors
 --       Processes:              146
 --       Regions:                270
 --       Buttons:                330
---       Dynamic Actions:        310
+--       Dynamic Actions:        311
 --     Shared Components:
 --       Logic:
 --         Items:                  2
@@ -112,7 +112,7 @@ wwv_imp_workspace.create_flow(
 ,p_substitution_value_01=>'Fine Tutors'
 ,p_file_prefix => nvl(wwv_flow_application_install.get_static_app_file_prefix,'')
 ,p_files_version=>270
-,p_version_scn=>15692841096647
+,p_version_scn=>15707611380610
 ,p_print_server_type=>'INSTANCE'
 ,p_file_storage=>'DB'
 ,p_is_pwa=>'Y'
@@ -33702,6 +33702,7 @@ wwv_flow_imp_page.create_page_item(
 ,p_display_as=>'NATIVE_NUMBER_FIELD'
 ,p_cSize=>30
 ,p_begin_on_new_line=>'N'
+,p_colspan=>3
 ,p_field_template=>1609121967514267634
 ,p_item_css_classes=>'apex_disabled'
 ,p_item_template_options=>'#DEFAULT#'
@@ -33777,6 +33778,7 @@ wwv_flow_imp_page.create_page_item(
 '   AND F.STATUS   = ''A''',
 '   ; '))
 ,p_lov_cascade_parent_items=>'P30_CLASS_ID'
+,p_ajax_items_to_submit=>'P30_CLASS_ID'
 ,p_ajax_optimize_refresh=>'Y'
 ,p_cSize=>30
 ,p_begin_on_new_line=>'N'
@@ -34903,7 +34905,7 @@ wwv_flow_imp_page.create_page_da_event(
 ,p_triggering_element=>'P30_CLASS_ID'
 ,p_bind_type=>'bind'
 ,p_execution_type=>'IMMEDIATE'
-,p_bind_event_type=>'change'
+,p_bind_event_type=>'click'
 );
 wwv_flow_imp_page.create_page_da_action(
  p_id=>wwv_flow_imp.id(77625081173025605103)
@@ -34965,7 +34967,8 @@ wwv_flow_imp_page.create_page_da_action(
 '    SELECT COUNT(*) INTO V_CNT ',
 '      FROM STUDENT_FEES F     ',
 '     WHERE F.STUDENT_ID = :P30_STUDENT_ID_1',
-'       AND F.SITE_ID    = :P30_BRANCHES',
+'       AND F.SITE_ID    = :APP_SITE_ID',
+'       AND F.STATUS     = ''A''',
 '       ;',
 '      IF V_CNT > 0 THEN',
 '        RETURN FALSE;',
@@ -35406,6 +35409,8 @@ wwv_flow_imp_page.create_page_da_action(
 '  });',
 '',
 ''))
+,p_client_condition_type=>'NOT_NULL'
+,p_client_condition_element=>'P30_SIBLING_ADMISSION_NO'
 );
 wwv_flow_imp_page.create_page_da_event(
  p_id=>wwv_flow_imp.id(79419820925516254147)
@@ -35848,13 +35853,15 @@ wwv_flow_imp_page.create_page_da_event(
 ,p_event_sequence=>350
 ,p_bind_type=>'bind'
 ,p_bind_event_type=>'ready'
+,p_display_when_type=>'ITEM_IS_NOT_NULL'
+,p_display_when_cond=>'P30_DISCOUNT_TYPE'
 );
 wwv_flow_imp_page.create_page_da_action(
  p_id=>wwv_flow_imp.id(86302622898277354010)
 ,p_event_id=>wwv_flow_imp.id(86302622675223354008)
 ,p_event_result=>'TRUE'
 ,p_action_sequence=>20
-,p_execute_on_page_init=>'Y'
+,p_execute_on_page_init=>'N'
 ,p_name=>'Show normal field'
 ,p_action=>'NATIVE_SHOW'
 ,p_affected_elements_type=>'ITEM'
@@ -35868,8 +35875,8 @@ wwv_flow_imp_page.create_page_da_action(
 '    FROM STUDENT_FEES F            ',
 '   WHERE F.STUDENT_ID = :P30_STUDENT_ID_1',
 '     AND F.SITE_ID    = :APP_SITE_ID',
-'     AND STATUS       = ''A''',
-'     AND F.HOURLY_FEE_DISC IS NOT NULL ',
+'     AND F.STATUS       = ''A''',
+'     AND NVL(F.HOURLY_FEE_DISC,0) <> 0 ',
 '     ; ',
 '  IF V_CNT > 0  THEN',
 '     RETURN TRUE;',
@@ -35884,7 +35891,7 @@ wwv_flow_imp_page.create_page_da_action(
 ,p_event_id=>wwv_flow_imp.id(86302622675223354008)
 ,p_event_result=>'TRUE'
 ,p_action_sequence=>30
-,p_execute_on_page_init=>'Y'
+,p_execute_on_page_init=>'N'
 ,p_name=>'Hide Special field'
 ,p_action=>'NATIVE_HIDE'
 ,p_affected_elements_type=>'ITEM'
@@ -35895,20 +35902,21 @@ wwv_flow_imp_page.create_page_da_action(
 '  V_CNT_H NUMBER;',
 '   V_CNT NUMBER;',
 'BEGIN',
-'   SELECT COUNT(*) INTO V_CNT',
+'   /*SELECT COUNT(*) INTO V_CNT',
 '     FROM STUDENT_FEES F            ',
 '    WHERE F.STUDENT_ID = :P30_STUDENT_ID_1',
 '      AND F.SITE_ID    = :APP_SITE_ID',
-'      AND STATUS     = ''A''',
-'     ;',
+'      AND F.STATUS     = ''A''',
+'     ;*/',
 '  SELECT COUNT(*) INTO V_CNT_H ',
 '    FROM STUDENT_FEES F            ',
 '   WHERE F.STUDENT_ID = :P30_STUDENT_ID_1',
 '     AND F.SITE_ID    = :APP_SITE_ID',
-'     AND STATUS     = ''A''',
-'     AND F.SPECIAL_DISC IS NULL ',
+'     AND F.STATUS     = ''A''',
+'     AND NVL(F.SPECIAL_DISC,0) = 0 ',
 '     ; ',
-'  IF V_CNT = 0 OR V_CNT_H > 0 THEN',
+'  --IF V_CNT = 0 OR V_CNT_H > 0 THEN',
+'    IF V_CNT_H > 0 THEN',
 '     RETURN TRUE;',
 '  ELSE',
 '     RETURN FALSE;',
@@ -35921,8 +35929,8 @@ wwv_flow_imp_page.create_page_da_action(
 ,p_event_id=>wwv_flow_imp.id(86302622675223354008)
 ,p_event_result=>'TRUE'
 ,p_action_sequence=>40
-,p_execute_on_page_init=>'Y'
-,p_name=>'Show normal field'
+,p_execute_on_page_init=>'N'
+,p_name=>'Show Special Disc field'
 ,p_action=>'NATIVE_SHOW'
 ,p_affected_elements_type=>'ITEM'
 ,p_affected_elements=>'P30_SPECIAL_DISC'
@@ -35936,7 +35944,7 @@ wwv_flow_imp_page.create_page_da_action(
 '   WHERE F.STUDENT_ID = :P30_STUDENT_ID_1',
 '     AND F.SITE_ID    = :APP_SITE_ID',
 '     AND STATUS     = ''A''',
-'     AND F.SPECIAL_DISC IS NOT NULL ',
+'     AND NVL(F.SPECIAL_DISC,0) <> 0',
 '     ; ',
 '  IF V_CNT > 0  THEN',
 '     RETURN TRUE;',
@@ -35951,7 +35959,7 @@ wwv_flow_imp_page.create_page_da_action(
 ,p_event_id=>wwv_flow_imp.id(86302622675223354008)
 ,p_event_result=>'TRUE'
 ,p_action_sequence=>50
-,p_execute_on_page_init=>'Y'
+,p_execute_on_page_init=>'N'
 ,p_name=>'hide normal field'
 ,p_action=>'NATIVE_HIDE'
 ,p_affected_elements_type=>'ITEM'
@@ -35962,26 +35970,58 @@ wwv_flow_imp_page.create_page_da_action(
 '  V_CNT_H NUMBER;',
 '   V_CNT NUMBER;',
 'BEGIN',
-'   SELECT COUNT(*) INTO V_CNT',
+'   /*SELECT COUNT(*) INTO V_CNT',
 '     FROM STUDENT_FEES F            ',
 '    WHERE F.STUDENT_ID = :P30_STUDENT_ID_1',
 '      AND F.SITE_ID    = :APP_SITE_ID',
 '      AND STATUS     = ''A''',
-'     ;',
+'     ;*/',
 '  SELECT COUNT(*) INTO V_CNT_H ',
 '    FROM STUDENT_FEES F            ',
 '   WHERE F.STUDENT_ID = :P30_STUDENT_ID_1',
 '     AND F.SITE_ID    = :APP_SITE_ID',
-'     AND STATUS     = ''A''',
-'      AND F.HOURLY_FEE_DISC IS NULL ',
+'     AND F.STATUS     = ''A''',
+'     AND NVL(F.HOURLY_FEE_DISC,0) = 0',
 '     ; ',
-'  IF V_CNT = 0 OR V_CNT_H > 0 THEN',
+'  --IF V_CNT = 0 OR V_CNT_H > 0 THEN',
+'    IF V_CNT_H > 0 THEN',
 '     RETURN TRUE;',
 '  ELSE',
 '     RETURN FALSE;',
 '  END IF;',
 'END;        '))
 ,p_server_condition_expr2=>'PLSQL'
+);
+wwv_flow_imp_page.create_page_da_event(
+ p_id=>wwv_flow_imp.id(118789928156428481325)
+,p_name=>'Hide and show disc normal and secial field on empty page load'
+,p_event_sequence=>360
+,p_bind_type=>'bind'
+,p_bind_event_type=>'ready'
+,p_display_when_type=>'ITEM_IS_NULL'
+,p_display_when_cond=>'P30_DISCOUNT_TYPE'
+);
+wwv_flow_imp_page.create_page_da_action(
+ p_id=>wwv_flow_imp.id(118789928365230481327)
+,p_event_id=>wwv_flow_imp.id(118789928156428481325)
+,p_event_result=>'TRUE'
+,p_action_sequence=>20
+,p_execute_on_page_init=>'N'
+,p_name=>'Hide Special field'
+,p_action=>'NATIVE_HIDE'
+,p_affected_elements_type=>'ITEM'
+,p_affected_elements=>'P30_SPECIAL_DISC'
+);
+wwv_flow_imp_page.create_page_da_action(
+ p_id=>wwv_flow_imp.id(118789928505905481329)
+,p_event_id=>wwv_flow_imp.id(118789928156428481325)
+,p_event_result=>'TRUE'
+,p_action_sequence=>40
+,p_execute_on_page_init=>'N'
+,p_name=>'hide normal field'
+,p_action=>'NATIVE_HIDE'
+,p_affected_elements_type=>'ITEM'
+,p_affected_elements=>'P30_HOURLY_FEE_DISC'
 );
 wwv_flow_imp_page.create_page_da_event(
  p_id=>wwv_flow_imp.id(90148947654563985302)
@@ -46007,19 +46047,12 @@ wwv_flow_imp_page.create_page_item(
 ,p_item_sequence=>140
 ,p_item_plug_id=>wwv_flow_imp.id(22029123870787020598)
 ,p_item_source_plug_id=>wwv_flow_imp.id(22029123870787020598)
-,p_prompt=>'Exams Fee'
 ,p_source=>'EXAM_FEE'
 ,p_source_type=>'REGION_SOURCE_COLUMN'
-,p_display_as=>'NATIVE_NUMBER_FIELD'
-,p_cSize=>30
-,p_begin_on_new_line=>'N'
-,p_field_template=>1609121967514267634
-,p_item_template_options=>'#DEFAULT#'
+,p_display_as=>'NATIVE_HIDDEN'
 ,p_is_persistent=>'N'
 ,p_attributes=>wwv_flow_t_plugin_attributes(wwv_flow_t_varchar2(
-  'min_value', '0',
-  'number_alignment', 'left',
-  'virtual_keyboard', 'decimal')).to_clob
+  'value_protected', 'N')).to_clob
 );
 wwv_flow_imp_page.create_page_item(
  p_id=>wwv_flow_imp.id(22162714745327003325)
@@ -46299,7 +46332,7 @@ wwv_flow_imp_page.create_page_da_action(
 'document.getElementById("P49_MONTHLY_FEE").readOnly=true;',
 '//document.getElementById("P49_OPENING_BALANCE").readOnly=true;',
 'document.getElementById("P49_CLOSING_BALANACE").readOnly=true;',
-'document.getElementById("P49_REGISTRATION_FEE").readOnly=true;'))
+'//document.getElementById("P49_REGISTRATION_FEE").readOnly=true;'))
 );
 wwv_flow_imp_page.create_page_da_event(
  p_id=>wwv_flow_imp.id(21769941451153508716)
@@ -58807,6 +58840,7 @@ wwv_flow_imp_page.create_page_plug(
 'AND S.SITE_ID    =SCS.SITE_ID(+)',
 'AND SCS.CLASS_SHEDULE_ID=CS.SCHEDULE_ID(+)',
 'AND SCS.SITE_ID  =CS.SITE_ID(+)',
+'AND F.STATUS     = ''A''',
 'AND S.SITE_ID    = :APP_SITE_ID',
 'AND S.STUDENT_ID = NVL(:P72_ADMISSION_NO,S.STUDENT_ID)',
 'AND S.STATUS     = NVL(:P72_STATUS,S.STATUS)',

@@ -33,17 +33,17 @@ prompt APPLICATION 246682 - Fine Tutors
 -- Application Export:
 --   Application:     246682
 --   Name:            Fine Tutors
---   Date and Time:   08:44 Monday January 26, 2026
+--   Date and Time:   17:50 Monday January 26, 2026
 --   Exported By:     MIANSAUED786@GMAIL.COM
 --   Flashback:       0
 --   Export Type:     Application Export
 --     Pages:                    118
---       Items:                  635
+--       Items:                  640
 --       Validations:             75
 --       Processes:              146
---       Regions:                270
+--       Regions:                271
 --       Buttons:                330
---       Dynamic Actions:        312
+--       Dynamic Actions:        316
 --     Shared Components:
 --       Logic:
 --         Items:                  2
@@ -112,7 +112,7 @@ wwv_imp_workspace.create_flow(
 ,p_substitution_value_01=>'Fine Tutors'
 ,p_file_prefix => nvl(wwv_flow_application_install.get_static_app_file_prefix,'')
 ,p_files_version=>270
-,p_version_scn=>15707947370251
+,p_version_scn=>15708108938381
 ,p_print_server_type=>'INSTANCE'
 ,p_file_storage=>'DB'
 ,p_is_pwa=>'Y'
@@ -15971,7 +15971,14 @@ wwv_flow_imp_shared.create_list_of_values(
 '   AND E.SUBJECT_ID=S.SUBJECT_ID',
 '   AND E.STATUS=''A''',
 '   --AND E.SUBJECT_ID=NVL(:P45_SUBJECT_ID,:P55_SUBJECT_ID)',
-'  -- AND E.SITE_ID=:APP_SITE_ID--NVL(:P45_SITE_ID,:P55_SITE_ID)'))
+'   AND (',
+'        E.SITE_ID = :APP_SITE_ID',
+'        OR :APP_SITE_ID IN (',
+'              SELECT REGEXP_SUBSTR(E.ALLOW_SITES, ''[^,]+'', 1, LEVEL)',
+'              FROM dual',
+'              CONNECT BY REGEXP_SUBSTR(E.ALLOW_SITES, ''[^,]+'', 1, LEVEL) IS NOT NULL',
+'        )',
+'      );'))
 ,p_source_type=>'SQL'
 ,p_location=>'LOCAL'
 ,p_return_column_name=>'EMPLOYEE_ID'
@@ -15979,7 +15986,7 @@ wwv_flow_imp_shared.create_list_of_values(
 ,p_group_sort_direction=>'ASC'
 ,p_default_sort_column_name=>'EMPLOYEE_ID'
 ,p_default_sort_direction=>'ASC'
-,p_version_scn=>15688936868272
+,p_version_scn=>15708107393751
 );
 wwv_flow_imp_shared.create_list_of_values_cols(
  p_id=>wwv_flow_imp.id(19268873238862823338)
@@ -23049,7 +23056,7 @@ wwv_flow_imp_page.create_page_plug(
 '        v_html := v_html || ''</table>'';',
 '    END IF;',
 '    -- Fee Details Section-------------------',
-'    SELECT COUNT(*) INTO v_count FROM STUDENT_FEES WHERE STUDENT_ID = :P16_STUDENT_ID AND SITE_ID = :APP_SITE_ID;',
+'    SELECT COUNT(*) INTO v_count FROM STUDENT_FEES WHERE STUDENT_ID = :P16_STUDENT_ID AND SITE_ID = :APP_SITE_ID AND STATUS = ''A'';',
 '    IF v_count > 0 THEN',
 '        FOR rec IN (',
 unistr('            SELECT ''\00A3''||'' ''||NVL(REGISTRATION_FEE,0) REGISTRATION_FEE,''\00A3''||'' ''||NVL(BOOK_FEE,0) BOOK_FEE,''\00A3''||'' ''||NVL(EXAM_FEE,0) EXAM_FEE'),
@@ -23059,15 +23066,15 @@ unistr('                   ''\00A3''||'' ''||NVL(TOTAL_FEE,0) TOTAL_FEE,'),
 '            FROM STUDENT_FEES S,PAYMENT_TYPE P',
 '            WHERE S.PAY_ID=P.PAY_ID',
 '              AND  STUDENT_ID = :P16_STUDENT_ID AND SITE_ID = :APP_SITE_ID',
+'              AND S.STATUS = ''A''',
 '        ) LOOP',
 '            v_html := v_html || ''<h2>Fee Details</h2>',
 '            <table id="fee_table">',
-'            <tr><th>Registration Fee</th><th>Books Fee</th><th>Exams Fee</th><th>Hourly Fee</th><th>Past Papers Fee</th><th>Monthly Fee</th><th>Due Date</th><th>Payment Method</th></tr>',
+'            <tr><th>Registration Fee</th><th>Books Fee</th><th>Exam Material Fee</th><th>Hourly Fee</th><th>Monthly Fee</th><th>Due Date</th><th>Payment Method</th></tr>',
 '            <tr><td>'' || rec.REGISTRATION_FEE || ''</td>',
 '                <td>'' || rec.BOOK_FEE || ''</td>',
-'                <td>'' || rec.EXAM_FEE || ''</td>',
-'                <td>'' || rec.HOURLY_FEE || ''</td>',
 '                <td>'' || rec.PAST_PAPER_FEE || ''</td>',
+'                <td>'' || rec.HOURLY_FEE || ''</td>',
 '                <td><b>'' || rec.TOTAL_FEE || ''</b></td>',
 '                <td>'' || rec.DUE_DATE || ''</td>',
 '                <td>'' || rec.PAYMENT_METHOD || ''</td></tr>',
@@ -23557,6 +23564,55 @@ wwv_flow_imp_page.create_report_columns(
 ,p_column_alias=>'COUNTRY'
 ,p_column_display_sequence=>17
 ,p_column_heading=>'Country'
+,p_heading_alignment=>'LEFT'
+,p_disable_sort_column=>'N'
+,p_derived_column=>'N'
+,p_include_in_export=>'Y'
+);
+wwv_flow_imp_page.create_report_region(
+ p_id=>wwv_flow_imp.id(118789929196055481335)
+,p_name=>'Employee Info 3'
+,p_parent_plug_id=>wwv_flow_imp.id(15599049507398988139)
+,p_template=>4072358936313175081
+,p_display_sequence=>40
+,p_region_css_classes=>'js-master-region'
+,p_region_template_options=>'#DEFAULT#:t-Region--noPadding:t-Region--removeHeader js-removeLandmark:t-Region--scrollBody:margin-top-none'
+,p_component_template_options=>'#DEFAULT#:t-AVPList--leftAligned'
+,p_display_point=>'SUB_REGIONS'
+,p_source_type=>'NATIVE_SQL_REPORT'
+,p_query_type=>'SQL'
+,p_source=>wwv_flow_string.join(wwv_flow_t_varchar2(
+'SELECT LISTAGG(s.site_name, '', '') ',
+'       WITHIN GROUP (ORDER BY s.site_name) AS SITE_NAMES',
+'FROM employees e',
+'JOIN sites s ',
+'  ON s.site_id IN (',
+'        SELECT REGEXP_SUBSTR(e.ALLOW_SITES, ''[^,]+'', 1, LEVEL)',
+'        FROM dual',
+'        CONNECT BY REGEXP_SUBSTR(e.ALLOW_SITES, ''[^,]+'', 1, LEVEL) IS NOT NULL',
+'     )',
+'WHERE e.emp_id = :P17_EMP_ID;'))
+,p_display_when_condition=>'P17_EMP_ID'
+,p_display_condition_type=>'ITEM_IS_NOT_NULL'
+,p_ajax_enabled=>'Y'
+,p_ajax_items_to_submit=>'P17_EMP_ID'
+,p_lazy_loading=>false
+,p_query_row_template=>2100515439059797523
+,p_query_num_rows=>15
+,p_query_options=>'DERIVED_REPORT_COLUMNS'
+,p_query_no_data_found=>'No Record Selected'
+,p_query_row_count_max=>500
+,p_csv_output=>'N'
+,p_prn_output=>'N'
+,p_sort_null=>'L'
+,p_plug_query_strip_html=>'Y'
+);
+wwv_flow_imp_page.create_report_columns(
+ p_id=>wwv_flow_imp.id(118789930171122481345)
+,p_query_column_id=>1
+,p_column_alias=>'SITE_NAMES'
+,p_column_display_sequence=>10
+,p_column_heading=>'Branches Allow'
 ,p_heading_alignment=>'LEFT'
 ,p_disable_sort_column=>'N'
 ,p_derived_column=>'N'
@@ -25018,7 +25074,7 @@ wwv_flow_imp_page.create_page_item(
 ,p_name=>'P19_HIRE_DATE'
 ,p_source_data_type=>'DATE'
 ,p_is_required=>true
-,p_item_sequence=>130
+,p_item_sequence=>140
 ,p_item_plug_id=>wwv_flow_imp.id(16028325548299607717)
 ,p_item_source_plug_id=>wwv_flow_imp.id(16028325548299607717)
 ,p_prompt=>'Hire Date'
@@ -25028,7 +25084,6 @@ wwv_flow_imp_page.create_page_item(
 ,p_display_as=>'NATIVE_DATE_PICKER_APEX'
 ,p_cSize=>32
 ,p_cMaxlength=>255
-,p_begin_on_new_line=>'N'
 ,p_field_template=>1609122147107268652
 ,p_item_template_options=>'#DEFAULT#'
 ,p_is_persistent=>'N'
@@ -25044,7 +25099,7 @@ wwv_flow_imp_page.create_page_item(
  p_id=>wwv_flow_imp.id(16028330197849607723)
 ,p_name=>'P19_JOB_TITLE'
 ,p_source_data_type=>'VARCHAR2'
-,p_item_sequence=>140
+,p_item_sequence=>150
 ,p_item_plug_id=>wwv_flow_imp.id(16028325548299607717)
 ,p_item_source_plug_id=>wwv_flow_imp.id(16028325548299607717)
 ,p_prompt=>'Job Title'
@@ -25053,6 +25108,7 @@ wwv_flow_imp_page.create_page_item(
 ,p_display_as=>'NATIVE_TEXT_FIELD'
 ,p_cSize=>32
 ,p_cMaxlength=>50
+,p_begin_on_new_line=>'N'
 ,p_field_template=>1609121967514267634
 ,p_item_template_options=>'#DEFAULT#'
 ,p_is_persistent=>'N'
@@ -25067,7 +25123,7 @@ wwv_flow_imp_page.create_page_item(
 ,p_name=>'P19_SALARY_TYPE'
 ,p_source_data_type=>'VARCHAR2'
 ,p_is_required=>true
-,p_item_sequence=>170
+,p_item_sequence=>180
 ,p_item_plug_id=>wwv_flow_imp.id(16028325548299607717)
 ,p_item_source_plug_id=>wwv_flow_imp.id(16028325548299607717)
 ,p_prompt=>'Salary Type'
@@ -25090,7 +25146,7 @@ wwv_flow_imp_page.create_page_item(
 ,p_name=>'P19_DEPT_ID'
 ,p_source_data_type=>'NUMBER'
 ,p_is_required=>true
-,p_item_sequence=>160
+,p_item_sequence=>170
 ,p_item_plug_id=>wwv_flow_imp.id(16028325548299607717)
 ,p_item_source_plug_id=>wwv_flow_imp.id(16028325548299607717)
 ,p_prompt=>'Dept'
@@ -25126,6 +25182,7 @@ wwv_flow_imp_page.create_page_item(
 '  ; '))
 ,p_lov_display_null=>'YES'
 ,p_cHeight=>1
+,p_colspan=>3
 ,p_field_template=>1609122147107268652
 ,p_item_template_options=>'#DEFAULT#'
 ,p_is_persistent=>'N'
@@ -25137,7 +25194,7 @@ wwv_flow_imp_page.create_page_item(
  p_id=>wwv_flow_imp.id(16028332379238607725)
 ,p_name=>'P19_STATUS'
 ,p_source_data_type=>'VARCHAR2'
-,p_item_sequence=>190
+,p_item_sequence=>200
 ,p_item_plug_id=>wwv_flow_imp.id(16028325548299607717)
 ,p_item_source_plug_id=>wwv_flow_imp.id(16028325548299607717)
 ,p_prompt=>'Status'
@@ -25158,7 +25215,7 @@ wwv_flow_imp_page.create_page_item(
  p_id=>wwv_flow_imp.id(16028332759471607725)
 ,p_name=>'P19_FEED_BY'
 ,p_source_data_type=>'VARCHAR2'
-,p_item_sequence=>200
+,p_item_sequence=>210
 ,p_item_plug_id=>wwv_flow_imp.id(16028325548299607717)
 ,p_item_source_plug_id=>wwv_flow_imp.id(16028325548299607717)
 ,p_item_default=>':APP_USER'
@@ -25175,7 +25232,7 @@ wwv_flow_imp_page.create_page_item(
  p_id=>wwv_flow_imp.id(16028333144076607726)
 ,p_name=>'P19_FEED_DATE'
 ,p_source_data_type=>'DATE'
-,p_item_sequence=>210
+,p_item_sequence=>220
 ,p_item_plug_id=>wwv_flow_imp.id(16028325548299607717)
 ,p_item_source_plug_id=>wwv_flow_imp.id(16028325548299607717)
 ,p_item_default=>'TRUNC(SYSDATE)'
@@ -25216,7 +25273,7 @@ wwv_flow_imp_page.create_page_item(
 ,p_name=>'P19_SHIFT'
 ,p_source_data_type=>'VARCHAR2'
 ,p_is_required=>true
-,p_item_sequence=>180
+,p_item_sequence=>190
 ,p_item_plug_id=>wwv_flow_imp.id(16028325548299607717)
 ,p_item_source_plug_id=>wwv_flow_imp.id(16028325548299607717)
 ,p_prompt=>'Shift'
@@ -25240,7 +25297,7 @@ wwv_flow_imp_page.create_page_item(
  p_id=>wwv_flow_imp.id(18847805038380260040)
 ,p_name=>'P19_SUBJECT'
 ,p_source_data_type=>'NUMBER'
-,p_item_sequence=>150
+,p_item_sequence=>160
 ,p_item_plug_id=>wwv_flow_imp.id(16028325548299607717)
 ,p_item_source_plug_id=>wwv_flow_imp.id(16028325548299607717)
 ,p_prompt=>'Subject'
@@ -25261,6 +25318,40 @@ wwv_flow_imp_page.create_page_item(
 ,p_lov_display_extra=>'YES'
 ,p_attributes=>wwv_flow_t_plugin_attributes(wwv_flow_t_varchar2(
   'page_action_on_selection', 'NONE')).to_clob
+);
+wwv_flow_imp_page.create_page_item(
+ p_id=>wwv_flow_imp.id(118789929014551481334)
+,p_name=>'P19_ALLOW_BRANCHES'
+,p_source_data_type=>'VARCHAR2'
+,p_item_sequence=>130
+,p_item_plug_id=>wwv_flow_imp.id(16028325548299607717)
+,p_item_source_plug_id=>wwv_flow_imp.id(16028325548299607717)
+,p_prompt=>'Allow Branches'
+,p_source=>'ALLOW_SITES'
+,p_source_type=>'REGION_SOURCE_COLUMN'
+,p_display_as=>'NATIVE_POPUP_LOV'
+,p_lov=>wwv_flow_string.join(wwv_flow_t_varchar2(
+'SELECT SITE_NAME,SITE_ID    ',
+'   FROM SITES S',
+'  WHERE S.STATUS=''A''',
+'  ; '))
+,p_lov_display_null=>'YES'
+,p_cSize=>30
+,p_begin_on_new_line=>'N'
+,p_field_template=>1609122147107268652
+,p_item_template_options=>'#DEFAULT#'
+,p_is_persistent=>'N'
+,p_lov_display_extra=>'YES'
+,p_attributes=>wwv_flow_t_plugin_attributes(wwv_flow_t_varchar2(
+  'case_sensitive', 'N',
+  'display_as', 'POPUP',
+  'fetch_on_search', 'N',
+  'initial_fetch', 'FIRST_ROWSET',
+  'manual_entry', 'N',
+  'match_type', 'CONTAINS',
+  'min_chars', '0')).to_clob
+,p_multi_value_type=>'SEPARATED'
+,p_multi_value_separator=>','
 );
 wwv_flow_imp_page.create_page_da_event(
  p_id=>wwv_flow_imp.id(16028339113506607731)
@@ -33034,7 +33125,7 @@ wwv_flow_imp_page.create_page_item(
  p_id=>wwv_flow_imp.id(31172479785300568021)
 ,p_name=>'P30_BOOK_FEE'
 ,p_source_data_type=>'NUMBER'
-,p_item_sequence=>60
+,p_item_sequence=>70
 ,p_item_plug_id=>wwv_flow_imp.id(31172479249583568016)
 ,p_item_source_plug_id=>wwv_flow_imp.id(31172479249583568016)
 ,p_prompt=>'Books Fee'
@@ -33056,7 +33147,7 @@ wwv_flow_imp_page.create_page_item(
  p_id=>wwv_flow_imp.id(31172479892316568022)
 ,p_name=>'P30_EXAM_FEE'
 ,p_source_data_type=>'NUMBER'
-,p_item_sequence=>90
+,p_item_sequence=>100
 ,p_item_plug_id=>wwv_flow_imp.id(31172479249583568016)
 ,p_item_source_plug_id=>wwv_flow_imp.id(31172479249583568016)
 ,p_source=>'EXAM_FEE'
@@ -33070,7 +33161,7 @@ wwv_flow_imp_page.create_page_item(
  p_id=>wwv_flow_imp.id(31172479944025568023)
 ,p_name=>'P30_HOURLY_FEE'
 ,p_source_data_type=>'NUMBER'
-,p_item_sequence=>140
+,p_item_sequence=>160
 ,p_item_plug_id=>wwv_flow_imp.id(31172479249583568016)
 ,p_item_source_plug_id=>wwv_flow_imp.id(31172479249583568016)
 ,p_prompt=>'Hourly Fee'
@@ -33091,7 +33182,7 @@ wwv_flow_imp_page.create_page_item(
  p_id=>wwv_flow_imp.id(31172480030705568024)
 ,p_name=>'P30_PAST_PAPER_FEE'
 ,p_source_data_type=>'NUMBER'
-,p_item_sequence=>100
+,p_item_sequence=>110
 ,p_item_plug_id=>wwv_flow_imp.id(31172479249583568016)
 ,p_item_source_plug_id=>wwv_flow_imp.id(31172479249583568016)
 ,p_prompt=>'Exams Material Fee'
@@ -33112,7 +33203,7 @@ wwv_flow_imp_page.create_page_item(
  p_id=>wwv_flow_imp.id(31172480182208568025)
 ,p_name=>'P30_DUE_DATE'
 ,p_source_data_type=>'DATE'
-,p_item_sequence=>250
+,p_item_sequence=>230
 ,p_item_plug_id=>wwv_flow_imp.id(31172479249583568016)
 ,p_item_source_plug_id=>wwv_flow_imp.id(31172479249583568016)
 ,p_prompt=>'Due Date'
@@ -33136,7 +33227,7 @@ wwv_flow_imp_page.create_page_item(
  p_id=>wwv_flow_imp.id(31172480262569568026)
 ,p_name=>'P30_PAY_ID'
 ,p_source_data_type=>'VARCHAR2'
-,p_item_sequence=>240
+,p_item_sequence=>220
 ,p_item_plug_id=>wwv_flow_imp.id(31172479249583568016)
 ,p_item_source_plug_id=>wwv_flow_imp.id(31172479249583568016)
 ,p_prompt=>'Payment Method'
@@ -33168,7 +33259,7 @@ wwv_flow_imp_page.create_page_item(
  p_id=>wwv_flow_imp.id(31172480306772568027)
 ,p_name=>'P30_FEED_BY_2'
 ,p_source_data_type=>'VARCHAR2'
-,p_item_sequence=>290
+,p_item_sequence=>300
 ,p_item_plug_id=>wwv_flow_imp.id(31172479249583568016)
 ,p_item_source_plug_id=>wwv_flow_imp.id(31172479249583568016)
 ,p_source=>'FEED_BY'
@@ -33182,7 +33273,7 @@ wwv_flow_imp_page.create_page_item(
  p_id=>wwv_flow_imp.id(31172480468734568028)
 ,p_name=>'P30_FEED_DATE_2'
 ,p_source_data_type=>'DATE'
-,p_item_sequence=>300
+,p_item_sequence=>310
 ,p_item_plug_id=>wwv_flow_imp.id(31172479249583568016)
 ,p_item_source_plug_id=>wwv_flow_imp.id(31172479249583568016)
 ,p_source=>'FEED_DATE'
@@ -33196,7 +33287,7 @@ wwv_flow_imp_page.create_page_item(
  p_id=>wwv_flow_imp.id(31172480543222568029)
 ,p_name=>'P30_SITE_ID_2'
 ,p_source_data_type=>'NUMBER'
-,p_item_sequence=>310
+,p_item_sequence=>320
 ,p_item_plug_id=>wwv_flow_imp.id(31172479249583568016)
 ,p_item_source_plug_id=>wwv_flow_imp.id(31172479249583568016)
 ,p_item_default=>'APP_SITE_ID'
@@ -33212,7 +33303,7 @@ wwv_flow_imp_page.create_page_item(
  p_id=>wwv_flow_imp.id(31172480699869568030)
 ,p_name=>'P30_TOTAL_FEE'
 ,p_source_data_type=>'NUMBER'
-,p_item_sequence=>150
+,p_item_sequence=>170
 ,p_item_plug_id=>wwv_flow_imp.id(31172479249583568016)
 ,p_item_source_plug_id=>wwv_flow_imp.id(31172479249583568016)
 ,p_prompt=>'Monthly Fee'
@@ -33478,7 +33569,7 @@ wwv_flow_imp_page.create_page_item(
  p_id=>wwv_flow_imp.id(76143615002175876401)
 ,p_name=>'P30_FEE_START_DATE'
 ,p_source_data_type=>'DATE'
-,p_item_sequence=>230
+,p_item_sequence=>210
 ,p_item_plug_id=>wwv_flow_imp.id(31172479249583568016)
 ,p_item_source_plug_id=>wwv_flow_imp.id(31172479249583568016)
 ,p_prompt=>'Fee Start Date'
@@ -33525,7 +33616,7 @@ wwv_flow_imp_page.create_page_item(
  p_id=>wwv_flow_imp.id(77995141323169684410)
 ,p_name=>'P30_NO_OF_BOOKS'
 ,p_source_data_type=>'NUMBER'
-,p_item_sequence=>50
+,p_item_sequence=>60
 ,p_item_plug_id=>wwv_flow_imp.id(31172479249583568016)
 ,p_item_source_plug_id=>wwv_flow_imp.id(31172479249583568016)
 ,p_prompt=>'Books Set'
@@ -33582,7 +33673,7 @@ wwv_flow_imp_page.create_page_item(
  p_id=>wwv_flow_imp.id(77995143922516684436)
 ,p_name=>'P30_FEE_STATUS'
 ,p_source_data_type=>'VARCHAR2'
-,p_item_sequence=>260
+,p_item_sequence=>240
 ,p_item_plug_id=>wwv_flow_imp.id(31172479249583568016)
 ,p_item_source_plug_id=>wwv_flow_imp.id(31172479249583568016)
 ,p_prompt=>'Status '
@@ -33645,57 +33736,31 @@ wwv_flow_imp_page.create_page_item(
 ,p_item_sequence=>40
 ,p_item_plug_id=>wwv_flow_imp.id(31172479249583568016)
 ,p_item_source_plug_id=>wwv_flow_imp.id(31172479249583568016)
-,p_prompt=>'Discount %'
 ,p_source=>'REG_FEE_DISC'
 ,p_source_type=>'REGION_SOURCE_COLUMN'
-,p_display_as=>'NATIVE_SELECT_LIST'
-,p_lov=>wwv_flow_string.join(wwv_flow_t_varchar2(
-'SELECT DISC_PER,DISC_PER DISC_PER1',
-'  FROM DISCOUNTS',
-' ORDER BY DISC_PER',
-'  ;  '))
-,p_lov_display_null=>'YES'
-,p_lov_null_text=>'0'
-,p_cHeight=>1
-,p_begin_on_new_line=>'N'
-,p_field_template=>1609121967514267634
-,p_item_template_options=>'#DEFAULT#'
+,p_display_as=>'NATIVE_HIDDEN'
 ,p_is_persistent=>'N'
-,p_lov_display_extra=>'YES'
 ,p_attributes=>wwv_flow_t_plugin_attributes(wwv_flow_t_varchar2(
-  'page_action_on_selection', 'NONE')).to_clob
+  'value_protected', 'N')).to_clob
 );
 wwv_flow_imp_page.create_page_item(
  p_id=>wwv_flow_imp.id(79419820696081254144)
 ,p_name=>'P30_PAST_PAPER_DISC'
 ,p_source_data_type=>'NUMBER'
-,p_item_sequence=>110
+,p_item_sequence=>120
 ,p_item_plug_id=>wwv_flow_imp.id(31172479249583568016)
 ,p_item_source_plug_id=>wwv_flow_imp.id(31172479249583568016)
-,p_prompt=>'Discount %'
 ,p_source=>'PAST_PAPER_DISC'
 ,p_source_type=>'REGION_SOURCE_COLUMN'
-,p_display_as=>'NATIVE_SELECT_LIST'
-,p_lov=>wwv_flow_string.join(wwv_flow_t_varchar2(
-'SELECT DISC_PER,DISC_PER DISC_PER1',
-'  FROM DISCOUNTS',
-' ORDER BY DISC_PER',
-'  ;  '))
-,p_lov_display_null=>'YES'
-,p_lov_null_text=>'0'
-,p_cHeight=>1
-,p_begin_on_new_line=>'N'
-,p_field_template=>1609121967514267634
-,p_item_template_options=>'#DEFAULT#'
+,p_display_as=>'NATIVE_HIDDEN'
 ,p_is_persistent=>'N'
-,p_lov_display_extra=>'YES'
 ,p_attributes=>wwv_flow_t_plugin_attributes(wwv_flow_t_varchar2(
-  'page_action_on_selection', 'NONE')).to_clob
+  'value_protected', 'N')).to_clob
 );
 wwv_flow_imp_page.create_page_item(
  p_id=>wwv_flow_imp.id(80068305147768064435)
 ,p_name=>'P30_TOTAL_PAYABLE'
-,p_item_sequence=>180
+,p_item_sequence=>190
 ,p_item_plug_id=>wwv_flow_imp.id(31172479249583568016)
 ,p_use_cache_before_default=>'NO'
 ,p_prompt=>'Total Payable'
@@ -33715,55 +33780,35 @@ wwv_flow_imp_page.create_page_item(
  p_id=>wwv_flow_imp.id(85896381272540247102)
 ,p_name=>'P30_SPECIAL_DISC'
 ,p_source_data_type=>'NUMBER'
-,p_item_sequence=>220
+,p_item_sequence=>260
 ,p_item_plug_id=>wwv_flow_imp.id(31172479249583568016)
 ,p_item_source_plug_id=>wwv_flow_imp.id(31172479249583568016)
-,p_prompt=>'Discount %'
 ,p_source=>'SPECIAL_DISC'
 ,p_source_type=>'REGION_SOURCE_COLUMN'
-,p_display_as=>'NATIVE_NUMBER_FIELD'
-,p_cSize=>30
-,p_begin_on_new_line=>'N'
-,p_begin_on_new_field=>'N'
-,p_field_template=>1609121967514267634
-,p_item_template_options=>'#DEFAULT#'
+,p_display_as=>'NATIVE_HIDDEN'
 ,p_is_persistent=>'N'
 ,p_attributes=>wwv_flow_t_plugin_attributes(wwv_flow_t_varchar2(
-  'number_alignment', 'left',
-  'virtual_keyboard', 'decimal')).to_clob
+  'value_protected', 'N')).to_clob
 );
 wwv_flow_imp_page.create_page_item(
  p_id=>wwv_flow_imp.id(85896381869006247108)
 ,p_name=>'P30_HOURLY_FEE_DISC'
 ,p_source_data_type=>'NUMBER'
-,p_item_sequence=>210
+,p_item_sequence=>250
 ,p_item_plug_id=>wwv_flow_imp.id(31172479249583568016)
 ,p_item_source_plug_id=>wwv_flow_imp.id(31172479249583568016)
-,p_prompt=>'Discount %'
 ,p_source=>'HOURLY_FEE_DISC'
 ,p_source_type=>'REGION_SOURCE_COLUMN'
-,p_display_as=>'NATIVE_SELECT_LIST'
-,p_lov=>wwv_flow_string.join(wwv_flow_t_varchar2(
-'SELECT DISC_PER,DISC_PER DISC_PER1',
-'  FROM DISCOUNTS',
-' ORDER BY DISC_PER',
-'  ;  '))
-,p_lov_display_null=>'YES'
-,p_lov_null_text=>'0'
-,p_cHeight=>1
-,p_begin_on_new_line=>'N'
-,p_field_template=>1609121967514267634
-,p_item_template_options=>'#DEFAULT#'
+,p_display_as=>'NATIVE_HIDDEN'
 ,p_is_persistent=>'N'
-,p_lov_display_extra=>'YES'
 ,p_attributes=>wwv_flow_t_plugin_attributes(wwv_flow_t_varchar2(
-  'page_action_on_selection', 'NONE')).to_clob
+  'value_protected', 'N')).to_clob
 );
 wwv_flow_imp_page.create_page_item(
  p_id=>wwv_flow_imp.id(85896381918927247109)
 ,p_name=>'P30_TUITION_FEE_TYPE'
 ,p_source_data_type=>'VARCHAR2'
-,p_item_sequence=>120
+,p_item_sequence=>140
 ,p_item_plug_id=>wwv_flow_imp.id(31172479249583568016)
 ,p_item_source_plug_id=>wwv_flow_imp.id(31172479249583568016)
 ,p_prompt=>'Session Type'
@@ -33798,7 +33843,7 @@ wwv_flow_imp_page.create_page_item(
 wwv_flow_imp_page.create_page_item(
  p_id=>wwv_flow_imp.id(85896382019659247110)
 ,p_name=>'P30_TUTION_TIME'
-,p_item_sequence=>130
+,p_item_sequence=>150
 ,p_item_plug_id=>wwv_flow_imp.id(31172479249583568016)
 ,p_use_cache_before_default=>'NO'
 ,p_prompt=>'Session Time'
@@ -33833,7 +33878,7 @@ wwv_flow_imp_page.create_page_item(
 wwv_flow_imp_page.create_page_item(
  p_id=>wwv_flow_imp.id(86302622078268354002)
 ,p_name=>'P30_DISCOUNT_TYPE'
-,p_item_sequence=>160
+,p_item_sequence=>270
 ,p_item_plug_id=>wwv_flow_imp.id(31172479249583568016)
 ,p_use_cache_before_default=>'NO'
 ,p_item_default=>wwv_flow_string.join(wwv_flow_t_varchar2(
@@ -33860,25 +33905,16 @@ wwv_flow_imp_page.create_page_item(
 'END;         '))
 ,p_item_default_type=>'FUNCTION_BODY'
 ,p_item_default_language=>'PLSQL'
-,p_prompt=>'Discount Type'
-,p_display_as=>'NATIVE_SELECT_LIST'
-,p_lov=>'STATIC2:Normal;N,Special;S,Sibling;SI'
-,p_lov_display_null=>'YES'
-,p_lov_null_text=>'--select--'
-,p_cHeight=>1
-,p_begin_on_new_line=>'N'
-,p_field_template=>1609121967514267634
-,p_item_template_options=>'#DEFAULT#'
+,p_display_as=>'NATIVE_HIDDEN'
 ,p_is_persistent=>'N'
-,p_lov_display_extra=>'YES'
 ,p_attributes=>wwv_flow_t_plugin_attributes(wwv_flow_t_varchar2(
-  'page_action_on_selection', 'NONE')).to_clob
+  'value_protected', 'N')).to_clob
 );
 wwv_flow_imp_page.create_page_item(
  p_id=>wwv_flow_imp.id(86302623910275354021)
 ,p_name=>'P30_DISC_REASON'
 ,p_source_data_type=>'VARCHAR2'
-,p_item_sequence=>270
+,p_item_sequence=>280
 ,p_item_plug_id=>wwv_flow_imp.id(31172479249583568016)
 ,p_item_source_plug_id=>wwv_flow_imp.id(31172479249583568016)
 ,p_prompt=>'Discount Notes'
@@ -33904,31 +33940,18 @@ wwv_flow_imp_page.create_page_item(
 ,p_item_sequence=>80
 ,p_item_plug_id=>wwv_flow_imp.id(31172479249583568016)
 ,p_item_source_plug_id=>wwv_flow_imp.id(31172479249583568016)
-,p_prompt=>'Discount %'
-,p_source=>'REG_FEE_DISC'
+,p_source=>'BOOK_DISC'
 ,p_source_type=>'REGION_SOURCE_COLUMN'
-,p_display_as=>'NATIVE_SELECT_LIST'
-,p_lov=>wwv_flow_string.join(wwv_flow_t_varchar2(
-'SELECT DISC_PER,DISC_PER DISC_PER1',
-'  FROM DISCOUNTS',
-' ORDER BY DISC_PER',
-'  ;  '))
-,p_lov_display_null=>'YES'
-,p_lov_null_text=>'0'
-,p_cHeight=>1
-,p_begin_on_new_line=>'N'
-,p_field_template=>1609121967514267634
-,p_item_template_options=>'#DEFAULT#'
+,p_display_as=>'NATIVE_HIDDEN'
 ,p_is_persistent=>'N'
-,p_lov_display_extra=>'YES'
 ,p_attributes=>wwv_flow_t_plugin_attributes(wwv_flow_t_varchar2(
-  'page_action_on_selection', 'NONE')).to_clob
+  'value_protected', 'N')).to_clob
 );
 wwv_flow_imp_page.create_page_item(
  p_id=>wwv_flow_imp.id(90816384255618313001)
 ,p_name=>'P30_TUTION_TIME_HIDDEN'
 ,p_source_data_type=>'NUMBER'
-,p_item_sequence=>280
+,p_item_sequence=>290
 ,p_item_plug_id=>wwv_flow_imp.id(31172479249583568016)
 ,p_item_source_plug_id=>wwv_flow_imp.id(31172479249583568016)
 ,p_source=>'TUTION_TIME'
@@ -33937,6 +33960,87 @@ wwv_flow_imp_page.create_page_item(
 ,p_is_persistent=>'N'
 ,p_attributes=>wwv_flow_t_plugin_attributes(wwv_flow_t_varchar2(
   'value_protected', 'N')).to_clob
+);
+wwv_flow_imp_page.create_page_item(
+ p_id=>wwv_flow_imp.id(125672748904052699725)
+,p_name=>'P30_REG_FEE_AMT'
+,p_source_data_type=>'NUMBER'
+,p_item_sequence=>50
+,p_item_plug_id=>wwv_flow_imp.id(31172479249583568016)
+,p_item_source_plug_id=>wwv_flow_imp.id(31172479249583568016)
+,p_prompt=>'Discount '
+,p_source=>'REG_FEE_AMT'
+,p_source_type=>'REGION_SOURCE_COLUMN'
+,p_display_as=>'NATIVE_NUMBER_FIELD'
+,p_cSize=>30
+,p_begin_on_new_line=>'N'
+,p_field_template=>1609121967514267634
+,p_item_template_options=>'#DEFAULT#'
+,p_is_persistent=>'N'
+,p_attributes=>wwv_flow_t_plugin_attributes(wwv_flow_t_varchar2(
+  'number_alignment', 'left',
+  'virtual_keyboard', 'decimal')).to_clob
+);
+wwv_flow_imp_page.create_page_item(
+ p_id=>wwv_flow_imp.id(125672749342372699729)
+,p_name=>'P30_BOOKS_FEE_AMT'
+,p_source_data_type=>'NUMBER'
+,p_item_sequence=>90
+,p_item_plug_id=>wwv_flow_imp.id(31172479249583568016)
+,p_item_source_plug_id=>wwv_flow_imp.id(31172479249583568016)
+,p_prompt=>'Discount '
+,p_source=>'BOOK_FEE_AMT'
+,p_source_type=>'REGION_SOURCE_COLUMN'
+,p_display_as=>'NATIVE_NUMBER_FIELD'
+,p_cSize=>30
+,p_begin_on_new_line=>'N'
+,p_field_template=>1609121967514267634
+,p_item_template_options=>'#DEFAULT#'
+,p_is_persistent=>'N'
+,p_attributes=>wwv_flow_t_plugin_attributes(wwv_flow_t_varchar2(
+  'number_alignment', 'left',
+  'virtual_keyboard', 'decimal')).to_clob
+);
+wwv_flow_imp_page.create_page_item(
+ p_id=>wwv_flow_imp.id(125672749726657699733)
+,p_name=>'P30_PAST_PAPER_AMT'
+,p_source_data_type=>'NUMBER'
+,p_item_sequence=>130
+,p_item_plug_id=>wwv_flow_imp.id(31172479249583568016)
+,p_item_source_plug_id=>wwv_flow_imp.id(31172479249583568016)
+,p_prompt=>'Discount '
+,p_source=>'PPAST_PAPER_FEE_AMT'
+,p_source_type=>'REGION_SOURCE_COLUMN'
+,p_display_as=>'NATIVE_NUMBER_FIELD'
+,p_cSize=>30
+,p_begin_on_new_line=>'N'
+,p_field_template=>1609121967514267634
+,p_item_template_options=>'#DEFAULT#'
+,p_is_persistent=>'N'
+,p_attributes=>wwv_flow_t_plugin_attributes(wwv_flow_t_varchar2(
+  'number_alignment', 'left',
+  'virtual_keyboard', 'decimal')).to_clob
+);
+wwv_flow_imp_page.create_page_item(
+ p_id=>wwv_flow_imp.id(125672750270907699738)
+,p_name=>'P30_MONTH_FEE_DISC_AMT'
+,p_source_data_type=>'NUMBER'
+,p_item_sequence=>200
+,p_item_plug_id=>wwv_flow_imp.id(31172479249583568016)
+,p_item_source_plug_id=>wwv_flow_imp.id(31172479249583568016)
+,p_prompt=>'Monthly Fee Discount Amount'
+,p_source=>'MONTH_FEE_DISC_AMT'
+,p_source_type=>'REGION_SOURCE_COLUMN'
+,p_display_as=>'NATIVE_NUMBER_FIELD'
+,p_cSize=>30
+,p_begin_on_new_line=>'N'
+,p_colspan=>3
+,p_field_template=>1609121967514267634
+,p_item_template_options=>'#DEFAULT#'
+,p_is_persistent=>'N'
+,p_attributes=>wwv_flow_t_plugin_attributes(wwv_flow_t_varchar2(
+  'number_alignment', 'left',
+  'virtual_keyboard', 'decimal')).to_clob
 );
 wwv_flow_imp_page.create_page_validation(
  p_id=>wwv_flow_imp.id(31172480722492568031)
@@ -34487,6 +34591,7 @@ wwv_flow_imp_page.create_page_validation(
 ,p_validation2=>'PLSQL'
 ,p_validation_type=>'FUNC_BODY_RETURNING_BOOLEAN'
 ,p_error_message=>'Discount must have some value.'
+,p_validation_condition_type=>'NEVER'
 ,p_when_button_pressed=>wwv_flow_imp.id(89332703940775115615)
 ,p_associated_item=>wwv_flow_imp.id(79419820579623254143)
 ,p_error_display_location=>'INLINE_WITH_FIELD'
@@ -34494,7 +34599,7 @@ wwv_flow_imp_page.create_page_validation(
 wwv_flow_imp_page.create_page_validation(
  p_id=>wwv_flow_imp.id(89332705869743115634)
 ,p_validation_name=>'no of books valid'
-,p_validation_sequence=>320
+,p_validation_sequence=>330
 ,p_validation=>wwv_flow_string.join(wwv_flow_t_varchar2(
 'IF :P30_NO_OF_BOOKS IS NULL THEN   ',
 '    RETURN FALSE;',
@@ -34511,7 +34616,7 @@ wwv_flow_imp_page.create_page_validation(
 wwv_flow_imp_page.create_page_validation(
  p_id=>wwv_flow_imp.id(89332705991212115635)
 ,p_validation_name=>'book fee valid'
-,p_validation_sequence=>330
+,p_validation_sequence=>340
 ,p_validation=>wwv_flow_string.join(wwv_flow_t_varchar2(
 'IF :P30_BOOK_FEE IS NULL THEN   ',
 '    RETURN FALSE;',
@@ -34528,7 +34633,7 @@ wwv_flow_imp_page.create_page_validation(
 wwv_flow_imp_page.create_page_validation(
  p_id=>wwv_flow_imp.id(89332706003413115636)
 ,p_validation_name=>'books fee disc valid'
-,p_validation_sequence=>340
+,p_validation_sequence=>350
 ,p_validation=>wwv_flow_string.join(wwv_flow_t_varchar2(
 'IF :P30_BOOKS_FEE_DISC IS NULL THEN   ',
 '    RETURN FALSE;',
@@ -34538,6 +34643,7 @@ wwv_flow_imp_page.create_page_validation(
 ,p_validation2=>'PLSQL'
 ,p_validation_type=>'FUNC_BODY_RETURNING_BOOLEAN'
 ,p_error_message=>'Discount must have some value.'
+,p_validation_condition_type=>'NEVER'
 ,p_when_button_pressed=>wwv_flow_imp.id(89332703940775115615)
 ,p_associated_item=>wwv_flow_imp.id(90148947573672985301)
 ,p_error_display_location=>'INLINE_WITH_FIELD'
@@ -34545,7 +34651,7 @@ wwv_flow_imp_page.create_page_validation(
 wwv_flow_imp_page.create_page_validation(
  p_id=>wwv_flow_imp.id(89332706166567115637)
 ,p_validation_name=>'past paper fee valid'
-,p_validation_sequence=>350
+,p_validation_sequence=>370
 ,p_validation=>wwv_flow_string.join(wwv_flow_t_varchar2(
 'IF :P30_PAST_PAPER_FEE IS NULL THEN   ',
 '    RETURN FALSE;',
@@ -34562,7 +34668,7 @@ wwv_flow_imp_page.create_page_validation(
 wwv_flow_imp_page.create_page_validation(
  p_id=>wwv_flow_imp.id(89332706260074115638)
 ,p_validation_name=>'past paper fee disc valid'
-,p_validation_sequence=>360
+,p_validation_sequence=>380
 ,p_validation=>wwv_flow_string.join(wwv_flow_t_varchar2(
 'IF :P30_PAST_PAPER_DISC IS NULL THEN   ',
 '    RETURN FALSE;',
@@ -34572,6 +34678,7 @@ wwv_flow_imp_page.create_page_validation(
 ,p_validation2=>'PLSQL'
 ,p_validation_type=>'FUNC_BODY_RETURNING_BOOLEAN'
 ,p_error_message=>'Discount must have some value.'
+,p_validation_condition_type=>'NEVER'
 ,p_when_button_pressed=>wwv_flow_imp.id(89332703940775115615)
 ,p_associated_item=>wwv_flow_imp.id(79419820696081254144)
 ,p_error_display_location=>'INLINE_WITH_FIELD'
@@ -34579,7 +34686,7 @@ wwv_flow_imp_page.create_page_validation(
 wwv_flow_imp_page.create_page_validation(
  p_id=>wwv_flow_imp.id(89332706379154115639)
 ,p_validation_name=>'tuition fee type valid'
-,p_validation_sequence=>370
+,p_validation_sequence=>400
 ,p_validation=>wwv_flow_string.join(wwv_flow_t_varchar2(
 'IF :P30_TUITION_FEE_TYPE IS NULL THEN   ',
 '    RETURN FALSE;',
@@ -34596,7 +34703,7 @@ wwv_flow_imp_page.create_page_validation(
 wwv_flow_imp_page.create_page_validation(
  p_id=>wwv_flow_imp.id(89332706446798115640)
 ,p_validation_name=>'tuition time valid'
-,p_validation_sequence=>380
+,p_validation_sequence=>410
 ,p_validation=>wwv_flow_string.join(wwv_flow_t_varchar2(
 'IF :P30_TUTION_TIME IS NULL THEN   ',
 '    RETURN FALSE;',
@@ -34613,7 +34720,7 @@ wwv_flow_imp_page.create_page_validation(
 wwv_flow_imp_page.create_page_validation(
  p_id=>wwv_flow_imp.id(89332706566749115641)
 ,p_validation_name=>'hourly fee valid'
-,p_validation_sequence=>390
+,p_validation_sequence=>420
 ,p_validation=>wwv_flow_string.join(wwv_flow_t_varchar2(
 'IF :P30_HOURLY_FEE IS NULL THEN   ',
 '    RETURN FALSE;',
@@ -34630,7 +34737,7 @@ wwv_flow_imp_page.create_page_validation(
 wwv_flow_imp_page.create_page_validation(
  p_id=>wwv_flow_imp.id(89332706634916115642)
 ,p_validation_name=>'TOTAL fee valid'
-,p_validation_sequence=>400
+,p_validation_sequence=>430
 ,p_validation=>wwv_flow_string.join(wwv_flow_t_varchar2(
 'IF :P30_TOTAL_FEE IS NULL THEN   ',
 '    RETURN FALSE;',
@@ -34647,7 +34754,7 @@ wwv_flow_imp_page.create_page_validation(
 wwv_flow_imp_page.create_page_validation(
  p_id=>wwv_flow_imp.id(89332706763988115643)
 ,p_validation_name=>'DISCOUNT TYPE valid'
-,p_validation_sequence=>410
+,p_validation_sequence=>440
 ,p_validation=>wwv_flow_string.join(wwv_flow_t_varchar2(
 'IF :P30_DISCOUNT_TYPE IS NULL THEN   ',
 '    RETURN FALSE;',
@@ -34664,7 +34771,7 @@ wwv_flow_imp_page.create_page_validation(
 wwv_flow_imp_page.create_page_validation(
  p_id=>wwv_flow_imp.id(89332706800797115644)
 ,p_validation_name=>'hourly fee disc valid'
-,p_validation_sequence=>420
+,p_validation_sequence=>450
 ,p_validation=>wwv_flow_string.join(wwv_flow_t_varchar2(
 'IF :P30_HOURLY_FEE_DISC IS NULL THEN   ',
 '    RETURN FALSE;',
@@ -34681,7 +34788,7 @@ wwv_flow_imp_page.create_page_validation(
 wwv_flow_imp_page.create_page_validation(
  p_id=>wwv_flow_imp.id(89332706909978115645)
 ,p_validation_name=>'special disc valid'
-,p_validation_sequence=>430
+,p_validation_sequence=>460
 ,p_validation=>wwv_flow_string.join(wwv_flow_t_varchar2(
 'IF :P30_SPECIAL_DISC IS NULL THEN   ',
 '    RETURN FALSE;',
@@ -34698,7 +34805,7 @@ wwv_flow_imp_page.create_page_validation(
 wwv_flow_imp_page.create_page_validation(
  p_id=>wwv_flow_imp.id(89332707024894115646)
 ,p_validation_name=>'total payable valid'
-,p_validation_sequence=>440
+,p_validation_sequence=>470
 ,p_validation=>wwv_flow_string.join(wwv_flow_t_varchar2(
 'IF :P30_TOTAL_PAYABLE IS NULL THEN   ',
 '    RETURN FALSE;',
@@ -34715,7 +34822,7 @@ wwv_flow_imp_page.create_page_validation(
 wwv_flow_imp_page.create_page_validation(
  p_id=>wwv_flow_imp.id(89332707139689115647)
 ,p_validation_name=>'fee start date valid'
-,p_validation_sequence=>450
+,p_validation_sequence=>480
 ,p_validation=>wwv_flow_string.join(wwv_flow_t_varchar2(
 'IF :P30_FEE_START_DATE IS NULL THEN   ',
 '    RETURN FALSE;',
@@ -34732,7 +34839,7 @@ wwv_flow_imp_page.create_page_validation(
 wwv_flow_imp_page.create_page_validation(
  p_id=>wwv_flow_imp.id(89332707284929115648)
 ,p_validation_name=>'pay id valid'
-,p_validation_sequence=>460
+,p_validation_sequence=>490
 ,p_validation=>wwv_flow_string.join(wwv_flow_t_varchar2(
 'IF :P30_PAY_ID IS NULL THEN   ',
 '    RETURN FALSE;',
@@ -34749,7 +34856,7 @@ wwv_flow_imp_page.create_page_validation(
 wwv_flow_imp_page.create_page_validation(
  p_id=>wwv_flow_imp.id(77995143719305684434)
 ,p_validation_name=>'due date valid'
-,p_validation_sequence=>470
+,p_validation_sequence=>500
 ,p_validation=>wwv_flow_string.join(wwv_flow_t_varchar2(
 'IF :P30_DUE_DATE IS NULL THEN   ',
 '    RETURN FALSE;',
@@ -34766,7 +34873,7 @@ wwv_flow_imp_page.create_page_validation(
 wwv_flow_imp_page.create_page_validation(
  p_id=>wwv_flow_imp.id(89332707356559115649)
 ,p_validation_name=>'disc reason valid'
-,p_validation_sequence=>480
+,p_validation_sequence=>510
 ,p_validation=>wwv_flow_string.join(wwv_flow_t_varchar2(
 'IF :P30_DISC_REASON IS NULL THEN   ',
 '    RETURN FALSE;',
@@ -34783,7 +34890,7 @@ wwv_flow_imp_page.create_page_validation(
 wwv_flow_imp_page.create_page_validation(
  p_id=>wwv_flow_imp.id(77995144040556684437)
 ,p_validation_name=>'fee status valid'
-,p_validation_sequence=>490
+,p_validation_sequence=>520
 ,p_validation=>wwv_flow_string.join(wwv_flow_t_varchar2(
 'IF :P30_STATUS IS NULL THEN   ',
 '    RETURN FALSE;',
@@ -34800,7 +34907,7 @@ wwv_flow_imp_page.create_page_validation(
 wwv_flow_imp_page.create_page_validation(
  p_id=>wwv_flow_imp.id(77995144145791684438)
 ,p_validation_name=>'fee status valid_1'
-,p_validation_sequence=>500
+,p_validation_sequence=>530
 ,p_validation=>wwv_flow_string.join(wwv_flow_t_varchar2(
 'IF :P30_STATUS IS NULL THEN   ',
 '    RETURN FALSE;',
@@ -34817,7 +34924,7 @@ wwv_flow_imp_page.create_page_validation(
 wwv_flow_imp_page.create_page_validation(
  p_id=>wwv_flow_imp.id(77995144247721684439)
 ,p_validation_name=>'fee status valid_2'
-,p_validation_sequence=>510
+,p_validation_sequence=>540
 ,p_validation=>wwv_flow_string.join(wwv_flow_t_varchar2(
 'IF :P30_FEE_STATUS IS NULL THEN   ',
 '    RETURN FALSE;',
@@ -34834,7 +34941,7 @@ wwv_flow_imp_page.create_page_validation(
 wwv_flow_imp_page.create_page_validation(
  p_id=>wwv_flow_imp.id(116427920949772251101)
 ,p_validation_name=>'Check email is valid'
-,p_validation_sequence=>520
+,p_validation_sequence=>550
 ,p_validation=>'regexp_like(:P30_EMAIL, ''^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$'')'
 ,p_validation2=>'PLSQL'
 ,p_validation_type=>'EXPRESSION'
@@ -35222,12 +35329,12 @@ wwv_flow_imp_page.create_page_da_action(
 'END; ',
 '',
 'BEGIN',
-' SELECT FEE_ID,REGISTRATION_FEE,REG_FEE_DISC,BOOK_FEE,EXAM_FEE,PAST_PAPER_FEE,PAST_PAPER_DISC,HOURLY_FEE,HOURLY_FEE_DISC,',
-'        TOTAL_FEE,PAY_ID,FEE_START_DATE,SPECIAL_DISC,TUITION_FEE_TYPE,TUTION_TIME,TUTION_TIME,DISC_REASON,NO_OF_BOOKS,BOOK_DISC,',
-'        (NVL(REGISTRATION_FEE,0)+NVL(BOOK_FEE,0)+NVL(PAST_PAPER_FEE,0)+NVL(TOTAL_FEE,0)),STATUS,DUE_DATE   ',
-'    INTO :P30_FEE_ID,:P30_REGISTRATION_FEE,:P30_REG_FEE_DISC,:P30_BOOK_FEE,:P30_EXAM_FEE,:P30_PAST_PAPER_FEE,:P30_PAST_PAPER_DISC,:P30_HOURLY_FEE,:P30_HOURLY_FEE_DISC,',
-'         :P30_TOTAL_FEE,:P30_PAY_ID,:P30_FEE_START_DATE,:P30_SPECIAL_DISC,:P30_TUITION_FEE_TYPE,:P30_TUTION_TIME,:P30_TUTION_TIME_HIDDEN,:P30_DISC_REASON,:P30_NO_OF_BOOKS,:P30_BOOKS_FEE_DISC,:P30_TOTAL_PAYABLE,',
-'         :P30_FEE_STATUS,:P30_DUE_DATE',
+' SELECT FEE_ID,REGISTRATION_FEE,/*REG_FEE_DISC*/ REG_FEE_AMT,BOOK_FEE,EXAM_FEE,PAST_PAPER_FEE,/*PAST_PAPER_DISC*/ PAST_PAPER_FEE_AMT,HOURLY_FEE,/*HOURLY_FEE_DISC,*/',
+'        TOTAL_FEE,PAY_ID,FEE_START_DATE,/*SPECIAL_DISC,*/TUITION_FEE_TYPE,TUTION_TIME,TUTION_TIME,DISC_REASON,NO_OF_BOOKS,/*BOOK_DISC*/ BOOK_FEE_AMT,',
+'        (NVL(REGISTRATION_FEE,0)+NVL(BOOK_FEE,0)+NVL(PAST_PAPER_FEE,0)+NVL(TOTAL_FEE,0)),STATUS,DUE_DATE, MONTH_FEE_DISC_AMT  ',
+'    INTO :P30_FEE_ID,:P30_REGISTRATION_FEE,/*:P30_REG_FEE_DISC*/ :P30_REG_FEE_AMT,:P30_BOOK_FEE,:P30_EXAM_FEE,:P30_PAST_PAPER_FEE,/*:P30_PAST_PAPER_DISC*/ :P30_PAST_PAPER_AMT,:P30_HOURLY_FEE,/*:P30_HOURLY_FEE_DISC,*/',
+'         :P30_TOTAL_FEE,:P30_PAY_ID,:P30_FEE_START_DATE,/*:P30_SPECIAL_DISC,*/:P30_TUITION_FEE_TYPE,:P30_TUTION_TIME,:P30_TUTION_TIME_HIDDEN,:P30_DISC_REASON,:P30_NO_OF_BOOKS,/*:P30_BOOKS_FEE_DISC*/ :P30_BOOKS_FEE_AMT,:P30_TOTAL_PAYABLE,',
+'         :P30_FEE_STATUS,:P30_DUE_DATE, :P30_MONTH_FEE_DISC_AMT',
 '  FROM STUDENT_FEES F           ',
 ' WHERE F.STUDENT_ID=:P30_STUDENT_ID_1',
 '   AND SITE_ID     =:APP_SITE_ID',
@@ -35273,7 +35380,7 @@ wwv_flow_imp_page.create_page_da_action(
 ,p_attribute_03=>'P30_STUDENT_NAME,P30_LAST_NAME,P30_GENDER,P30_DATE_OF_BIRTH,P30_ADMISSION_DATE,P30_CLASS_ID,P30_MEDICAL_CONDITION,P30_LEARNING_NEED,P30_SCHOOL_NAME,P30_SESSIONS,P30_FEE_STATUS,P30_COMMENTS,P30_PARENT_ID,P30_PARENT_NAME,P30_RELATIONSHIP,P30_CONTACT_NU'
 ||'MBER,P30_EMAIL,P30_OCCUPATION,P30_POSTCODE,P30_ADDRESS,P30_STUDENT_ID_2,:P30_FEE_ID,:P30_REGISTRATION_FEE,:P30_BOOK_FEE,:P30_EXAM_FEE,:P30_PAST_PAPER_FEE,:P30_HOURLY_FEE,:P30_TOTAL_FEE,:P30_PAY_ID,:P30_TOTAL_STUDY_HOURS,P30_REF_ID,P30_STUDENT_ID_4,P3'
 ||'0_REFRENCE_STUDENT_ID,P30_REF_NAME,P30_STUDENT_TYPE,P30_EME_CONTACT_NUMBER,P30_EME_NAME,P30_PARENT_CONTRACT_ID,P30_FEE_START_DATE,P30_STAGE,P30_SIBLING_ADMISSION_NO,P30_REG_FEE_DISC,P30_PAST_PAPER_DISC,P30_SPECIAL_DISC,P30_TUTION_TIME,P30_TUITION_FEE'
-||'_TYPE,P30_HOURLY_FEE_DISC,P30_DISC_REASON,P30_TOTAL_PAYABLE,P30_NO_OF_BOOKS,P30_BOOKS_FEE_DISC,P30_TUTION_TIME_HIDDEN,P30_FEE_STATUS,P30_DUE_DATE'
+||'_TYPE,P30_HOURLY_FEE_DISC,P30_DISC_REASON,P30_TOTAL_PAYABLE,P30_NO_OF_BOOKS,P30_BOOKS_FEE_DISC,P30_TUTION_TIME_HIDDEN,P30_FEE_STATUS,P30_DUE_DATE,P30_BOOKS_FEE_AMT,P30_PAST_PAPER_AMT,P30_REG_FEE_AMT,P30_MONTH_FEE_DISC_AMT'
 ,p_attribute_04=>'N'
 ,p_attribute_05=>'PLSQL'
 ,p_wait_for_result=>'Y'
@@ -35423,6 +35530,7 @@ wwv_flow_imp_page.create_page_da_event(
 ,p_bind_type=>'bind'
 ,p_execution_type=>'IMMEDIATE'
 ,p_bind_event_type=>'click'
+,p_display_when_type=>'NEVER'
 );
 wwv_flow_imp_page.create_page_da_action(
  p_id=>wwv_flow_imp.id(79419821058360254148)
@@ -35459,14 +35567,59 @@ wwv_flow_imp_page.create_page_da_action(
 ,p_wait_for_result=>'Y'
 );
 wwv_flow_imp_page.create_page_da_event(
+ p_id=>wwv_flow_imp.id(125672749197131699727)
+,p_name=>'Calculate Admi Disc amt'
+,p_event_sequence=>290
+,p_triggering_element_type=>'ITEM'
+,p_triggering_element=>'P30_REG_FEE_AMT'
+,p_bind_type=>'bind'
+,p_execution_type=>'IMMEDIATE'
+,p_bind_event_type=>'input'
+);
+wwv_flow_imp_page.create_page_da_action(
+ p_id=>wwv_flow_imp.id(125672749282781699728)
+,p_event_id=>wwv_flow_imp.id(125672749197131699727)
+,p_event_result=>'TRUE'
+,p_action_sequence=>10
+,p_execute_on_page_init=>'N'
+,p_action=>'NATIVE_EXECUTE_PLSQL_CODE'
+,p_attribute_01=>wwv_flow_string.join(wwv_flow_t_varchar2(
+'DECLARE',
+'    V_PLAN_REG_FEE NUMBER;',
+'BEGIN',
+'    BEGIN',
+'        SELECT F.ADMISSION_FEE ',
+'          INTO V_PLAN_REG_FEE',
+'          FROM FEE_PLAN F',
+'         WHERE F.CLASS_ID = :P30_CLASS_ID',
+'           AND F.SITE_ID  = :APP_SITE_ID',
+'           AND F.STATUS   = ''A'';',
+'    EXCEPTION ',
+'        WHEN NO_DATA_FOUND THEN',
+'            V_PLAN_REG_FEE := 0;',
+'    END;',
+'    :P30_REGISTRATION_FEE := NVL(ROUND(V_PLAN_REG_FEE -  NVL(:P30_REG_FEE_AMT,0),2),V_PLAN_REG_FEE);',
+'    ',
+'    :P30_TOTAL_PAYABLE:=ROUND(NVL(:P30_REGISTRATION_FEE,0)+NVL(:P30_BOOK_FEE,0)+NVL(:P30_PAST_PAPER_FEE,0)+NVL(:P30_TOTAL_FEE,0),2);',
+'',
+'END;',
+''))
+,p_attribute_02=>'P30_CLASS_ID,P30_REGISTRATION_FEE,P30_BOOK_FEE,P30_PAST_PAPER_FEE,P30_TOTAL_FEE,P30_REG_FEE_AMT'
+,p_attribute_03=>'P30_REGISTRATION_FEE,P30_TOTAL_PAYABLE'
+,p_attribute_04=>'N'
+,p_attribute_05=>'PLSQL'
+,p_wait_for_result=>'Y'
+);
+wwv_flow_imp_page.create_page_da_event(
  p_id=>wwv_flow_imp.id(79419821103532254149)
 ,p_name=>'Get Past Paper Disc'
-,p_event_sequence=>290
+,p_event_sequence=>300
 ,p_triggering_element_type=>'ITEM'
 ,p_triggering_element=>'P30_PAST_PAPER_DISC'
 ,p_bind_type=>'bind'
 ,p_execution_type=>'IMMEDIATE'
 ,p_bind_event_type=>'click'
+,p_display_when_type=>'NEVER'
 );
 wwv_flow_imp_page.create_page_da_action(
  p_id=>wwv_flow_imp.id(79419821299266254150)
@@ -35503,9 +35656,53 @@ wwv_flow_imp_page.create_page_da_action(
 ,p_wait_for_result=>'Y'
 );
 wwv_flow_imp_page.create_page_da_event(
+ p_id=>wwv_flow_imp.id(125672749960965699735)
+,p_name=>'Get Past Paper Amt'
+,p_event_sequence=>310
+,p_triggering_element_type=>'ITEM'
+,p_triggering_element=>'P30_PAST_PAPER_AMT'
+,p_bind_type=>'bind'
+,p_execution_type=>'IMMEDIATE'
+,p_bind_event_type=>'input'
+);
+wwv_flow_imp_page.create_page_da_action(
+ p_id=>wwv_flow_imp.id(125672750010670699736)
+,p_event_id=>wwv_flow_imp.id(125672749960965699735)
+,p_event_result=>'TRUE'
+,p_action_sequence=>10
+,p_execute_on_page_init=>'N'
+,p_action=>'NATIVE_EXECUTE_PLSQL_CODE'
+,p_attribute_01=>wwv_flow_string.join(wwv_flow_t_varchar2(
+'DECLARE',
+'    V_PLAN_PAST_FEE NUMBER;',
+'BEGIN',
+'    BEGIN',
+'        SELECT F.PAST_PAPERS_FEE ',
+'          INTO V_PLAN_PAST_FEE',
+'          FROM FEE_PLAN F',
+'         WHERE F.CLASS_ID = :P30_CLASS_ID',
+'           AND F.SITE_ID  = :APP_SITE_ID',
+'           AND F.STATUS   = ''A'';',
+'    EXCEPTION ',
+'        WHEN NO_DATA_FOUND THEN',
+'            V_PLAN_PAST_FEE := 0;',
+'    END;',
+'    :P30_PAST_PAPER_FEE := ROUND(V_PLAN_PAST_FEE -  NVL(:P30_PAST_PAPER_AMT,0),2);',
+'',
+'    :P30_TOTAL_PAYABLE:=ROUND(NVL(:P30_REGISTRATION_FEE,0)+NVL(:P30_BOOK_FEE,0)+NVL(:P30_PAST_PAPER_FEE,0)+NVL(:P30_TOTAL_FEE,0),2);',
+'',
+'END;',
+''))
+,p_attribute_02=>'P30_CLASS_ID,P30_REGISTRATION_FEE,P30_BOOK_FEE,P30_PAST_PAPER_FEE,P30_TOTAL_FEE,P30_PAST_PAPER_AMT'
+,p_attribute_03=>'P30_PAST_PAPER_FEE,P30_TOTAL_PAYABLE'
+,p_attribute_04=>'N'
+,p_attribute_05=>'PLSQL'
+,p_wait_for_result=>'Y'
+);
+wwv_flow_imp_page.create_page_da_event(
  p_id=>wwv_flow_imp.id(85896381446717247104)
 ,p_name=>'Get Hourly fee and time '
-,p_event_sequence=>300
+,p_event_sequence=>320
 ,p_triggering_element_type=>'ITEM'
 ,p_triggering_element=>'P30_TUTION_TIME'
 ,p_bind_type=>'bind'
@@ -35577,7 +35774,7 @@ wwv_flow_imp_page.create_page_da_action(
 wwv_flow_imp_page.create_page_da_event(
  p_id=>wwv_flow_imp.id(85896381637126247106)
 ,p_name=>'Get discount'
-,p_event_sequence=>320
+,p_event_sequence=>330
 ,p_triggering_element_type=>'ITEM'
 ,p_triggering_element=>'P30_HOURLY_FEE_DISC'
 ,p_bind_type=>'bind'
@@ -35639,7 +35836,7 @@ wwv_flow_imp_page.create_page_da_action(
 wwv_flow_imp_page.create_page_da_event(
  p_id=>wwv_flow_imp.id(86302623228654354014)
 ,p_name=>'Get discounts'
-,p_event_sequence=>330
+,p_event_sequence=>340
 ,p_triggering_element_type=>'ITEM'
 ,p_triggering_element=>'P30_SPECIAL_DISC'
 ,p_bind_type=>'bind'
@@ -35701,7 +35898,7 @@ wwv_flow_imp_page.create_page_da_action(
 wwv_flow_imp_page.create_page_da_event(
  p_id=>wwv_flow_imp.id(86302622191181354003)
 ,p_name=>'Hide and Show'
-,p_event_sequence=>340
+,p_event_sequence=>350
 ,p_triggering_element_type=>'ITEM'
 ,p_triggering_element=>'P30_DISCOUNT_TYPE'
 ,p_bind_type=>'bind'
@@ -35852,7 +36049,7 @@ wwv_flow_imp_page.create_page_da_action(
 wwv_flow_imp_page.create_page_da_event(
  p_id=>wwv_flow_imp.id(86302622675223354008)
 ,p_name=>'Hide and show disc normal and secial field'
-,p_event_sequence=>350
+,p_event_sequence=>360
 ,p_bind_type=>'bind'
 ,p_bind_event_type=>'ready'
 ,p_display_when_type=>'ITEM_IS_NOT_NULL'
@@ -35997,7 +36194,7 @@ wwv_flow_imp_page.create_page_da_action(
 wwv_flow_imp_page.create_page_da_event(
  p_id=>wwv_flow_imp.id(118789928156428481325)
 ,p_name=>'Hide and show disc normal and secial field on empty page load'
-,p_event_sequence=>360
+,p_event_sequence=>370
 ,p_bind_type=>'bind'
 ,p_bind_event_type=>'ready'
 ,p_display_when_type=>'ITEM_IS_NULL'
@@ -36028,12 +36225,13 @@ wwv_flow_imp_page.create_page_da_action(
 wwv_flow_imp_page.create_page_da_event(
  p_id=>wwv_flow_imp.id(90148947654563985302)
 ,p_name=>'Calculate Book Disc'
-,p_event_sequence=>370
+,p_event_sequence=>380
 ,p_triggering_element_type=>'ITEM'
 ,p_triggering_element=>'P30_BOOKS_FEE_DISC'
 ,p_bind_type=>'bind'
 ,p_execution_type=>'IMMEDIATE'
 ,p_bind_event_type=>'click'
+,p_display_when_type=>'NEVER'
 );
 wwv_flow_imp_page.create_page_da_action(
  p_id=>wwv_flow_imp.id(90148947717822985303)
@@ -36069,9 +36267,52 @@ wwv_flow_imp_page.create_page_da_action(
 ,p_wait_for_result=>'Y'
 );
 wwv_flow_imp_page.create_page_da_event(
+ p_id=>wwv_flow_imp.id(125672749505586699731)
+,p_name=>'Calculate Book AMT'
+,p_event_sequence=>390
+,p_triggering_element_type=>'ITEM'
+,p_triggering_element=>'P30_BOOKS_FEE_AMT'
+,p_bind_type=>'bind'
+,p_execution_type=>'IMMEDIATE'
+,p_bind_event_type=>'input'
+);
+wwv_flow_imp_page.create_page_da_action(
+ p_id=>wwv_flow_imp.id(125672749644336699732)
+,p_event_id=>wwv_flow_imp.id(125672749505586699731)
+,p_event_result=>'TRUE'
+,p_action_sequence=>10
+,p_execute_on_page_init=>'N'
+,p_action=>'NATIVE_EXECUTE_PLSQL_CODE'
+,p_attribute_01=>wwv_flow_string.join(wwv_flow_t_varchar2(
+'DECLARE',
+'    V_PLAN_BOOK_FEE NUMBER;',
+'BEGIN',
+'    BEGIN',
+'        SELECT F.BOOKS_FEE ',
+'          INTO V_PLAN_BOOK_FEE',
+'          FROM FEE_PLAN F',
+'         WHERE F.CLASS_ID = :P30_CLASS_ID',
+'           AND F.SITE_ID  = :APP_SITE_ID',
+'           AND F.STATUS   = ''A'';',
+'    EXCEPTION ',
+'        WHEN NO_DATA_FOUND THEN',
+'            V_PLAN_BOOK_FEE := 0;',
+'    END;',
+'    :P30_BOOK_FEE := ROUND((V_PLAN_BOOK_FEE*:P30_NO_OF_BOOKS) -  NVL(:P30_BOOKS_FEE_AMT,0),2);',
+'',
+'    :P30_TOTAL_PAYABLE:=ROUND(NVL(:P30_REGISTRATION_FEE,0)+NVL(:P30_BOOK_FEE,0)+NVL(:P30_PAST_PAPER_FEE,0)+NVL(:P30_TOTAL_FEE,0),2);',
+'END;',
+''))
+,p_attribute_02=>'P30_CLASS_ID,P30_NO_OF_BOOKS,P30_REGISTRATION_FEE,P30_BOOK_FEE,P30_PAST_PAPER_FEE,P30_TOTAL_FEE,P30_BOOKS_FEE_AMT'
+,p_attribute_03=>'P30_BOOK_FEE,P30_TOTAL_PAYABLE'
+,p_attribute_04=>'N'
+,p_attribute_05=>'PLSQL'
+,p_wait_for_result=>'Y'
+);
+wwv_flow_imp_page.create_page_da_event(
  p_id=>wwv_flow_imp.id(77995141433388684411)
 ,p_name=>'Calculate Books Fee'
-,p_event_sequence=>380
+,p_event_sequence=>400
 ,p_triggering_element_type=>'ITEM'
 ,p_triggering_element=>'P30_NO_OF_BOOKS'
 ,p_bind_type=>'bind'
@@ -36115,7 +36356,7 @@ wwv_flow_imp_page.create_page_da_action(
 wwv_flow_imp_page.create_page_da_event(
  p_id=>wwv_flow_imp.id(116430628192891605504)
 ,p_name=>'Branches'
-,p_event_sequence=>390
+,p_event_sequence=>410
 ,p_triggering_element_type=>'ITEM'
 ,p_triggering_element=>'P30_BRANCHES'
 ,p_bind_type=>'bind'
@@ -36150,7 +36391,7 @@ wwv_flow_imp_page.create_page_da_action(
 wwv_flow_imp_page.create_page_da_event(
  p_id=>wwv_flow_imp.id(118789928878186481332)
 ,p_name=>'Adjust Label on load data'
-,p_event_sequence=>400
+,p_event_sequence=>420
 ,p_triggering_element_type=>'ITEM'
 ,p_triggering_element=>'P30_TUTION_TIME'
 ,p_bind_type=>'bind'
@@ -36170,6 +36411,49 @@ wwv_flow_imp_page.create_page_da_action(
 '    .closest(".t-Form-fieldContainer")',
 '    .addClass("is-active");',
 '}, 100);'))
+);
+wwv_flow_imp_page.create_page_da_event(
+ p_id=>wwv_flow_imp.id(125672750374816699739)
+,p_name=>'Month_Fee_Disc_AMT'
+,p_event_sequence=>430
+,p_triggering_element_type=>'ITEM'
+,p_triggering_element=>'P30_MONTH_FEE_DISC_AMT'
+,p_bind_type=>'bind'
+,p_execution_type=>'IMMEDIATE'
+,p_bind_event_type=>'input'
+);
+wwv_flow_imp_page.create_page_da_action(
+ p_id=>wwv_flow_imp.id(125672750464332699740)
+,p_event_id=>wwv_flow_imp.id(125672750374816699739)
+,p_event_result=>'TRUE'
+,p_action_sequence=>10
+,p_execute_on_page_init=>'N'
+,p_action=>'NATIVE_EXECUTE_PLSQL_CODE'
+,p_attribute_01=>wwv_flow_string.join(wwv_flow_t_varchar2(
+'DECLARE',
+'    V_TOTAL_FEE NUMBER;',
+'BEGIN',
+'    BEGIN',
+'        SELECT F.TOTAL_FEE  INTO V_TOTAL_FEE',
+'          FROM STUDENT_FEES F',
+'         WHERE F.STUDENT_ID = :P30_STUDENT_ID_1',
+'           AND F.SITE_ID    = :APP_SITE_ID',
+'           AND F.STATUS     = ''A'';',
+'    EXCEPTION ',
+'        WHEN NO_DATA_FOUND THEN',
+'            V_TOTAL_FEE := :P30_TOTAL_FEE;',
+'    END;',
+'    :P30_TOTAL_FEE := ROUND(V_TOTAL_FEE -  NVL(:P30_MONTH_FEE_DISC_AMT,0),2);',
+'',
+'   ',
+'',
+'END;',
+''))
+,p_attribute_02=>'P30_STUDENT_ID_1,P30_TOTAL_FEE,P30_MONTH_FEE_DISC_AMT'
+,p_attribute_03=>'P30_TOTAL_FEE'
+,p_attribute_04=>'N'
+,p_attribute_05=>'PLSQL'
+,p_wait_for_result=>'Y'
 );
 wwv_flow_imp_page.create_page_process(
  p_id=>wwv_flow_imp.id(77625081012994605102)
@@ -36283,19 +36567,20 @@ wwv_flow_imp_page.create_page_process(
 '   END IF;',
 '   ----INSERT OR UPADTE STUDENT FEE RECORD-----------------',
 '   IF V_FEE_CNT = 0 AND V_STUDENT_CNT > 0 AND :P30_FEE_START_DATE IS NOT NULL THEN',
-'    INSERT INTO STUDENT_FEES(STUDENT_ID,REGISTRATION_FEE,REG_FEE_DISC,BOOK_FEE,EXAM_FEE,HOURLY_FEE,PAST_PAPER_FEE,PAST_PAPER_DISC,DUE_DATE,PAY_ID,FEED_BY,FEED_DATE,',
-'                                SITE_ID,TOTAL_FEE,FEE_START_DATE,HOURLY_FEE_DISC,SPECIAL_DISC,TUITION_FEE_TYPE,TUTION_TIME,BOOK_DISC,NO_OF_BOOKS,DISC_REASON,STATUS)',
-'          VALUES(:P30_STUDENT_ID_1,:P30_REGISTRATION_FEE,:P30_REG_FEE_DISC,:P30_BOOK_FEE,:P30_EXAM_FEE,:P30_HOURLY_FEE,:P30_PAST_PAPER_FEE,:P30_PAST_PAPER_DISC,:P30_DUE_DATE,:P30_PAY_ID,:APP_USER,TRUNC(SYSDATE),',
-'                 :APP_SITE_ID,:P30_TOTAL_FEE,:P30_FEE_START_DATE,:P30_HOURLY_FEE_DISC,:P30_SPECIAL_DISC,:P30_TUITION_FEE_TYPE,:P30_TUTION_TIME_HIDDEN,:P30_BOOKS_FEE_DISC,:P30_NO_OF_BOOKS,',
-'                 :P30_DISC_REASON,:P30_FEE_STATUS)    ',
+'    INSERT INTO STUDENT_FEES(STUDENT_ID,REGISTRATION_FEE,/*REG_FEE_DISC*/REG_FEE_AMT,BOOK_FEE,EXAM_FEE,HOURLY_FEE,PAST_PAPER_FEE,/*PAST_PAPER_DISC*/PAST_PAPER_FEE_AMT,DUE_DATE,PAY_ID,FEED_BY,FEED_DATE,',
+'                                SITE_ID,TOTAL_FEE,FEE_START_DATE,/*HOURLY_FEE_DISCSPECIAL_DISC*/TUITION_FEE_TYPE,TUTION_TIME,/*BOOK_DISC*/ BOOK_FEE_AMT,NO_OF_BOOKS,DISC_REASON,STATUS,MONTH_FEE_DISC_AMT)',
+'          VALUES(:P30_STUDENT_ID_1,:P30_REGISTRATION_FEE,/*:P30_REG_FEE_DISC*/:P30_REG_FEE_AMT,:P30_BOOK_FEE,:P30_EXAM_FEE,:P30_HOURLY_FEE,:P30_PAST_PAPER_FEE,/*:P30_PAST_PAPER_DISC*/ :P30_PAST_PAPER_AMT,:P30_DUE_DATE,:P30_PAY_ID,:APP_USER,TRUNC(SYSD'
+||'ATE),',
+'                 :APP_SITE_ID,:P30_TOTAL_FEE,:P30_FEE_START_DATE,/*:P30_HOURLY_FEE_DISC,:P30_SPECIAL_DISC*/:P30_TUITION_FEE_TYPE,:P30_TUTION_TIME_HIDDEN,/*:P30_BOOKS_FEE_DISC*/ :P30_BOOKS_FEE_AMT,:P30_NO_OF_BOOKS,',
+'                 :P30_DISC_REASON,:P30_FEE_STATUS, :P30_MONTH_FEE_DISC_AMT)    ',
 '                 ;',
 '   ELSIF V_FEE_CNT > 0 AND V_STUDENT_CNT > 0 THEN                                   ',
 '      UPDATE STUDENT_FEES',
-'         SET REGISTRATION_FEE = :P30_REGISTRATION_FEE,REG_FEE_DISC = :P30_REG_FEE_DISC, BOOK_FEE = :P30_BOOK_FEE, EXAM_FEE = :P30_EXAM_FEE, HOURLY_FEE = :P30_HOURLY_FEE,',
-'              PAST_PAPER_FEE = :P30_PAST_PAPER_FEE, PAST_PAPER_DISC = :P30_PAST_PAPER_DISC, DUE_DATE = :P30_DUE_DATE, PAY_ID = :P30_PAY_ID, FEED_BY = :APP_USER, FEED_DATE = TRUNC(SYSDATE), ',
-'              TOTAL_FEE = :P30_TOTAL_FEE, FEE_START_DATE = :P30_FEE_START_DATE, HOURLY_FEE_DISC = :P30_HOURLY_FEE_DISC, SPECIAL_DISC = :P30_SPECIAL_DISC,',
-'              TUITION_FEE_TYPE = :P30_TUITION_FEE_TYPE, TUTION_TIME = :P30_TUTION_TIME_HIDDEN, BOOK_DISC = :P30_BOOKS_FEE_DISC, NO_OF_BOOKS = :P30_NO_OF_BOOKS, DISC_REASON = :P30_DISC_REASON,',
-'              STATUS = :P30_FEE_STATUS',
+'         SET REGISTRATION_FEE = :P30_REGISTRATION_FEE,/*REG_FEE_DISC = :P30_REG_FEE_DISC*/ REG_FEE_AMT= :P30_REG_FEE_AMT , BOOK_FEE = :P30_BOOK_FEE, EXAM_FEE = :P30_EXAM_FEE, HOURLY_FEE = :P30_HOURLY_FEE,',
+'              PAST_PAPER_FEE = :P30_PAST_PAPER_FEE, /*PAST_PAPER_DISC = :P30_PAST_PAPER_DISC*/ PAST_PAPER_FEE_AMT = :P30_PAST_PAPER_AMT, DUE_DATE = :P30_DUE_DATE, PAY_ID = :P30_PAY_ID, FEED_BY = :APP_USER, FEED_DATE = TRUNC(SYSDATE), ',
+'              TOTAL_FEE = :P30_TOTAL_FEE, FEE_START_DATE = :P30_FEE_START_DATE, /*HOURLY_FEE_DISC = :P30_HOURLY_FEE_DISC, SPECIAL_DISC = :P30_SPECIAL_DISC,*/',
+'              TUITION_FEE_TYPE = :P30_TUITION_FEE_TYPE, TUTION_TIME = :P30_TUTION_TIME_HIDDEN, /*BOOK_DISC = :P30_BOOKS_FEE_DISC*/ BOOK_FEE_AMT = :P30_BOOKS_FEE_AMT, NO_OF_BOOKS = :P30_NO_OF_BOOKS, DISC_REASON = :P30_DISC_REASON, ',
+'              STATUS = :P30_FEE_STATUS, MONTH_FEE_DISC_AMT = :P30_MONTH_FEE_DISC_AMT',
 '       WHERE FEE_ID   = :P30_FEE_ID',
 '         AND SITE_ID  = :APP_SITE_ID',
 '       ;    ',
@@ -36344,19 +36629,20 @@ wwv_flow_imp_page.create_page_process(
 '      ;',
 '   ----INSERT OR UPADTE STUDENT FEE RECORD-----------------',
 '   IF V_FEE_CNT = 0 AND V_STUDENT_CNT > 0 AND :P30_FEE_START_DATE IS NOT NULL THEN',
-'       INSERT INTO STUDENT_FEES(STUDENT_ID,REGISTRATION_FEE,REG_FEE_DISC,BOOK_FEE,EXAM_FEE,HOURLY_FEE,PAST_PAPER_FEE,PAST_PAPER_DISC,DUE_DATE,PAY_ID,FEED_BY,FEED_DATE,',
-'                                SITE_ID,TOTAL_FEE,FEE_START_DATE,HOURLY_FEE_DISC,SPECIAL_DISC,TUITION_FEE_TYPE,TUTION_TIME,BOOK_DISC,NO_OF_BOOKS,DISC_REASON,STATUS)',
-'          VALUES(:P30_STUDENT_ID_1,:P30_REGISTRATION_FEE,:P30_REG_FEE_DISC,:P30_BOOK_FEE,:P30_EXAM_FEE,:P30_HOURLY_FEE,:P30_PAST_PAPER_FEE,:P30_PAST_PAPER_DISC,:P30_DUE_DATE,:P30_PAY_ID,:APP_USER,TRUNC(SYSDATE),',
-'                 :APP_SITE_ID,:P30_TOTAL_FEE,:P30_FEE_START_DATE,:P30_HOURLY_FEE_DISC,:P30_SPECIAL_DISC,:P30_TUITION_FEE_TYPE,:P30_TUTION_TIME_HIDDEN,:P30_BOOKS_FEE_DISC,:P30_NO_OF_BOOKS,',
-'                 :P30_DISC_REASON,:P30_FEE_STATUS)    ',
+'       INSERT INTO STUDENT_FEES(STUDENT_ID,REGISTRATION_FEE,/*REG_FEE_DISC*/ REG_FEE_AMT,BOOK_FEE,EXAM_FEE,HOURLY_FEE,PAST_PAPER_FEE,/*PAST_PAPER_DISC*/ PAST_PAPER_FEE_AMT,DUE_DATE,PAY_ID,FEED_BY,FEED_DATE,',
+'                                SITE_ID,TOTAL_FEE,FEE_START_DATE,/*HOURLY_FEE_DISC,SPECIAL_DISC,*/TUITION_FEE_TYPE,TUTION_TIME,/*BOOK_DISC*/BOOK_FEE_AMT,NO_OF_BOOKS,DISC_REASON,STATUS, MONTH_FEE_DISC_AMT)',
+'          VALUES(:P30_STUDENT_ID_1,:P30_REGISTRATION_FEE,/*:P30_REG_FEE_DISC*/ :P30_REG_FEE_AMT,:P30_BOOK_FEE,:P30_EXAM_FEE,:P30_HOURLY_FEE,:P30_PAST_PAPER_FEE,/*:P30_PAST_PAPER_DISC*/:P30_PAST_PAPER_AMT,:P30_DUE_DATE,:P30_PAY_ID,:APP_USER,TRUNC(SYSD'
+||'ATE),',
+'                 :APP_SITE_ID,:P30_TOTAL_FEE,:P30_FEE_START_DATE,/*:P30_HOURLY_FEE_DISC,:P30_SPECIAL_DISC,*/:P30_TUITION_FEE_TYPE,:P30_TUTION_TIME_HIDDEN,/*:P30_BOOKS_FEE_DISC*/:P30_BOOKS_FEE_AMT,:P30_NO_OF_BOOKS,',
+'                 :P30_DISC_REASON,:P30_FEE_STATUS,:P30_MONTH_FEE_DISC_AMT)    ',
 '                 ;',
 '   ELSIF V_FEE_CNT > 0 AND V_STUDENT_CNT > 0 THEN                                   ',
 '      UPDATE STUDENT_FEES',
-'         SET REGISTRATION_FEE = :P30_REGISTRATION_FEE,REG_FEE_DISC = :P30_REG_FEE_DISC, BOOK_FEE = :P30_BOOK_FEE, EXAM_FEE = :P30_EXAM_FEE, HOURLY_FEE = :P30_HOURLY_FEE,',
-'              PAST_PAPER_FEE = :P30_PAST_PAPER_FEE, PAST_PAPER_DISC = :P30_PAST_PAPER_DISC, DUE_DATE = :P30_DUE_DATE, PAY_ID = :P30_PAY_ID, FEED_BY = :APP_USER, FEED_DATE = TRUNC(SYSDATE), ',
-'              TOTAL_FEE = :P30_TOTAL_FEE, FEE_START_DATE = :P30_FEE_START_DATE, HOURLY_FEE_DISC = :P30_HOURLY_FEE_DISC, SPECIAL_DISC = :P30_SPECIAL_DISC,',
-'              TUITION_FEE_TYPE = :P30_TUITION_FEE_TYPE, TUTION_TIME = :P30_TUTION_TIME_HIDDEN, BOOK_DISC = :P30_BOOKS_FEE_DISC, NO_OF_BOOKS = :P30_NO_OF_BOOKS, DISC_REASON = :P30_DISC_REASON, ',
-'              STATUS = :P30_FEE_STATUS',
+'         SET REGISTRATION_FEE = :P30_REGISTRATION_FEE,/*REG_FEE_DISC = :P30_REG_FEE_DISC*/ REG_FEE_AMT = :P30_REG_FEE_AMT, BOOK_FEE = :P30_BOOK_FEE, EXAM_FEE = :P30_EXAM_FEE, HOURLY_FEE = :P30_HOURLY_FEE,',
+'              PAST_PAPER_FEE = :P30_PAST_PAPER_FEE, /*PAST_PAPER_DISC = :P30_PAST_PAPER_DISC*/ PAST_PAPER_FEE_AMT = :P30_PAST_PAPER_AMT, DUE_DATE = :P30_DUE_DATE, PAY_ID = :P30_PAY_ID, FEED_BY = :APP_USER, FEED_DATE = TRUNC(SYSDATE), ',
+'              TOTAL_FEE = :P30_TOTAL_FEE, FEE_START_DATE = :P30_FEE_START_DATE, /*HOURLY_FEE_DISC = :P30_HOURLY_FEE_DISC, SPECIAL_DISC = :P30_SPECIAL_DISC,*/',
+'              TUITION_FEE_TYPE = :P30_TUITION_FEE_TYPE, TUTION_TIME = :P30_TUTION_TIME_HIDDEN, /*BOOK_DISC = :P30_BOOKS_FEE_DISC*/ BOOK_FEE_AMT = :P30_BOOKS_FEE_AMT, NO_OF_BOOKS = :P30_NO_OF_BOOKS, DISC_REASON = :P30_DISC_REASON, ',
+'              STATUS = :P30_FEE_STATUS, MONTH_FEE_DISC_AMT = :P30_MONTH_FEE_DISC_AMT',
 '       WHERE FEE_ID   = :P30_FEE_ID',
 '         AND SITE_ID  = :APP_SITE_ID',
 '       ;    ',
@@ -36391,19 +36677,20 @@ wwv_flow_imp_page.create_page_process(
 '      ;',
 '   ----INSERT OR UPADTE STUDENT FEE RECORD-----------------',
 '   IF V_FEE_CNT = 0 AND V_STUDENT_CNT > 0 AND :P30_FEE_START_DATE IS NOT NULL THEN',
-'      INSERT INTO STUDENT_FEES(STUDENT_ID,REGISTRATION_FEE,REG_FEE_DISC,BOOK_FEE,EXAM_FEE,HOURLY_FEE,PAST_PAPER_FEE,PAST_PAPER_DISC,DUE_DATE,PAY_ID,FEED_BY,FEED_DATE,',
-'                                SITE_ID,TOTAL_FEE,FEE_START_DATE,HOURLY_FEE_DISC,SPECIAL_DISC,TUITION_FEE_TYPE,TUTION_TIME,BOOK_DISC,NO_OF_BOOKS,DISC_REASON,STATUS)',
-'          VALUES(:P30_STUDENT_ID_1,:P30_REGISTRATION_FEE,:P30_REG_FEE_DISC,:P30_BOOK_FEE,:P30_EXAM_FEE,:P30_HOURLY_FEE,:P30_PAST_PAPER_FEE,:P30_PAST_PAPER_DISC,:P30_DUE_DATE,:P30_PAY_ID,:APP_USER,TRUNC(SYSDATE),',
-'                 :APP_SITE_ID,:P30_TOTAL_FEE,:P30_FEE_START_DATE,:P30_HOURLY_FEE_DISC,:P30_SPECIAL_DISC,:P30_TUITION_FEE_TYPE,:P30_TUTION_TIME_HIDDEN,:P30_BOOKS_FEE_DISC,:P30_NO_OF_BOOKS,',
-'                 :P30_DISC_REASON,:P30_FEE_STATUS)    ',
+'      INSERT INTO STUDENT_FEES(STUDENT_ID,REGISTRATION_FEE,/*REG_FEE_DISC*/ REG_FEE_AMT,BOOK_FEE,EXAM_FEE,HOURLY_FEE,PAST_PAPER_FEE,/*PAST_PAPER_DISC*/ PAST_PAPER_FEE_AMT,DUE_DATE,PAY_ID,FEED_BY,FEED_DATE,',
+'                                SITE_ID,TOTAL_FEE,FEE_START_DATE,/*HOURLY_FEE_DISC,SPECIAL_DISC,*/TUITION_FEE_TYPE,TUTION_TIME,/*BOOK_DISC*/ BOOK_FEE_AMT,NO_OF_BOOKS,DISC_REASON,STATUS,MONTH_FEE_DISC_AMT)',
+'          VALUES(:P30_STUDENT_ID_1,:P30_REGISTRATION_FEE,/*:P30_REG_FEE_DISC*/ :P30_REG_FEE_AMT,:P30_BOOK_FEE,:P30_EXAM_FEE,:P30_HOURLY_FEE,:P30_PAST_PAPER_FEE,/*:P30_PAST_PAPER_DISC*/:P30_PAST_PAPER_AMT,:P30_DUE_DATE,:P30_PAY_ID,:APP_USER,TRUNC(SYSD'
+||'ATE),',
+'                 :APP_SITE_ID,:P30_TOTAL_FEE,:P30_FEE_START_DATE,/*:P30_HOURLY_FEE_DISC,:P30_SPECIAL_DISC,*/:P30_TUITION_FEE_TYPE,:P30_TUTION_TIME_HIDDEN,/*:P30_BOOKS_FEE_DISC*/ :P30_BOOKS_FEE_AMT,:P30_NO_OF_BOOKS,',
+'                 :P30_DISC_REASON,:P30_FEE_STATUS, :P30_MONTH_FEE_DISC_AMT)    ',
 '                 ;',
 '   ELSIF V_FEE_CNT > 0 AND V_STUDENT_CNT > 0 THEN                                   ',
 '      UPDATE STUDENT_FEES',
-'         SET REGISTRATION_FEE = :P30_REGISTRATION_FEE,REG_FEE_DISC = :P30_REG_FEE_DISC, BOOK_FEE = :P30_BOOK_FEE, EXAM_FEE = :P30_EXAM_FEE, HOURLY_FEE = :P30_HOURLY_FEE,',
-'              PAST_PAPER_FEE = :P30_PAST_PAPER_FEE, PAST_PAPER_DISC = :P30_PAST_PAPER_DISC, DUE_DATE = :P30_DUE_DATE, PAY_ID = :P30_PAY_ID, FEED_BY = :APP_USER, FEED_DATE = TRUNC(SYSDATE), ',
-'              TOTAL_FEE = :P30_TOTAL_FEE, FEE_START_DATE = :P30_FEE_START_DATE, HOURLY_FEE_DISC = :P30_HOURLY_FEE_DISC, SPECIAL_DISC = :P30_SPECIAL_DISC,',
-'              TUITION_FEE_TYPE = :P30_TUITION_FEE_TYPE, TUTION_TIME = :P30_TUTION_TIME_HIDDEN, BOOK_DISC = :P30_BOOKS_FEE_DISC, NO_OF_BOOKS = :P30_NO_OF_BOOKS, DISC_REASON = :P30_DISC_REASON, ',
-'              STATUS = :P30_FEE_STATUS',
+'         SET REGISTRATION_FEE = :P30_REGISTRATION_FEE,/*REG_FEE_DISC = :P30_REG_FEE_DISC*/ REG_FEE_AMT = :P30_REG_FEE_AMT, BOOK_FEE = :P30_BOOK_FEE, EXAM_FEE = :P30_EXAM_FEE, HOURLY_FEE = :P30_HOURLY_FEE,',
+'              PAST_PAPER_FEE = :P30_PAST_PAPER_FEE, /*PAST_PAPER_DISC = :P30_PAST_PAPER_DISC*/ PAST_PAPER_FEE_AMT = :P30_PAST_PAPER_AMT, DUE_DATE = :P30_DUE_DATE, PAY_ID = :P30_PAY_ID, FEED_BY = :APP_USER, FEED_DATE = TRUNC(SYSDATE), ',
+'              TOTAL_FEE = :P30_TOTAL_FEE, FEE_START_DATE = :P30_FEE_START_DATE,/* HOURLY_FEE_DISC = :P30_HOURLY_FEE_DISC, SPECIAL_DISC = :P30_SPECIAL_DISC,*/',
+'              TUITION_FEE_TYPE = :P30_TUITION_FEE_TYPE, TUTION_TIME = :P30_TUTION_TIME_HIDDEN, /*BOOK_DISC = :P30_BOOKS_FEE_DISC*/ BOOK_FEE_AMT = :P30_BOOKS_FEE_AMT, NO_OF_BOOKS = :P30_NO_OF_BOOKS, DISC_REASON = :P30_DISC_REASON, ',
+'              STATUS = :P30_FEE_STATUS, MONTH_FEE_DISC_AMT = :P30_MONTH_FEE_DISC_AMT',
 '       WHERE FEE_ID   = :P30_FEE_ID',
 '         AND SITE_ID  = :APP_SITE_ID',
 '       ;    ',
